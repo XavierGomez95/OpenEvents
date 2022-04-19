@@ -1,8 +1,10 @@
-package com.androidpprog2.openevents;
+package com.androidpprog2.openevents.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.androidpprog2.openevents.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
