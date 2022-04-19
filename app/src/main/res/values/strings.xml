@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">OpenEvents</string>
+    <string name="e_mail">youremail@email.com</string>
+    <string name="password">password</string>
+    <string name="register">Register</string>
+    <string name="your_name">Your name</string>
+    <string name="password_again">Repeat password</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create a new account</string>
 </resources>
