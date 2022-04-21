@@ -4,6 +4,11 @@
     <string name="password">password</string>
     <string name="register">Register</string>
     <string name="your_name">Your name</string>
+
+    <string name="search_person_tittle">Search</string>
+    <string name="events_tittle">Events</string>
+    <string name="profile_tittle">Profile</string>
+
     <string name="password_again">Repeat password</string>
     <string name="login">Login</string>
     <string name="create_account">Create a new account</string>

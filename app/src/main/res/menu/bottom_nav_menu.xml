@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/search_person"
+        android:title="@string/search_person_tittle"
+        android:icon="@drawable/ic_search_people_foreground"/>
+    <item
+        android:id="@+id/events"
+        android:title="@string/events_tittle"
+        android:icon="@drawable/ic_search_people_foreground"/>
+    <item
+        android:id="@+id/profile"
+        android:title="@string/profile_tittle"
+        android:icon="@drawable/ic_search_people_foreground"/>
+</menu>
