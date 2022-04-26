@@ -7,10 +7,10 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/eventsFragmentId"
+        android:id="@+id/profileFragmentId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EVENTS"
+        android:text="PROFILE"
         android:textColor="#43a047"
         android:textSize="40sp"
         android:textStyle="italic|bold"

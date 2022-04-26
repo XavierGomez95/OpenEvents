@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.model;
+package com.androidpprog2.openevents.business;
 
 import java.util.Date;
 

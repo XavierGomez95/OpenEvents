@@ -7,7 +7,7 @@ import android.os.Handler;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.androidpprog2.openevents.activities.LoginActivity;
+import com.androidpprog2.openevents.view.activities.LoginActivity;
 import com.androidpprog2.openevents.R;
 
 public class SplashActivity extends AppCompatActivity {
