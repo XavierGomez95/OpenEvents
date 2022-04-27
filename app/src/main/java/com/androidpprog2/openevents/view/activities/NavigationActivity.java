@@ -14,10 +14,10 @@ import com.androidpprog2.openevents.view.fragments.EventsFragment;
 import com.androidpprog2.openevents.view.fragments.ProfileFragment;
 import com.androidpprog2.openevents.view.fragments.UsersFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 
-
-public class NavigationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class NavigationActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
     private BottomNavigationView bottomNavigationView;
     private ProfileFragment profileFragment = new ProfileFragment();
     private EventsFragment eventsFragment = new EventsFragment();
