@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,12 +49,14 @@ public class RegisterActivity extends AppCompatActivity {
             api.addUser(u, new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
+                    Log.d("RESPONSEEEEE","TRUEEEEE");
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-
+                    Log.d("RESPONSEEEEE",t.toString());
                 }
             });
         }
