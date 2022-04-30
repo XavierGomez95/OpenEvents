@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.api;
 
+import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 
 import java.util.List;
@@ -33,8 +34,8 @@ public class APIUser {
         this.service.addUser(user).enqueue(callback);
     }
 
-    public void loginUser(User user, Callback<User> callback) {
-        this.service.addUser(user).enqueue(callback);
+    public void loginUser(User user, Callback<Token> callback) {
+        this.service.addLogin(user).enqueue(callback);
     }
 
     public void getListUsers(Callback<List<User>> callback) {

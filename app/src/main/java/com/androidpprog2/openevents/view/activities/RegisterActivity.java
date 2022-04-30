@@ -49,7 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
             api.addUser(u, new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
-                    Log.d("RESPONSEEEEE","TRUEEEEE");
+                    User u=response.body();
+                    Log.d("RESPONSE","TRUEEEEE"+u.getEmail()+" "+u.getPassword());
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
 
                 }

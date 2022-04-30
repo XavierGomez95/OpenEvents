@@ -1,6 +1,7 @@
 package com.androidpprog2.openevents.api;
 
 
+import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface OpenEventsAPI {
     Call<User> addUser(@Body User user);
 
     @POST("users/login")
-    Call<User> addLogin(@Body User user);
+    Call<Token> addLogin(@Body User user);
 
     @GET("users")
     Call<List<User>> getListUsers();
