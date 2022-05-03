@@ -12,7 +12,6 @@
 
 
         <TextView
-            android:id="@+id/tv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -25,7 +24,7 @@
 
 
         <EditText
-            android:id="@+id/et_email"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
@@ -36,7 +35,7 @@
             android:textSize="15sp" />
 
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
