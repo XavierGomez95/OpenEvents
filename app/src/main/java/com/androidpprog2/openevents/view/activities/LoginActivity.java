@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText pass;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,6 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(view -> {
             checkData();
-            startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
         });
 
         goRegisterButton.setOnClickListener(view -> {
@@ -40,7 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * get inputs email and pass editTexts and calls the api waiting the response of a token
+     */
     private void checkData() {
         email = findViewById(R.id.email);
         pass = findViewById(R.id.password);
@@ -49,8 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         api.loginUser(u, new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
-                Token token = response.body();
-                Log.d("TOKENN", token.getAccessToken());
+               Token token = response.body();
+               Log.d("TOKENN", token.getAccessToken());
+               startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
             }
 
             @Override
