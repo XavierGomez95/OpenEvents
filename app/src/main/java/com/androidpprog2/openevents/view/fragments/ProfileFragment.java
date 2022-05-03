@@ -11,11 +11,10 @@ import androidx.fragment.app.Fragment;
 import com.androidpprog2.openevents.R;
 
 public class ProfileFragment extends Fragment {
-    // Check this
     @Nullable
     @Override
     public android.view.View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-        //return inflater.inflate(R.layout.fragment_profile, container, false);
+        //return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 }

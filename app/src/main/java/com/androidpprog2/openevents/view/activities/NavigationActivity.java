@@ -1,24 +1,22 @@
 package com.androidpprog2.openevents.view.activities;
 
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.androidpprog2.openevents.R;
+import com.androidpprog2.openevents.databinding.ActivityTabBarBinding;
 import com.androidpprog2.openevents.view.fragments.EventsFragment;
 import com.androidpprog2.openevents.view.fragments.ProfileFragment;
 import com.androidpprog2.openevents.view.fragments.UsersFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 
-public class NavigationActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
-    private BottomNavigationView bottomNavigationView;
+public class NavigationActivity extends AppCompatActivity {
+    private ActivityTabBarBinding binding;
     private ProfileFragment profileFragment = new ProfileFragment();
     private EventsFragment eventsFragment = new EventsFragment();
     private UsersFragment usersFragment = new UsersFragment();
@@ -26,32 +24,33 @@ public class NavigationActivity extends AppCompatActivity implements NavigationB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_bar);
+        binding = ActivityTabBarBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        selectFragment(eventsFragment); // Predefined fragment
 
-        bottomNavigationView = findViewById(R.id.bottomNavigationView); // activity_tab_bar id
-        bottomNavigationView.setSelectedItemId(R.id.search_users); // Predefined fragment
-        //bottomNavigationView.setOnNavigationItemSelectedListener(this);
-    }
+        binding.bottomNavigationView.setSelectedItemId(R.id.events); // Predefined button
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.search_users:
+                    selectFragment(usersFragment);
+//                    Log.e("1", "---- OPTION 1 !!!!");
+                    break;
 
-    @Override
-    public boolean onNavigationItemSelected (@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.usersFragmentId:
-                selectFragment(usersFragment);
-                // SOME STUFF
-                return true;
+                case R.id.events:
+                    selectFragment(eventsFragment);
+//                    Log.e("2", "---- OPTION 2 !!!!");
+                    break;
 
-            case R.id.eventsFragmentId:
-                selectFragment(eventsFragment);
-                // SOME STUFF
-                return true;
+                case R.id.profile:
+                    selectFragment(profileFragment);
+//                    Log.e("3", "---- OPTION 3 !!!!");
+                    break;
 
-            case R.id.profileFragmentId:
-                selectFragment(profileFragment);
-                // SOME STUFF
-                return true;
-        }
-        return false;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + item.getItemId());
+            }
+            return true;
+        });
     }
 
     public void selectFragment (Fragment incomingFragment) {

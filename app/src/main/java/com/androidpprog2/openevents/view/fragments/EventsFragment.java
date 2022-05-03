@@ -11,11 +11,10 @@ import androidx.fragment.app.Fragment;
 import com.androidpprog2.openevents.R;
 
 public class EventsFragment extends Fragment {
-    // Check this
     @Nullable
     @Override
     public android.view.View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-        //return inflater.inflate(R.layout.fragment_events, container, false);
+        //return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_events, container, false);
     }
 }
