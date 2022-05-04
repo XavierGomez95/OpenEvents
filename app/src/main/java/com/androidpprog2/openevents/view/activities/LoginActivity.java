@@ -1,12 +1,14 @@
 package com.androidpprog2.openevents.view.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIUser;
@@ -53,7 +55,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Token> call, Response<Token> response) {
                Token token = response.body();
                Log.d("TOKENN", token.getAccessToken());
+
+               safeToken(token);
+
                startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
+            }
+
+            private void safeToken(Token token) {
+                SharedPreferences sharedPreferences = getSharedPreferences
+                        ("credenciales", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.apply();
+                editor.putString("token", token.getAccessToken());
+                editor.commit();
             }
 
             @Override
