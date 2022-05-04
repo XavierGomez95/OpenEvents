@@ -26,7 +26,10 @@ public class SplashActivity extends AppCompatActivity {
             if (getToken() == null) {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 finish();
-            } else startActivity(new Intent(SplashActivity.this, NavigationActivity.class));
+            } else {
+                startActivity(new Intent(SplashActivity.this, NavigationActivity.class));
+                finish();
+            }
         }, 2000);
     }
 
