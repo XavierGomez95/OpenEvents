@@ -46,17 +46,19 @@ public class LoginActivity extends AppCompatActivity {
      * get inputs email and pass editTexts and calls the api waiting the response of a token
      */
     private void checkData() {
-        email = findViewById(R.id.email);
-        pass = findViewById(R.id.password);
-        User u = new User(email.getText().toString(), pass.getText().toString());
-        APIUser api = APIUser.getInstance();
-        api.loginUser(u, new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-               Token token = response.body();
-               Log.d("TOKENN", token.getAccessToken());
+        if (email != null && pass != null) {
+            email = findViewById(R.id.email);
+            pass = findViewById(R.id.password);
 
-                //if (token.getAccessToken() != null) {
+            User u = new User(email.getText().toString(), pass.getText().toString());
+            APIUser api = APIUser.getInstance();
+            api.loginUser(u, new Callback<Token>() {
+                @Override
+                public void onResponse(Call<Token> call, Response<Token> response) {
+                    Token token = response.body();
+//               Log.d("TOKENN", token.getAccessToken());
+
+                    //if (token.getAccessToken() != null) {
                     // Saving the token
                     safeToken(token);
 
@@ -64,23 +66,24 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                     intent.putExtra("tokenStr", token.getAccessToken()); // Casting to Parcelable
                     startActivity(intent);
-                //}
-            }
+                    //}
+                }
 
-            private void safeToken(Token token) {
-                SharedPreferences sharedPreferences = getSharedPreferences
-                        ("credenciales", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.apply();
-                editor.putString("token", token.getAccessToken());
-                editor.commit();
-            }
+                private void safeToken(Token token) {
+                    SharedPreferences sharedPreferences = getSharedPreferences
+                            ("credenciales", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.apply();
+                    editor.putString("token", token.getAccessToken());
+                    editor.commit();
+                }
 
-            @Override
-            public void onFailure(Call<Token> call, Throwable t) {
-                Log.d("TOKENN", "LOGIN FAIL");
-                Log.d("TOKENN", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<Token> call, Throwable t) {
+                    Log.d("TOKENN", "LOGIN FAIL");
+                    Log.d("TOKENN", t.toString());
+                }
+            });
+        }
     }
 }
