@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.api;
 
+import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 
@@ -9,12 +10,12 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class APIUser {
-    private static APIUser apiUser;
+public class APIEvents {
+    private static APIEvents apiEvents;
     private Retrofit retrofit;
     private OpenEventsAPI service;
 
-    public APIUser() {
+    public APIEvents() {
         this.retrofit = new Retrofit.Builder()
                 .baseUrl("http://puigmal.salle.url.edu/api/v2/").addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -22,16 +23,16 @@ public class APIUser {
 
     }
 
-    public static APIUser getInstance() {
-        if (apiUser == null) {
-            apiUser = new APIUser();
+    public static APIEvents getInstance() {
+        if (apiEvents == null) {
+            apiEvents = new APIEvents();
         }
-        return apiUser;
+        return apiEvents;
 
     }
 
-    public void addUser(User user, Callback<User> callback) {
-        this.service.addUser(user).enqueue(callback);
+    public void addEvent(Event event, Callback<Event> callback) {
+        this.service.addEvent(event).enqueue(callback);
     }
 
     public void loginUser(User user, Callback<Token> callback) {
