@@ -56,9 +56,15 @@ public class LoginActivity extends AppCompatActivity {
                Token token = response.body();
                Log.d("TOKENN", token.getAccessToken());
 
-               safeToken(token);
+                //if (token.getAccessToken() != null) {
+                    // Saving the token
+                    safeToken(token);
 
-               startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
+                    // Initialize the new Activity (Navigation Activity)
+                    Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                    intent.putExtra("tokenStr", token.getAccessToken()); // Casting to Parcelable
+                    startActivity(intent);
+                //}
             }
 
             private void safeToken(Token token) {

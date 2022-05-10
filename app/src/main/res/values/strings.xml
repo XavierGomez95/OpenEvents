@@ -15,4 +15,6 @@
     <string name="create_account">Create a new account</string>
     <string name="image">image</string>
 
+    <string name="logout">LogOut</string>
+
 </resources>

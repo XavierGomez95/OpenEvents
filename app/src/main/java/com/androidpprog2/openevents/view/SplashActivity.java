@@ -14,7 +14,7 @@ import com.androidpprog2.openevents.view.activities.LoginActivity;
 import com.androidpprog2.openevents.view.activities.NavigationActivity;
 
 public class SplashActivity extends AppCompatActivity {
-    private String token;
+    private String accessToken;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,21 +23,27 @@ public class SplashActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         new Handler().postDelayed(() -> {
-            if (getToken() == null) {
+            if (getSharedPreferences("credenciales", Context.MODE_PRIVATE)
+                    .getString("token", null) == null) {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(SplashActivity.this, NavigationActivity.class));
+                // Initialize the new Activity (Navigation Activity)
+                Intent intent = new Intent(SplashActivity.this, NavigationActivity.class);
+                intent.putExtra("tokenStr", accessToken); // Casting to Parcelable
+                startActivity(intent);
+                System.out.println(getAccessToken());
                 finish();
             }
         }, 2000);
     }
 
-    private String getToken() {
+    private String getAccessToken() {
         SharedPreferences sharedPreferences = getSharedPreferences
                 ("credenciales", Context.MODE_PRIVATE);
-        token = sharedPreferences.getString("token", "Error, information does not exist.");
+        accessToken = sharedPreferences.getString("token", "Error, information does not exist.");
+        //accessToken = null; // TEMPORAL PARA QUE SALGA SIEMPRE EL LOGIN
 
-        return token;
+        return accessToken;
     }
 }
