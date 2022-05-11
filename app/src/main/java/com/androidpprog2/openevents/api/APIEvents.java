@@ -35,20 +35,28 @@ public class APIEvents {
         this.service.addEvent(event).enqueue(callback);
     }
 
-    public void loginUser(User user, Callback<Token> callback) {
-        this.service.addLogin(user).enqueue(callback);
+    public void getEventId(Integer id, Callback<Event> callback) {
+        this.service.getEventId(id).enqueue(callback);
     }
 
-    public void getListUsers(Callback<List<User>> callback) {
-        this.service.getListUsers().enqueue(callback);
+    public void getListEvents(Callback<List<Event>> callback) {
+        this.service.getListEvents().enqueue(callback);
     }
 
-    public void getUser(Callback<User> callback, int id) {
-        this.service.getUser(id).enqueue(callback);
+    public void getEventsBest(Callback<List<Event>> callback) {
+        this.service.getEventsBest().enqueue(callback);
     }
 
-    public void editUser(User user, Callback<User> callback) {
-        this.service.editUser(user).enqueue(callback);
+    public void getEventsSearch(String location, String keyword, String date, Callback<List<Event>> callback) {
+        this.service.getEventsSearch(location, keyword, date).enqueue(callback);
+    }
+
+    public void editEvent(Event event, Callback<Event> callback) {
+        this.service.editEvent(event).enqueue(callback);
+    }
+
+    public void deleteEvent(Integer id, Callback<Event> callback) {
+        this.service.deleteEvent(id).enqueue(callback);
     }
 
 

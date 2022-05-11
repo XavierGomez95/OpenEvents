@@ -46,8 +46,20 @@ public class APIUser {
         this.service.getUser(id).enqueue(callback);
     }
 
+    public void getUserSearch(String search, Callback<List<User>> callback) {
+        this.service.getUserSearch(search).enqueue(callback);
+    }
+
+    public void getUserStats(Integer id, Callback<User> callback) {
+        this.service.getUserStats(id).enqueue(callback);
+    }
+
     public void editUser(User user, Callback<User> callback) {
         this.service.editUser(user).enqueue(callback);
+    }
+
+    public void deleteUser(Callback<User> callback) {
+        this.service.deleteUser().enqueue(callback);
     }
 
 

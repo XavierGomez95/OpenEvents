@@ -32,7 +32,7 @@ public interface OpenEventsAPI {
     Call<User> getUser(@Path("id") Integer id);
 
     @GET("users/search")
-    Call<List<User>> getUser(@Query("s") String userS);
+    Call<List<User>> getUserSearch(@Query("s") String userS);
 
     @GET("users/{id}/statistics")
     Call<User> getUserStats(@Path("id") Integer id);
@@ -75,7 +75,7 @@ public interface OpenEventsAPI {
     Call<List<Event>> getListEvents();
 
     @GET("events/{id}")
-    Call<Event> getEventsId(@Path("id") Integer id);
+    Call<Event> getEventId(@Path("id") Integer id);
 
     @GET("events/best")
     Call<List<Event>> getEventsBest();
