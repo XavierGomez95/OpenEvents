@@ -8,13 +8,15 @@
     tools:context=".view.activities.NavigationActivity">
 
     <LinearLayout
-        android:id="@+id/eventsFragmentId"
+        android:id="@+id/events_fragment_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- RecyclerView Layout -->
-        <include layout="@layout/activity_recyclerview_events" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_events"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

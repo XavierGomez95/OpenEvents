@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenEvents"
         android:usesCleartextTraffic="true">
+        <!--<meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/list_event_element" />-->
+
         <activity
             android:name=".view.activities.NavigationActivity"
             android:exported="false" />
@@ -29,7 +33,7 @@
         </activity>
         <activity
             android:name=".view.activities.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -8,7 +8,7 @@
     tools:context=".view.activities.NavigationActivity">
 
     <LinearLayout
-        android:id="@+id/usersFragmentId"
+        android:id="@+id/users_fragment_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -27,8 +27,10 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <!-- RecyclerView Layout -->
-        <include layout="@layout/activity_recyclerview_users" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_users"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 
