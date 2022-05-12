@@ -12,11 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <Button
+            android:id="@+id/create_event_btn"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="Add event"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_events"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".fragments.EventsFragment"
+            tools:listitem="@layout/list_event_element" />
 
     </LinearLayout>
 

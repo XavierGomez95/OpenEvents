@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -20,7 +21,7 @@ public interface OpenEventsAPI {
 
     //-------------USERS--------------
     @POST("users")
-    Call<User> addUser(@Body User user);
+    Call<User> addUser(@Header("Authorization") String token, @Body User user);
 
     @POST("users/login")
     Call<Token> addLogin(@Body User user);

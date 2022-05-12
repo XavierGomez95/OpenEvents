@@ -44,7 +44,6 @@ public class NavigationActivity extends AppCompatActivity {
                     selectFragment(eventsFragment);
 
 
-
 //                  Log.e("2", "---- OPTION 2 !!!!");
                     break;
 
@@ -61,7 +60,7 @@ public class NavigationActivity extends AppCompatActivity {
         });
     }
 
-    public void selectFragment (Fragment incomingFragment) {
+    public void selectFragment(Fragment incomingFragment) {
         FragmentManager fragment = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragment.beginTransaction();
         fragmentTransaction.replace(R.id.flFragment, incomingFragment);

@@ -5,11 +5,11 @@ import java.util.List;
 
 public class User implements Serializable {
     //int id;
-    String name;
-    String last_name;
-    String email;
-    String password;
-    String image;
+    private String name;
+    private String last_name;
+    private String email;
+    private String password;
+    private String image;
     //List<String> friends;
     //List<String> events;
 
