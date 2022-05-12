@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class User implements Serializable {
-    //int id;
+    //Integer id;
     private String name;
     private String last_name;
     private String email;

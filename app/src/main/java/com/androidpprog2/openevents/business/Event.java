@@ -5,17 +5,16 @@ import java.util.Date;
 
 public class
 Event implements Serializable {
-    private int id;
+    private Integer id;
     private String name;
-
     private String image;
     private String location;
     private String description;
     private String eventStart_date;
     private String eventEnd_date;
-    private int n_participators;
+    private Integer n_participators;
     private String type;
-    private int owner_id;
+    private Integer owner_id;
     private String date;
 
 

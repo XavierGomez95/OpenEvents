@@ -21,7 +21,7 @@ public interface OpenEventsAPI {
 
     //-------------USERS--------------
     @POST("users")
-    Call<User> addUser(@Header("Authorization") String token, @Body User user);
+    Call<User> addUser(@Body User user);
 
     @POST("users/login")
     Call<Token> addLogin(@Body User user);
@@ -70,7 +70,7 @@ public interface OpenEventsAPI {
 
     //-------------EVENTS--------------
     @POST("events")
-    Call<Event> addEvent(@Body Event event);
+    Call<Event> addEvent(@Header("Authorization") String token,@Body Event event);
 
     @GET("events")
     Call<List<Event>> getListEvents();

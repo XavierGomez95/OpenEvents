@@ -31,8 +31,8 @@ public class APIEvents {
 
     }
 
-    public void addEvent(Event event, Callback<Event> callback) {
-        this.service.addEvent(event).enqueue(callback);
+    public void addEvent(String token, Event event, Callback<Event> callback) {
+        this.service.addEvent(token, event).enqueue(callback);
     }
 
     public void getEventId(Integer id, Callback<Event> callback) {

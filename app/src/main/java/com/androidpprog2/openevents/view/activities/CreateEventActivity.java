@@ -12,6 +12,7 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIEvents;
 import com.androidpprog2.openevents.api.APIUser;
 import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 
 import retrofit2.Call;
@@ -48,16 +49,17 @@ public class CreateEventActivity extends AppCompatActivity {
         name = findViewById(R.id.ce_name);
         image = findViewById(R.id.ce_image);
         location = findViewById(R.id.ce_location);
+        description=findViewById(R.id.ce_description);
         eventStart_date = findViewById(R.id.ce_startDate);
         eventEnd_date = findViewById(R.id.ce_endDate);
         n_participators = findViewById(R.id.ce_participators);
         type = findViewById(R.id.ce_event_type);
 
         int num=Integer.parseInt(n_participators.getText().toString());
-        Event e = new Event("Eventest1", "image", "Barcelona", "description", "2022-01-20T12:00:00.000Z", "2022-01-20T15:00:00.000Z", 60, "Education");
+        Event e = new Event(name.getText().toString(), image.getText().toString(), location.getText().toString(), description.getText().toString(), "2022-01-20T12:00:00.000Z", "2022-01-20T15:00:00.000Z", 60, "Education");
 
         APIEvents api = APIEvents.getInstance();
-        api.addEvent(e, new Callback<Event>() {
+        api.addEvent(Token.getToken(this),e, new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
                 Event e = response.body();

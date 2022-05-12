@@ -15,6 +15,7 @@ import retrofit2.Response;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIUser;
+import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 
 
@@ -49,13 +50,14 @@ public class RegisterActivity extends AppCompatActivity {
             api.addUser(u, new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
-                    User u= response.body();
-                    Log.d("RESPONSE","TRUEEEEE"+u.getEmail());
+                    User u = response.body();
+                    Log.d("RESPONSE", "TRUEEEEE" + u.getEmail());
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 }
+
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    Log.d("RESPONSEEEEE",t.toString());
+                    Log.d("RESPONSEEEEE", t.toString());
                 }
             });
         }
