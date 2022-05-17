@@ -64,7 +64,7 @@ public class CreateEventActivity extends AppCompatActivity {
             public void onResponse(Call<Event> call, Response<Event> response) {
                 Event e = response.body();
                 Log.d("IRIS", "TRUEEEEE" + response.body());
-                //startActivity(new Intent(CreateEventActivity.this, LoginActivity.class));
+                finish();
             }
 
             @Override

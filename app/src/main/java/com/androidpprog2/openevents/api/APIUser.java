@@ -38,8 +38,8 @@ public class APIUser {
         this.service.addLogin(user).enqueue(callback);
     }
 
-    public void getListUsers(Callback<List<User>> callback) {
-        this.service.getListUsers().enqueue(callback);
+    public void getListUsers(String token,Callback<List<User>> callback) {
+        this.service.getListUsers(token).enqueue(callback);
     }
 
     public void getUser(Callback<User> callback, int id) {

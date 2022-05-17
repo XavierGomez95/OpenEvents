@@ -27,7 +27,7 @@ public interface OpenEventsAPI {
     Call<Token> addLogin(@Body User user);
 
     @GET("users")
-    Call<List<User>> getListUsers();
+    Call<List<User>> getListUsers(@Header("Authorization") String token);
 
     @GET("users/{id}")
     Call<User> getUser(@Path("id") Integer id);

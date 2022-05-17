@@ -40,4 +40,11 @@ public class User implements Serializable {
         return password;
     }
 
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public String getImage() {
+        return image;
+    }
 }

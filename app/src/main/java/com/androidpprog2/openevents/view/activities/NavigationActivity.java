@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +22,13 @@ public class NavigationActivity extends AppCompatActivity {
     private ProfileFragment profileFragment = new ProfileFragment();
     private EventsFragment eventsFragment = new EventsFragment();
     private UsersFragment usersFragment = new UsersFragment();
+    public static String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        email = intent.getStringExtra("email");
         binding = ActivityTabBarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

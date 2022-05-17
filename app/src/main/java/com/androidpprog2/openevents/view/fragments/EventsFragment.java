@@ -66,7 +66,7 @@ public class EventsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_events, container, false);
         //android.view.View root = inflater.inflate(R.layout.list_event_element, container, false);
 
-        if (eventList.size() == 0) apiCall();
+        apiCall();
 
 //        eventsRecyclerView.setLayoutManager(new LinearLayoutManager
 //                (getContext(), LinearLayoutManager.VERTICAL, false));

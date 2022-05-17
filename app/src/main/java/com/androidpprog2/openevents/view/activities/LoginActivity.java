@@ -64,7 +64,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Initialize the new Activity (Navigation Activity)
                 Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-                intent.putExtra("tokenStr", token.getAccessToken()); // Casting to Parcelable
+                //intent.putExtra("tokenStr", token.getAccessToken()); // Casting to Parcelable
+                intent.putExtra("email", email.getText().toString());
+
                 startActivity(intent);
                 //}
             }
@@ -75,6 +77,8 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.apply();
                 editor.putString("token", token.getAccessToken());
+                editor.putString("email", u.getEmail());
+
                 editor.commit();
             }
 

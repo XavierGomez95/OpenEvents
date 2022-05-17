@@ -14,12 +14,21 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.androidpprog2.openevents.R;
+import com.androidpprog2.openevents.api.APIUser;
+import com.androidpprog2.openevents.business.Token;
+import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.activities.LoginActivity;
+import com.androidpprog2.openevents.view.activities.NavigationActivity;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
     private Button logoutButton;
-    //private Token token;
-
+    private User user;
 
     @Nullable
     @Override
@@ -35,8 +44,30 @@ public class ProfileFragment extends Fragment {
         logoutButton.setOnClickListener(v -> {
             onClickLogout();
         });
-
+        searchUser();
         return root;
+    }
+
+    private void searchUser() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString("email", "Error, information does not exist.");
+
+        APIUser.getInstance().getListUsers(Token.getToken(getContext()), new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                for (User u : response.body()) {
+                    if (u.getEmail().equals(email)) {
+                        Log.d("CORRECTO", u.getLast_name());
+                    }
+
+                }
+            }
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+
+            }
+        });
+
     }
 
     private void onClickLogout() {
