@@ -8,29 +8,35 @@
     tools:context=".view.activities.NavigationActivity">
 
     <LinearLayout
-        android:id="@+id/users_fragment_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
-
             <androidx.appcompat.widget.SearchView
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
-                android:layout_marginEnd="20dp">
-            </androidx.appcompat.widget.SearchView>
+                android:layout_marginEnd="20dp"
+                app:queryHint="search"
+                app:iconifiedByDefault="false"/>
 
-        </androidx.appcompat.widget.Toolbar>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_users"
+        <LinearLayout
+            android:id="@+id/users_fragment_id"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="40dp"
+                android:id="@+id/recycler_view_users"
+                android:layout_width="match_parent"
+                tools:context=".fragments.UsersFragment"
+                tools:listitem="@layout/list_user_element"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
