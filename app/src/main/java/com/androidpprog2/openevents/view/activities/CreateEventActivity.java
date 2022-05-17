@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,8 +28,10 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText image;
     private EditText location;
     private EditText description;
-    private EditText eventStart_date;
-    private EditText eventEnd_date;
+    private DatePicker startDatePicker;
+    private TimePicker startTimePicker;
+    private DatePicker endDatePicker;
+    private TimePicker endTimePicker;
     private EditText n_participators;
     private EditText type;
 
@@ -49,17 +53,27 @@ public class CreateEventActivity extends AppCompatActivity {
         name = findViewById(R.id.ce_name);
         image = findViewById(R.id.ce_image);
         location = findViewById(R.id.ce_location);
-        description=findViewById(R.id.ce_description);
-        eventStart_date = findViewById(R.id.ce_startDate);
-        eventEnd_date = findViewById(R.id.ce_endDate);
+        description = findViewById(R.id.ce_description);
+        startDatePicker = findViewById(R.id.start_date);
+        startDatePicker = findViewById(R.id.start_date);
+        startTimePicker = findViewById(R.id.start_time);
+        endDatePicker = findViewById(R.id.end_date);
+        endTimePicker = findViewById(R.id.end_time);
+
+        String startDate = getStringDate(startDatePicker, startTimePicker);
+        String endDate = getStringDate(endDatePicker, endTimePicker);
+        Log.d("IRIS", "date" + startDate);
+        Log.d("IRIS", "date" + startDate);
+
+
         n_participators = findViewById(R.id.ce_participators);
         type = findViewById(R.id.ce_event_type);
 
-        int num=Integer.parseInt(n_participators.getText().toString());
-        Event e = new Event(name.getText().toString(), image.getText().toString(), location.getText().toString(), description.getText().toString(), "2022-01-20T12:00:00.000Z", "2022-01-20T15:00:00.000Z", 60, "Education");
+        int num = Integer.parseInt(n_participators.getText().toString());
+        Event e = new Event(name.getText().toString(), image.getText().toString(), location.getText().toString(), description.getText().toString(), startDate, endDate, 60, "Education");
 
         APIEvents api = APIEvents.getInstance();
-        api.addEvent(Token.getToken(this),e, new Callback<Event>() {
+        api.addEvent(Token.getToken(this), e, new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
                 Event e = response.body();
@@ -73,6 +87,17 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String getStringDate(DatePicker datePicker, TimePicker timePicker) {
+        Log.d("IRIS", "ENTRA");
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year = datePicker.getYear();
+        int hour = timePicker.getHour();
+        int minute = timePicker.getMinute();
+
+        return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":00.000Z";
     }
 }
 

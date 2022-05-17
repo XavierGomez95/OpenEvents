@@ -1,6 +1,7 @@
 package com.androidpprog2.openevents.view.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -18,12 +19,13 @@ public class EventDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_description);
+        setContentView(R.layout.activity_event_detail);
 
         List<Event> eventList = (List<Event>) getIntent().getSerializableExtra("eventlist");
         int position = (int) getIntent().getSerializableExtra("position");
 
         tittleDescriptionTextView = findViewById(R.id.tittleDescriptionTextView);
+        Log.d("IRIS", "position" + position);
         descriptionTextView = findViewById(R.id.descriptionTextView);
 
         tittleDescriptionTextView.setText(eventList.get(position).getName());

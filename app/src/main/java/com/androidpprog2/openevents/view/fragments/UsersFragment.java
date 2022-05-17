@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIUser;
 import com.androidpprog2.openevents.business.User;
-import com.androidpprog2.openevents.view.CustomAdapter;
+import com.androidpprog2.openevents.view.EventsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class UsersFragment extends Fragment {
     private APIUser apiUser;
     private List<User> userList = new ArrayList<>();
     private RecyclerView usersRecyclerView;
-    private CustomAdapter usersAdapter;
+    private EventsAdapter usersAdapter;
     private static final String TAG = "UsersFragment";
 /*
 

@@ -53,4 +53,8 @@ Event implements Serializable {
     public String getImage() {
         return image;
     }
+
+    public String getDescription() {
+        return description;
+    }
 }

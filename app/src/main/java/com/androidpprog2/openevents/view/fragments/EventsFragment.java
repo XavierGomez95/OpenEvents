@@ -1,8 +1,6 @@
 package com.androidpprog2.openevents.view.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,14 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIEvents;
 import com.androidpprog2.openevents.business.Event;
-import com.androidpprog2.openevents.view.CustomAdapter;
+import com.androidpprog2.openevents.view.EventsAdapter;
 import com.androidpprog2.openevents.view.activities.CreateEventActivity;
-import com.androidpprog2.openevents.view.activities.LoginActivity;
-import com.androidpprog2.openevents.view.activities.RegisterActivity;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +30,7 @@ public class EventsFragment extends Fragment {
     private APIEvents apiEvents;
     private List<Event> eventList = new ArrayList<>();
     private RecyclerView eventsRecyclerView;
-    private CustomAdapter eventsAdapter;
+    private EventsAdapter eventsAdapter;
     private static final String TAG = "EventFragment";
     private View view;
     private Button createEvent_btn;
@@ -83,7 +76,7 @@ public class EventsFragment extends Fragment {
                     if (response.isSuccessful()) {
                         eventList = response.body();
                         eventsRecyclerView = view.findViewById(R.id.recycler_view_events);
-                        eventsAdapter = new CustomAdapter(eventList);
+                        eventsAdapter = new EventsAdapter(eventList, getContext());
                         eventsRecyclerView.setAdapter(eventsAdapter);
                     }
                 } catch (Exception exception) {

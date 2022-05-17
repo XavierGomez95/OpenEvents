@@ -1,10 +1,13 @@
 package com.androidpprog2.openevents.view;
 
-import android.util.Log;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,11 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.view.activities.EventDetailActivity;
+import com.androidpprog2.openevents.view.activities.LoginActivity;
+import com.androidpprog2.openevents.view.activities.NavigationActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
+public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
     /**
      * VIEW HOLDER CLASS
      */
@@ -24,6 +31,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         ImageButton delete_btn;
         ImageButton edit_btn;
         TextView textView;
+        RelativeLayout relativeclic1;
 
         /**
          * Initializes checkbox and buttons finding by id
@@ -35,6 +43,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             textView = view.findViewById(R.id.textView);
             delete_btn = view.findViewById(R.id.btn_delete);
             edit_btn = view.findViewById(R.id.btn_save_edit);
+            relativeclic1 = view.findViewById(R.id.row_fragment);
         }
 
         /**
@@ -46,12 +55,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
          * @param pos position of the recycle view
          */
         public void bind(int pos) {
-            Log.d("IRIS", "LIST:" + list.get(2).getName());
             textView.setText(list.get(pos).getName());
-
             delete_btn.setOnClickListener(v -> deleteItem(pos));
             edit_btn.setOnClickListener(v -> editItem(pos));
+            relativeclic1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, EventDetailActivity.class);
+                    intent.putExtra("position", pos);
+                    intent.putExtra("eventlist", (Serializable) list);
 
+                    context.startActivity(intent);
+                }
+            });
 
         }
 
@@ -75,10 +91,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * ADAPTER TASK CLASS
      */
     private List<Event> list;
+    private Context context;
+    private Activity activity;
 
 
-    public CustomAdapter(List<Event> list) {
+    public EventsAdapter(List<Event> list, Context context) {
         this.list = list;
+        this.context = context;
+        this.activity = (Activity) context;
     }
 
 
