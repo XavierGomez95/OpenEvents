@@ -9,10 +9,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.androidpprog2.openevents.R;
+import com.androidpprog2.openevents.api.APIUser;
+import com.androidpprog2.openevents.business.Token;
+import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.databinding.ActivityTabBarBinding;
 import com.androidpprog2.openevents.view.fragments.EventsFragment;
 import com.androidpprog2.openevents.view.fragments.ProfileFragment;
 import com.androidpprog2.openevents.view.fragments.UsersFragment;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class NavigationActivity extends AppCompatActivity {
@@ -22,7 +31,8 @@ public class NavigationActivity extends AppCompatActivity {
     private ProfileFragment profileFragment = new ProfileFragment();
     private EventsFragment eventsFragment = new EventsFragment();
     private UsersFragment usersFragment = new UsersFragment();
-    public static String email;
+    public static User myUser;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +41,7 @@ public class NavigationActivity extends AppCompatActivity {
         email = intent.getStringExtra("email");
         binding = ActivityTabBarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        searchUser();
         // Predefined fragment
         selectFragment(eventsFragment);
 
@@ -70,4 +80,23 @@ public class NavigationActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.flFragment, incomingFragment);
         fragmentTransaction.commit();
     }
+
+    private void searchUser() {
+        APIUser.getInstance().getListUsers(Token.getToken(this), new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                for (User u : response.body()) {
+                    if (u.getEmail().equals(email)) {
+                        myUser = u;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+
+            }
+        });
+    }
 }
+

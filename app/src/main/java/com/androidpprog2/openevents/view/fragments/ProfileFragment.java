@@ -1,5 +1,7 @@
 package com.androidpprog2.openevents.view.fragments;
 
+import static com.androidpprog2.openevents.view.activities.NavigationActivity.myUser;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,7 +29,7 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
     private TextView logout;
-    private User user;
+    private User user = myUser;
 
     @Nullable
     @Override
@@ -44,31 +46,10 @@ public class ProfileFragment extends Fragment {
         logout.setOnClickListener(v -> {
             onClickLogout();
         });
-        searchUser();
+
         return root;
     }
 
-    private void searchUser() {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
-        String email = sharedPreferences.getString("email", "Error, information does not exist.");
-
-        APIUser.getInstance().getListUsers(Token.getToken(getContext()), new Callback<List<User>>() {
-            @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
-                for (User u : response.body()) {
-                    if (u.getEmail().equals(email)) {
-                        Log.d("CORRECTO", u.getLast_name());
-                    }
-
-                }
-            }
-            @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-
-            }
-        });
-
-    }
 
     private void onClickLogout() {
         // Reset accessToken to null

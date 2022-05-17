@@ -1,5 +1,7 @@
 package com.androidpprog2.openevents.view.fragments;
 
+import static com.androidpprog2.openevents.view.activities.NavigationActivity.myUser;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIEvents;
 import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.EventsAdapter;
 import com.androidpprog2.openevents.view.activities.CreateEventActivity;
 
@@ -33,7 +36,9 @@ public class EventsFragment extends Fragment {
     private EventsAdapter eventsAdapter;
     private static final String TAG = "EventFragment";
     private View view;
+
     private Button createEvent_btn;
+    private User user = myUser;
 
 
     public EventsFragment() {
