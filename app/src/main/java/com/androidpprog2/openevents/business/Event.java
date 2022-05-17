@@ -57,4 +57,28 @@ Event implements Serializable {
     public String getDescription() {
         return description;
     }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getEventStart_date() {
+        return eventStart_date;
+    }
+
+    public String getEventEnd_date() {
+        return eventEnd_date;
+    }
+
+    public Integer getN_participators() {
+        return n_participators;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 }

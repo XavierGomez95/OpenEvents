@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.api;
 
+import com.androidpprog2.openevents.business.Assistance;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
@@ -9,6 +10,7 @@ import java.util.List;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Header;
 
 public class APIEvents {
     private static APIEvents apiEvents;
@@ -47,16 +49,24 @@ public class APIEvents {
         this.service.getEventsBest().enqueue(callback);
     }
 
-    public void getEventsSearch(String location, String keyword, String date, Callback<List<Event>> callback) {
+    public void getEventsSearch(@Header("Authorization") String token, String location, String keyword, String date, Callback<List<Event>> callback) {
         this.service.getEventsSearch(location, keyword, date).enqueue(callback);
     }
 
-    public void editEvent(Event event, Callback<Event> callback) {
-        this.service.editEvent(event).enqueue(callback);
+    public void editEvent(String token, Event event, Callback<Event> callback) {
+        this.service.editEvent(token, event).enqueue(callback);
     }
 
-    public void deleteEvent(Integer id, Callback<Event> callback) {
-        this.service.deleteEvent(id).enqueue(callback);
+    public void deleteEvent(String token, Integer id, Callback<Event> callback) {
+        this.service.deleteEvent(token, id).enqueue(callback);
+    }
+
+    public void addEventAssistance(String token, int id, Callback<Assistance> callback) {
+        this.service.addAssistance(token, id).enqueue(callback);
+    }
+
+    public void deleteEventAssistance(String token, int id, Callback<Assistance> callback) {
+        this.service.deleteAssistance(token, id).enqueue(callback);
     }
 
 
