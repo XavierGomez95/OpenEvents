@@ -1,7 +1,6 @@
 package com.androidpprog2.openevents.business;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class User implements Serializable {
     //Integer id;
@@ -30,6 +29,10 @@ public class User implements Serializable {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getEmail() {
