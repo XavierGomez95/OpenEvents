@@ -33,7 +33,7 @@ public interface OpenEventsAPI {
     Call<User> getUser(@Path("id") Integer id);
 
     @GET("users/search")
-    Call<List<User>> getUserSearch(@Query("s") String userS);
+    Call<List<User>> getUserSearch(@Header("Authorization") String token, @Query("s") String userS);
 
     @GET("users/{id}/statistics")
     Call<User> getUserStats(@Path("id") Integer id);
@@ -70,7 +70,7 @@ public interface OpenEventsAPI {
 
     //-------------EVENTS--------------
     @POST("events")
-    Call<Event> addEvent(@Header("Authorization") String token,@Body Event event);
+    Call<Event> addEvent(@Header("Authorization") String token, @Body Event event);
 
     @GET("events")
     Call<List<Event>> getListEvents();
