@@ -61,16 +61,10 @@ public class EventsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
-        //android.view.View root = inflater.inflate(R.layout.fragment_events, container, false);
         view = inflater.inflate(R.layout.fragment_events, container, false);
-        //android.view.View root = inflater.inflate(R.layout.list_event_element, container, false);
-
         apiCall();
 
-//        eventsRecyclerView.setLayoutManager(new LinearLayoutManager
-//                (getContext(), LinearLayoutManager.VERTICAL, false));
-//        eventsRecyclerView.setAdapter(eventsAdapter);
+
         createEvent_btn = view.findViewById(R.id.create_event_btn);
 
         createEvent_btn.setOnClickListener(view -> {
