@@ -17,9 +17,7 @@
             android:text="Tittle"
             android:textColor="@color/black"
             android:textSize="40sp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="16dp" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/descriptionTextView"
@@ -27,12 +25,43 @@
             android:layout_height="wrap_content"
             android:text="Description"
             android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="normal"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="93dp" />
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/dateStartTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DateStart"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/dateEndTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date End"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/locationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/btn_attend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ATTEND"/>
+
+
     </LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

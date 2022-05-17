@@ -38,7 +38,7 @@ public class APIUser {
         this.service.addLogin(user).enqueue(callback);
     }
 
-    public void getListUsers(String token,Callback<List<User>> callback) {
+    public void getListUsers(String token, Callback<List<User>> callback) {
         this.service.getListUsers(token).enqueue(callback);
     }
 
@@ -46,20 +46,20 @@ public class APIUser {
         this.service.getUser(id).enqueue(callback);
     }
 
-    public void getUserSearch(String token,String search, Callback<List<User>> callback) {
-        this.service.getUserSearch(token,search).enqueue(callback);
+    public void getUserSearch(String token, String search, Callback<List<User>> callback) {
+        this.service.getUserSearch(token, search).enqueue(callback);
     }
 
     public void getUserStats(Integer id, Callback<User> callback) {
         this.service.getUserStats(id).enqueue(callback);
     }
 
-    public void editUser(User user, Callback<User> callback) {
-        this.service.editUser(user).enqueue(callback);
+    public void editUser(String token, User user, Callback<User> callback) {
+        this.service.editUser(token, user).enqueue(callback);
     }
 
-    public void deleteUser(Callback<User> callback) {
-        this.service.deleteUser().enqueue(callback);
+    public void deleteUser(String token, Callback<User> callback) {
+        this.service.deleteUser(token).enqueue(callback);
     }
 
 
