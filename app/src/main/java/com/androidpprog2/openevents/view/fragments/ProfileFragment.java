@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +18,6 @@ import com.androidpprog2.openevents.api.APIUser;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.activities.LoginActivity;
-import com.androidpprog2.openevents.view.activities.NavigationActivity;
 
 import java.util.List;
 
@@ -27,21 +26,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
-    private Button logoutButton;
+    private TextView logout;
     private User user;
 
     @Nullable
     @Override
-    public android.view.View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public android.view.View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                                          @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         android.view.View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        logoutButton = root.findViewById(R.id.logout_id);
+        logout = root.findViewById(R.id.logout_id);
 
 //        token = new Token(savedInstanceState.getString("tokenStr")); // Como pasar el objeto token
         //Log.e("TAG", "Profile token: " + token.getAccessToken()); // TEMPORAL
 
-        logoutButton.setOnClickListener(v -> {
+        logout.setOnClickListener(v -> {
             onClickLogout();
         });
         searchUser();
