@@ -17,6 +17,9 @@
             android:resource="@xml/list_event_element" />-->
 
         <activity
+            android:name=".view.activities.MyEventsActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activities.NavigationActivity"
             android:exported="false" />
         <activity

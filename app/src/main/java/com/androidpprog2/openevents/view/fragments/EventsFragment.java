@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,12 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIEvents;
 import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.EventsAdapter;
+import com.androidpprog2.openevents.view.MyEventsAdapter;
 import com.androidpprog2.openevents.view.activities.CreateEventActivity;
+import com.androidpprog2.openevents.view.activities.MyEventsActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,17 +35,18 @@ import retrofit2.Response;
 public class EventsFragment extends Fragment {
     private APIEvents apiEvents;
     private List<Event> eventList, myEventList;
-    private RecyclerView eventsRecyclerView;
+    private RecyclerView myEventsRecyclerView;
     private EventsAdapter eventsAdapter;
+    private MyEventsAdapter myEventsAdapter;
     private static final String TAG = "EventFragment";
     private View view;
 
-    private ExtendedFloatingActionButton createEvent_fab;
+    private ExtendedFloatingActionButton createEvent_fab, myEvents_fab;
     private User user = null;
 
 
     public EventsFragment() {
-        apiCall();
+        apiEventsCall();
     }
 
   /*  @Override
@@ -58,36 +61,45 @@ public class EventsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_events, container, false);
 
-        apiCall();
         user = searchUser(getContext());
+        apiEventsCall();
+
 
         createEvent_fab = view.findViewById(R.id.create_event_floating_button);
-
         createEvent_fab.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), CreateEventActivity.class));
         });
 
-        /*apiIdCall();
-        myEvents_btn = view.findViewById(R.id.my_events);
-        myEvents_btn.setOnClickListener(view -> {
 
-        });*/
+        myEvents_fab = view.findViewById(R.id.my_events);
+        myEvents_fab.setOnClickListener(view -> {
+            user = searchUser(getContext());
+            apiMyEventsCall();
+            Intent intent = new Intent(getActivity(), MyEventsActivity.class);
+
+            Bundle args = new Bundle();
+            args.putSerializable("MyEventList", (Serializable) eventList); // myEventList CAMBIAR LA LISTA
+            intent.putExtra("BUNDLE", args);
+
+            startActivity(intent);
+        });
 
 
         return view;
     }
 
-    /*private void apiIdCall() {
+    private void apiMyEventsCall() {
         apiEvents = APIEvents.getInstance();
         apiEvents.getMyEvents(Token.getToken(getContext()), user.getId(), new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 try {
                     if (response.isSuccessful()) {
-                        myEventList = response.body();
-                        eventsRecyclerView = view.findViewById(R.id.recycler_view_events);
-                        eventsAdapter = new EventsAdapter(myEventList, getContext());
-                        eventsRecyclerView.setAdapter(eventsAdapter);
+                        myEventList.addAll(eventList);
+//                        myEventList = response.body();
+//                        myEventsRecyclerView = view.findViewById(R.id.recycler_view_events);
+//                        myEventsAdapter = new MyEventsAdapter(myEventList, getContext());
+//                        myEventsRecyclerView.setAdapter(myEventsAdapter);
                     }
                 } catch (Exception exception) {
                     Log.e("TAG", exception.getMessage());
@@ -99,9 +111,9 @@ public class EventsFragment extends Fragment {
 
             }
         });
-    }*/
+    }
 
-    private void apiCall() {
+    private void apiEventsCall() {
         final boolean success = false;
         apiEvents = APIEvents.getInstance();
         apiEvents.getListEvents(new Callback<List<Event>>() {
@@ -110,9 +122,9 @@ public class EventsFragment extends Fragment {
                 try {
                     if (response.isSuccessful()) {
                         eventList = response.body();
-                        eventsRecyclerView = view.findViewById(R.id.recycler_view_events);
+                        myEventsRecyclerView = view.findViewById(R.id.recycler_view_events);
                         eventsAdapter = new EventsAdapter(eventList, getContext());
-                        eventsRecyclerView.setAdapter(eventsAdapter);
+                        myEventsRecyclerView.setAdapter(eventsAdapter);
                     }
                 } catch (Exception exception) {
                     Log.e("TAG", exception.getMessage());
