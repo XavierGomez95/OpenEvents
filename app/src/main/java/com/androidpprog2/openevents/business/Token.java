@@ -17,7 +17,6 @@ public class Token implements Serializable {
     public static String getToken(Context c) {
         SharedPreferences sharedPreferences = c.getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "Error, information does not exist.");
-        Log.d("TOKEN", token);
         return "Bearer " + token;
     }
 

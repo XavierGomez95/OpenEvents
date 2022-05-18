@@ -31,13 +31,13 @@ public interface OpenEventsAPI {
     Call<List<User>> getListUsers(@Header("Authorization") String token);
 
     @GET("users/{id}")
-    Call<User> getUser(@Path("id") Integer id);
+    Call<User> getUser(@Header("Authorization") String token, @Path("id") Integer id);
 
     @GET("users/search")
     Call<List<User>> getUserSearch(@Header("Authorization") String token, @Query("s") String userS);
 
     @GET("users/{id}/statistics")
-    Call<User> getUserStats(@Path("id") Integer id);
+    Call<Object> getUserStats(@Header("Authorization") String token, @Path("id") Integer id);
 
     @PUT("users")
     Call<User> editUser(@Header("Authorization") String token, @Body User user);

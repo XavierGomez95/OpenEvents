@@ -3,8 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_login.xml" value="0.12360688956433637" />
-        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_register.xml" value="0.264" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/drawable/ic_profile.xml" value="0.1445" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_create_event.xml" value="0.25416666666666665" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_event_detail.xml" value="0.25416666666666665" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_tab_bar.xml" value="0.25416666666666665" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/fragment_events.xml" value="0.18613138686131386" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/fragment_users.xml" value="0.25416666666666665" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/list_event_element.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/list_user_element.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/mipmap-anydpi-v26/ic_add_user.xml" value="0.1" />
       </map>
     </option>
   </component>

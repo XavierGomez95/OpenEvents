@@ -1,107 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.activities.RegisterActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        tools:context=".view.activities.RegisterActivity">
 
-
-        <TextView
-            android:id="@+id/tv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/register"
-            android:textAlignment="center"
-            android:textSize="50sp"
-            android:layout_marginStart="25dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="60dp"
-            android:textColor="@color/dark_blue"/>
-
-
-
-        <EditText
-            android:id="@+id/r_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/first_name"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:padding="15dp"
-            android:textSize="15sp" />
-        <EditText
-            android:id="@+id/r_last_name"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/last_name"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:padding="15dp"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/r_email"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/e_mail"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:padding="15dp"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/r_password"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/password"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:padding="15dp"
-            android:inputType="textPassword"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/r_password_again"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/password_again"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:padding="15dp"
-            android:inputType="textPassword"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/r_image"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/image"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:padding="15dp"
-            android:textSize="15sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
-        <Button
-            android:id="@+id/btn_register"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/register"
-            android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/tv_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/register"
+                android:textAlignment="center"
+                android:textColor="@color/dark_blue"
+                android:textSize="50sp" />
 
-    </LinearLayout>
+
+            <EditText
+                android:id="@+id/r_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints="name"
+                android:hint="@string/first_name"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/r_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints="name"
+                android:hint="@string/last_name"
+                android:inputType="textPersonName"
+                android:padding="15dp"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/r_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints="emailAddress"
+                android:hint="@string/e_mail"
+                android:inputType="textEmailAddress"
+                android:padding="15dp"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/r_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:autofillHints="password"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="15dp"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/r_password_again"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints="password"
+                android:hint="@string/password_again"
+                android:inputType="textPassword"
+                android:padding="15dp"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/r_image"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:autofillHints=""
+                android:hint="@string/image"
+                android:inputType="text"
+                android:padding="15dp"
+                android:textSize="15sp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/register"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

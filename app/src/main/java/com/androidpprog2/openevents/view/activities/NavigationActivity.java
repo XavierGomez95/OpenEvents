@@ -1,7 +1,9 @@
 package com.androidpprog2.openevents.view.activities;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -31,20 +33,18 @@ public class NavigationActivity extends AppCompatActivity {
     private ProfileFragment profileFragment = new ProfileFragment();
     private EventsFragment eventsFragment = new EventsFragment();
     private UsersFragment usersFragment = new UsersFragment();
-    public static User myUser;
-    private String email;
+    public static User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        email = intent.getStringExtra("email");
+
         binding = ActivityTabBarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        searchUser();
+
         // Predefined fragment
         selectFragment(eventsFragment);
-
+        searchUser(this);
         binding.bottomNavigationView.setSelectedItemId(R.id.events); // Predefined button
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -81,22 +81,31 @@ public class NavigationActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    private void searchUser() {
-        APIUser.getInstance().getListUsers(Token.getToken(this), new Callback<List<User>>() {
+    public static User searchUser(Context c) {
+        SharedPreferences sharedPreferences = c.getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        final String[] email = {sharedPreferences.getString("email", "Error, information does not exist.")};
+        APIUser.getInstance().getListUsers(Token.getToken(c), new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 for (User u : response.body()) {
-                    if (u.getEmail().equals(email)) {
-                        myUser = u;
+                    if (u.getEmail().equals(email[0])) {
+                        user = u;
+                        Log.d("IRIS", "USER" + user.getEmail());
+                        break;
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.d("IRIS", "FAIL");
 
             }
+
         });
+
+        return user;
     }
+
 }
 

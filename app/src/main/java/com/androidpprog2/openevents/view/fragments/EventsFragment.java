@@ -1,6 +1,6 @@
 package com.androidpprog2.openevents.view.fragments;
 
-import static com.androidpprog2.openevents.view.activities.NavigationActivity.myUser;
+import static com.androidpprog2.openevents.view.activities.NavigationActivity.searchUser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.androidpprog2.openevents.view.EventsAdapter;
 import com.androidpprog2.openevents.view.activities.CreateEventActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,23 +39,19 @@ public class EventsFragment extends Fragment {
     private View view;
 
     private ExtendedFloatingActionButton createEvent_fab;
-    private User user = myUser;
+    private User user = null;
 
 
     public EventsFragment() {
         apiCall();
     }
 
-    @Override
+  /*  @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //eventsAdapter.setItems(eventList);
-
-        //recyclerViewCall();
     }
+*/
 
-    //private void recyclerViewCall() { }
 
     @Nullable
     @Override
@@ -61,6 +59,7 @@ public class EventsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_events, container, false);
 
         apiCall();
+        user = searchUser(getContext());
 
         createEvent_fab = view.findViewById(R.id.create_event_floating_button);
 

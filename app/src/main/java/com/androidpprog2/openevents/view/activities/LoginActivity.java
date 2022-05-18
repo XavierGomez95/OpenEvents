@@ -14,6 +14,7 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIUser;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         //if (email != null && pass != null) {
         email = findViewById(R.id.email);
         pass = findViewById(R.id.password);
+        Context context = this;
 
         User u = new User(email.getText().toString(), pass.getText().toString());
         APIUser api = APIUser.getInstance();
@@ -56,19 +58,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 Token token = response.body();
-                Log.d("TOKENN", token.getAccessToken());
+                if (token.getAccessToken() != null) {
+                    // Saving the token
+                    safeToken(token);
+                    DynamicToast.makeSuccess(context, "Successful Login").show();
 
-                //if (token.getAccessToken() != null) {
-                // Saving the token
-                safeToken(token);
-
-                // Initialize the new Activity (Navigation Activity)
-                Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
-                //intent.putExtra("tokenStr", token.getAccessToken()); // Casting to Parcelable
-                intent.putExtra("email", email.getText().toString());
-
-                startActivity(intent);
-                //}
+                    Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
+                    startActivity(intent);
+                } else {
+                    DynamicToast.makeError(context, "Wrong email or password").show();
+                }
             }
 
             private void safeToken(Token token) {
@@ -84,9 +83,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                Log.d("TOKENN", "LOGIN FAIL");
-                Log.d("TOKENN", t.toString());
+                DynamicToast.makeError(context, "Error while connecting to the API").show();
             }
+
+
         });
     }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Header;
 
 public class APIEvents {
     private static APIEvents apiEvents;
@@ -47,7 +46,7 @@ public class APIEvents {
         this.service.getEventsBest().enqueue(callback);
     }
 
-    public void getEventsSearch(@Header("Authorization") String token, String location, String keyword, String date, Callback<List<Event>> callback) {
+    public void getEventsSearch(String token, String location, String keyword, String date, Callback<List<Event>> callback) {
         this.service.getEventsSearch(location, keyword, date).enqueue(callback);
     }
 

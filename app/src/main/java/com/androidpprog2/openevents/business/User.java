@@ -3,7 +3,7 @@ package com.androidpprog2.openevents.business;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    //Integer id;
+    private Integer id;
     private String name;
     private String last_name;
     private String email;

@@ -13,7 +13,7 @@
     <string name="password_again">Repeat password</string>
     <string name="login">Login</string>
     <string name="create_account">Create a new account</string>
-    <string name="image">image</string>
+    <string name="image">Image ulr</string>
 
     <string name="logout">LogOut</string>
 
