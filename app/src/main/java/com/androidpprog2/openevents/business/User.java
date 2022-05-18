@@ -50,4 +50,22 @@ public class User implements Serializable {
     public String getImage() {
         return image;
     }
+
+    public Integer getId () {return id; }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
 }

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,6 +25,7 @@
 
                 <!-- Circular Image View  -->
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_centerInParent="true"
@@ -39,16 +41,42 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/profile_name"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="10dp"
-                    android:text="Nombre Apellido"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:orientation="horizontal"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:id="@+id/profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Nombre"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/profile_last_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/profile_name"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="Apellido"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 
@@ -66,7 +94,9 @@
                     android:text="Email"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    android:clickable="true"
+                    android:focusable="true" />
 
             </LinearLayout>
 
@@ -82,6 +112,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="30dp"
                     android:clickable="true"
+                    android:focusable="true"
                     android:text="@string/logout"
                     android:textColor="@color/dark_blue"
                     android:textSize="20sp"

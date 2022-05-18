@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -14,7 +13,6 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIUser;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
-import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,12 +59,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (token.getAccessToken() != null) {
                     // Saving the token
                     safeToken(token);
-                    DynamicToast.makeSuccess(context, "Successful Login").show();
+                    //DynamicToast.makeSuccess(context, "Successful Login").show();
 
                     Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
                     startActivity(intent);
                 } else {
-                    DynamicToast.makeError(context, "Wrong email or password").show();
+                    //DynamicToast.makeError(context, "Wrong email or password").show();
                 }
             }
 
@@ -83,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                DynamicToast.makeError(context, "Error while connecting to the API").show();
+                //DynamicToast.makeError(context, "Error while connecting to the API").show();
             }
 
 
