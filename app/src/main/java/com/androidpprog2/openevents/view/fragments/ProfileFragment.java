@@ -16,19 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.api.APIUser;
-import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.activities.LoginActivity;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class ProfileFragment extends Fragment {
-    private TextView logout;
+    private TextView logout, email, name;
     private User user = myUser;
 
     @Nullable
@@ -38,14 +30,17 @@ public class ProfileFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         android.view.View root = inflater.inflate(R.layout.fragment_profile, container, false);
-        logout = root.findViewById(R.id.logout_id);
-
-//        token = new Token(savedInstanceState.getString("tokenStr")); // Como pasar el objeto token
-        //Log.e("TAG", "Profile token: " + token.getAccessToken()); // TEMPORAL
+        logout = root.findViewById(R.id.profile_logout_id);
 
         logout.setOnClickListener(v -> {
             onClickLogout();
         });
+
+        email = root.findViewById(R.id.profile_email);
+        email.setText("myUser.getEmail()");
+
+        name = root.findViewById(R.id.profile_name);
+        name.setText("myUser.getName()" + " " + "myUser.getLast_name");
 
         return root;
     }
@@ -61,10 +56,6 @@ public class ProfileFragment extends Fragment {
         sharedPreferences.edit().remove("token").clear().apply();
         sharedPreferences.edit().putString("token", null).apply();
         Log.e("LogOut", sharedPreferences.getString("token", "Non existing token"));
-
-        // Set new activity and pass the new null accessToken to the intent
-        /*Intent intent = new Intent(getContext(), LoginActivity.class);
-        intent.putExtra("tokenStr", token.getAccessToken());*/
 
         // Start LoginActivity and finish this one
         startActivity(new Intent(getContext(), LoginActivity.class));

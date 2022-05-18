@@ -58,7 +58,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
          */
         ViewHolder(View view) {
             super(view);
-            nameTextView = view.findViewById(R.id.nameTextView);
+            nameTextView = view.findViewById(R.id.user_item_tittle_textView);
             //lastNameTextView = view.findViewById(R.id.);
         }
 

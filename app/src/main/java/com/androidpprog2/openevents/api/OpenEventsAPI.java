@@ -46,7 +46,7 @@ public interface OpenEventsAPI {
     Call<User> deleteUser(@Header("Authorization") String token);
 
     @GET("users/{id}/events")
-    Call<List<Event>> getUserEvents(@Path("id") Integer id);
+    Call<List<Event>> getUserEvents(@Header("Authorization") String token, @Path("id") Integer id);
 
     @GET("users/{id}/events/future")
     Call<List<Event>> getUserFutureEvents(@Header("Authorization") String token, @Path("id") Integer id);

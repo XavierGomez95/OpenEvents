@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +20,8 @@ import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.EventsAdapter;
 import com.androidpprog2.openevents.view.activities.CreateEventActivity;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,13 +30,13 @@ import retrofit2.Response;
 
 public class EventsFragment extends Fragment {
     private APIEvents apiEvents;
-    private List<Event> eventList = new ArrayList<>();
+    private List<Event> eventList, myEventList;
     private RecyclerView eventsRecyclerView;
     private EventsAdapter eventsAdapter;
     private static final String TAG = "EventFragment";
     private View view;
 
-    private Button createEvent_btn;
+    private ExtendedFloatingActionButton createEvent_fab;
     private User user = myUser;
 
 
@@ -60,16 +59,48 @@ public class EventsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_events, container, false);
+
         apiCall();
 
+        createEvent_fab = view.findViewById(R.id.create_event_floating_button);
 
-        createEvent_btn = view.findViewById(R.id.create_event_btn);
-
-        createEvent_btn.setOnClickListener(view -> {
+        createEvent_fab.setOnClickListener(view -> {
             startActivity(new Intent(getActivity(), CreateEventActivity.class));
         });
+
+        /*apiIdCall();
+        myEvents_btn = view.findViewById(R.id.my_events);
+        myEvents_btn.setOnClickListener(view -> {
+
+        });*/
+
+
         return view;
     }
+
+    /*private void apiIdCall() {
+        apiEvents = APIEvents.getInstance();
+        apiEvents.getMyEvents(Token.getToken(getContext()), user.getId(), new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        myEventList = response.body();
+                        eventsRecyclerView = view.findViewById(R.id.recycler_view_events);
+                        eventsAdapter = new EventsAdapter(myEventList, getContext());
+                        eventsRecyclerView.setAdapter(eventsAdapter);
+                    }
+                } catch (Exception exception) {
+                    Log.e("TAG", exception.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
+    }*/
 
     private void apiCall() {
         final boolean success = false;
@@ -98,9 +129,9 @@ public class EventsFragment extends Fragment {
         });
 
 
-        // TEMPORAL
+        /*// TODO: DELETE TEMPORAL
         for (Event e : eventList)
-            Log.d("EventsFragment List", e.getName());
+            Log.d("EventsFragment List", e.getName());*/
 
 
     }

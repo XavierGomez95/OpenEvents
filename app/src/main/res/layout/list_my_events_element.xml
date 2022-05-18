@@ -4,7 +4,7 @@
     android:id="@+id/card_view_event"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="40dp"
+    app:cardCornerRadius="30dp"
     app:cardElevation="8dp"
     app:cardUseCompatPadding="true"
     android:clickable="true"
@@ -28,7 +28,7 @@
 
         <LinearLayout
             android:id="@+id/textView_width"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
@@ -40,13 +40,36 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold">
 
             </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:layout_toEndOf="@+id/textView_width"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/myEvents_element_edit_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_baseline_edit_24" />
+
+            <ImageButton
+                android:id="@+id/myEvents_element_delete_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_baseline_delete_forever_24" />
         </LinearLayout>
 
     </RelativeLayout>

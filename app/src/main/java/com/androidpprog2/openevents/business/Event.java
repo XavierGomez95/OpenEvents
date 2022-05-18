@@ -1,7 +1,6 @@
 package com.androidpprog2.openevents.business;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class
 Event implements Serializable {
@@ -58,6 +57,10 @@ Event implements Serializable {
         return description;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -74,11 +77,15 @@ Event implements Serializable {
         return n_participators;
     }
 
-    public String getDate() {
-        return date;
+    public String getType() {
+        return type;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getOwner_id() {
+        return owner_id;
+    }
+
+    public String getDate() {
+        return date;
     }
 }

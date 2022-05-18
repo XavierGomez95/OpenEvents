@@ -45,13 +45,6 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-
-
-
-        /*searchUserView = (SearchView) view.findViewById(R.id.search_bar);
-        searchUserView.clearFocus();
-
-        searchUsers();*/
     }
 
 
@@ -127,7 +120,6 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
                         userList.clear();
                         userList.addAll(response.body());
                         usersAdapter.notifyDataSetChanged();
-
                     }
                 } catch (Exception exception) {
                     Log.e("TAG", exception.getMessage());
