@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,8 +21,6 @@ import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.EventsAdapter;
-import com.androidpprog2.openevents.view.MyEventsAdapter;
-import com.androidpprog2.openevents.view.activities.CreateEventActivity;
 import com.androidpprog2.openevents.view.activities.MyEventsActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -35,13 +34,13 @@ import retrofit2.Response;
 public class EventsFragment extends Fragment {
     private APIEvents apiEvents;
     private List<Event> eventList, myEventList;
-    private RecyclerView myEventsRecyclerView;
+    private RecyclerView eventsRecyclerView;
     private EventsAdapter eventsAdapter;
-    private MyEventsAdapter myEventsAdapter;
     private static final String TAG = "EventFragment";
     private View view;
+    private ImageView imageView;
 
-    private ExtendedFloatingActionButton createEvent_fab, myEvents_fab;
+    private ExtendedFloatingActionButton myEvents_fab;
     private User user = null;
 
 
@@ -58,28 +57,31 @@ public class EventsFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_events, container, false);
 
         user = searchUser(getContext());
         apiEventsCall();
 
 
-        createEvent_fab = view.findViewById(R.id.create_event_floating_button);
-        createEvent_fab.setOnClickListener(view -> {
-            startActivity(new Intent(getActivity(), CreateEventActivity.class));
-        });
+        imageView = view.findViewById(R.id.icon_image_event_id);
 
 
         myEvents_fab = view.findViewById(R.id.my_events);
         myEvents_fab.setOnClickListener(view -> {
             user = searchUser(getContext());
             apiMyEventsCall();
-            Intent intent = new Intent(getActivity(), MyEventsActivity.class);
 
+            Intent intent = new Intent(getActivity(), MyEventsActivity.class);
             Bundle args = new Bundle();
             args.putSerializable("MyEventList", (Serializable) eventList); // myEventList CAMBIAR LA LISTA
             intent.putExtra("BUNDLE", args);
+
+
+            // TODO TEMPORAL
+            for (Event e : eventList)
+                Log.d("Event List: ", e.getName());
 
             startActivity(intent);
         });
@@ -122,9 +124,9 @@ public class EventsFragment extends Fragment {
                 try {
                     if (response.isSuccessful()) {
                         eventList = response.body();
-                        myEventsRecyclerView = view.findViewById(R.id.recycler_view_events);
+                        eventsRecyclerView = view.findViewById(R.id.recycler_view_events);
                         eventsAdapter = new EventsAdapter(eventList, getContext());
-                        myEventsRecyclerView.setAdapter(eventsAdapter);
+                        eventsRecyclerView.setAdapter(eventsAdapter);
                     }
                 } catch (Exception exception) {
                     Log.e("TAG", exception.getMessage());

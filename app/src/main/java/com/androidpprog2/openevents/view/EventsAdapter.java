@@ -3,10 +3,12 @@ package com.androidpprog2.openevents.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.view.activities.EventDetailActivity;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.List;
@@ -25,10 +28,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
      * VIEW HOLDER CLASS
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        //        ImageButton delete_btn;
+//        ImageButton delete_btn;
 //        ImageButton edit_btn;
         TextView textView;
-        RelativeLayout relativeclic1;
+        FrameLayout flameLayoutclic1;
 
         /**
          * Initializes checkbox and buttons finding by id
@@ -38,9 +41,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         ViewHolder(View view) {
             super(view);
             textView = view.findViewById(R.id.textView);
+            imageView = view.findViewById(R.id.icon_image_event_id);
+            flameLayoutclic1 = view.findViewById(R.id.row_fragment);
 //            delete_btn = view.findViewById(R.id.myEvent_element_delete_btn);
 //            edit_btn = view.findViewById(R.id.myEvent_element_edit_btn);
-            relativeclic1 = view.findViewById(R.id.row_fragment);
         }
 
         /**
@@ -53,14 +57,18 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
          */
         public void bind(int pos) {
             textView.setText(list.get(pos).getName());
+            loadImg(pos);
 //            delete_btn.setOnClickListener(v -> deleteItem(pos));
 //            edit_btn.setOnClickListener(v -> editItem(pos));
-            relativeclic1.setOnClickListener(v -> {
-                Intent intent = new Intent(activity, EventDetailActivity.class);
-                intent.putExtra("position", pos);
-                intent.putExtra("eventlist", (Serializable) list);
+            flameLayoutclic1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, EventDetailActivity.class);
+                    intent.putExtra("position", pos);
+                    intent.putExtra("eventlist", (Serializable) list);
 
-                context.startActivity(intent);
+                    context.startActivity(intent);
+                }
             });
 
         }
@@ -80,6 +88,23 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
     }
 
+    private void loadImg(int pos) {
+        String imageURL;
+
+        if (list.get(pos).getImage() != null) {
+            if ((list.get(pos).getImage().startsWith("http") || list.get(pos).getImage().startsWith("https"))
+                    && (list.get(pos).getImage().endsWith(".jpg") || list.get(pos).getImage().endsWith(".png")
+                    || list.get(pos).getImage().endsWith(".JPG") || list.get(pos).getImage().endsWith(".PNG")))
+                imageURL = list.get(pos).getImage();
+            else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+        } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+
+        Log.d("EVENT NAME : ", list.get(pos).getName());
+        Log.d("URL : ", list.get(pos).getImage());
+
+        Picasso.with(context).load(imageURL).into(imageView);
+    }
+
 
     /**
      * ADAPTER TASK CLASS
@@ -87,6 +112,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     private List<Event> list;
     private Context context;
     private Activity activity;
+    private ImageView imageView;
 
 
     public EventsAdapter(List<Event> list, Context context) {

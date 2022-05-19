@@ -13,51 +13,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/my_events"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="right|bottom"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="My events"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/my_events"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:textColor="@color/white"
-                    android:text="My events"
-                    android:textSize="20sp" />
-
-
-                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                    android:id="@+id/create_event_floating_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginRight="20dp"
-                    android:gravity="center_vertical"
-                    android:text="Add event"
-                    android:textColor="@color/white"
-                    android:textSize="20dp"
-                    app:icon="@android:drawable/ic_input_add"
-                    app:iconTint="@color/white" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="120dp"
+            android:layout_marginBottom="80dp"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
