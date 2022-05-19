@@ -28,8 +28,8 @@ public class MyEventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_events);
 
         Intent intent = getIntent();
-        savedInstanceState = intent.getBundleExtra("BUNDLE");
-        myEventList = (List<Event>) savedInstanceState.getSerializable("MyEventList");
+        Bundle bundle = intent.getBundleExtra("BUNDLE");
+        myEventList = (List<Event>) bundle.getSerializable("MyEventList");
 
         myEventsRecyclerView = findViewById(R.id.recycler_view_events);
         myEventsAdapter = new MyEventsAdapter(myEventList, this);

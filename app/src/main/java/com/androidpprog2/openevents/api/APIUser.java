@@ -1,5 +1,7 @@
 package com.androidpprog2.openevents.api;
 
+import com.androidpprog2.openevents.business.FriendRequest;
+import com.androidpprog2.openevents.business.Stats;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 
@@ -42,7 +44,7 @@ public class APIUser {
         this.service.getListUsers(token).enqueue(callback);
     }
 
-    public void getUser(String token, Callback<User> callback, int id) {
+    public void getUser(String token, int id, Callback<User> callback) {
         this.service.getUser(token, id).enqueue(callback);
     }
 
@@ -50,7 +52,7 @@ public class APIUser {
         this.service.getUserSearch(token, search).enqueue(callback);
     }
 
-    public void getUserStats(String token, Integer id, Callback<Object> callback) {
+    public void getUserStats(String token, Integer id, Callback<Stats> callback) {
         this.service.getUserStats(token, id).enqueue(callback);
     }
 
@@ -62,5 +64,11 @@ public class APIUser {
         this.service.deleteUser(token).enqueue(callback);
     }
 
+    public void addFriendRequest(String token, int id, Callback<FriendRequest> callback) {
+        this.service.addFriendRequest(token, id).enqueue(callback);
+    }
+    public void getFiends(String token, int id, Callback<List<User>> callback) {
+        this.service.getFriends(token, id).enqueue(callback);
+    }
 
 }

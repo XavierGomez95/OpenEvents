@@ -32,6 +32,9 @@
             android:name=".view.activities.EventDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".view.activities.UserDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.SplashActivity"
             android:exported="true">
             <intent-filter>

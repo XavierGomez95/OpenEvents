@@ -1,8 +1,10 @@
 package com.androidpprog2.openevents.api;
 
 
-import com.androidpprog2.openevents.business.Assistance;
+import com.androidpprog2.openevents.business.AssistanceRequest;
 import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.business.FriendRequest;
+import com.androidpprog2.openevents.business.Stats;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 
@@ -37,7 +39,7 @@ public interface OpenEventsAPI {
     Call<List<User>> getUserSearch(@Header("Authorization") String token, @Query("s") String userS);
 
     @GET("users/{id}/statistics")
-    Call<Object> getUserStats(@Header("Authorization") String token, @Path("id") Integer id);
+    Call<Stats> getUserStats(@Header("Authorization") String token, @Path("id") Integer id);
 
     @PUT("users")
     Call<User> editUser(@Header("Authorization") String token, @Body User user);
@@ -67,7 +69,10 @@ public interface OpenEventsAPI {
     Call<List<Event>> getAssistFinishedEvents(@Header("Authorization") String token, @Path("id") Integer id);
 
     @GET("users/{id}/friends")
-    Call<List<User>> getFriends(@Path("id") Integer id);
+    Call<List<User>> getFriends(@Header("Authorization") String token, @Path("id") Integer id);
+
+    @POST("friends/{id}")
+    Call<FriendRequest> addFriendRequest(@Header("Authorization") String token, @Path("id") Integer id);
 
     //-------------EVENTS--------------
     @POST("events")
@@ -92,19 +97,20 @@ public interface OpenEventsAPI {
     Call<Event> deleteEvent(@Header("Authorization") String token, @Path("id") Integer id);
 
     @GET("events/{id}/assistances")
-    Call<List<Assistance>> getAssistances(@Header("Authorization") String token, @Path("id") Integer id);
+    Call<List<AssistanceRequest>> getAssistances(@Header("Authorization") String token, @Path("id") Integer id);
 
     @GET("events/{event_id}/assistances/{user_id}")
-    Call<Assistance> get1Assistance(@Header("Authorization") String token, @Path("event_id") Integer event_id, @Path("user_id") Integer user_id);
+    Call<AssistanceRequest> get1Assistance(@Header("Authorization") String token, @Path("event_id") Integer event_id, @Path("user_id") Integer user_id);
 
     @POST("events/{id}/assistances")
-    Call<Assistance> addAssistance(@Header("Authorization") String token, @Path("id") Integer id);
+    Call<AssistanceRequest> addAssistance(@Header("Authorization") String token, @Path("id") Integer id);
 
     @PUT("events/{id}/assistances")
-    Call<Assistance> editAssistance(@Header("Authorization") String token, @Path("id") Integer id);
+    Call<AssistanceRequest> editAssistance(@Header("Authorization") String token, @Path("id") Integer id);
 
     @DELETE("events/{id}/assistances")
-    Call<Assistance> deleteAssistance(@Header("Authorization") String token, @Path("id") Integer id);
+    Call<AssistanceRequest> deleteAssistance(@Header("Authorization") String token, @Path("id") Integer id);
 
     //-------------ASSISTANCES--------------
+
 }

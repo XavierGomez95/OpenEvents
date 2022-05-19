@@ -19,6 +19,7 @@ public class User implements Serializable {
         this.password = password;
         this.image = image;
     }
+
     public User(String name, String last_name, String email, String image) {
         this.name = name;
         this.last_name = last_name;
@@ -29,6 +30,10 @@ public class User implements Serializable {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public String getName() {
@@ -50,8 +55,6 @@ public class User implements Serializable {
     public String getImage() {
         return image;
     }
-
-    public Integer getId () {return id; }
 
     public void setPassword(String password) {
         this.password = password;

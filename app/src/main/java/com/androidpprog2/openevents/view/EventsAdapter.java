@@ -25,7 +25,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
      * VIEW HOLDER CLASS
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-//        ImageButton delete_btn;
+        //        ImageButton delete_btn;
 //        ImageButton edit_btn;
         TextView textView;
         RelativeLayout relativeclic1;
@@ -55,15 +55,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             textView.setText(list.get(pos).getName());
 //            delete_btn.setOnClickListener(v -> deleteItem(pos));
 //            edit_btn.setOnClickListener(v -> editItem(pos));
-            relativeclic1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(activity, EventDetailActivity.class);
-                    intent.putExtra("position", pos);
-                    intent.putExtra("eventlist", (Serializable) list);
+            relativeclic1.setOnClickListener(v -> {
+                Intent intent = new Intent(activity, EventDetailActivity.class);
+                intent.putExtra("position", pos);
+                intent.putExtra("eventlist", (Serializable) list);
 
-                    context.startActivity(intent);
-                }
+                context.startActivity(intent);
             });
 
         }

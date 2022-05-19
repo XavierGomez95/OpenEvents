@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.api.APIEvents;
-import com.androidpprog2.openevents.api.APIUser;
-import com.androidpprog2.openevents.business.Assistance;
+import com.androidpprog2.openevents.business.AssistanceRequest;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
 
@@ -54,15 +53,15 @@ public class EventDetailActivity extends AppCompatActivity {
         attendButton.setOnClickListener(view -> {
             if (attendButton.getText().equals("ATTEND")) {
                 APIEvents api = APIEvents.getInstance();
-                api.addEventAssistance(Token.getToken(this), event.getId(), new Callback<Assistance>() {
+                api.addEventAssistance(Token.getToken(this), event.getId(), new Callback<AssistanceRequest>() {
                     @Override
-                    public void onResponse(Call<Assistance> call, Response<Assistance> response) {
+                    public void onResponse(Call<AssistanceRequest> call, Response<AssistanceRequest> response) {
                         attendButton.setText("UNATTEND");
                         Log.d("IRIS", "TRUEEE CREATE" + response.body());
                     }
 
                     @Override
-                    public void onFailure(Call<Assistance> call, Throwable t) {
+                    public void onFailure(Call<AssistanceRequest> call, Throwable t) {
                         Log.d("IRIS", "FALSE");
 
                     }
@@ -70,15 +69,15 @@ public class EventDetailActivity extends AppCompatActivity {
 
             } else {
                 APIEvents api = APIEvents.getInstance();
-                api.deleteEventAssistance(Token.getToken(this), event.getId(), new Callback<Assistance>() {
+                api.deleteEventAssistance(Token.getToken(this), event.getId(), new Callback<AssistanceRequest>() {
                     @Override
-                    public void onResponse(Call<Assistance> call, Response<Assistance> response) {
+                    public void onResponse(Call<AssistanceRequest> call, Response<AssistanceRequest> response) {
                         attendButton.setText("ATTEND");
                         Log.d("IRIS", "TRUEEE DELETE" + response.body());
                     }
 
                     @Override
-                    public void onFailure(Call<Assistance> call, Throwable t) {
+                    public void onFailure(Call<AssistanceRequest> call, Throwable t) {
                         Log.d("IRIS", "FALSE");
 
                     }

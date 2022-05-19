@@ -1,6 +1,6 @@
 package com.androidpprog2.openevents.api;
 
-import com.androidpprog2.openevents.business.Assistance;
+import com.androidpprog2.openevents.business.AssistanceRequest;
 import com.androidpprog2.openevents.business.Event;
 
 import java.util.List;
@@ -58,11 +58,11 @@ public class APIEvents {
         this.service.deleteEvent(token, id).enqueue(callback);
     }
 
-    public void addEventAssistance(String token, int id, Callback<Assistance> callback) {
+    public void addEventAssistance(String token, int id, Callback<AssistanceRequest> callback) {
         this.service.addAssistance(token, id).enqueue(callback);
     }
 
-    public void deleteEventAssistance(String token, int id, Callback<Assistance> callback) {
+    public void deleteEventAssistance(String token, int id, Callback<AssistanceRequest> callback) {
         this.service.deleteAssistance(token, id).enqueue(callback);
     }
 

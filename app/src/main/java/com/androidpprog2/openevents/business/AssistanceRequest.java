@@ -2,7 +2,7 @@ package com.androidpprog2.openevents.business;
 
 import java.io.Serializable;
 
-public class Assistance implements Serializable {
+public class AssistanceRequest implements Serializable {
     private Integer fieldCount;
     private Integer affectedRows;
     private Integer insertId;
@@ -10,7 +10,7 @@ public class Assistance implements Serializable {
     private Integer serverStatus;
     private Integer warningStatus;
 
-    public Assistance(Integer fieldCount, Integer affectedRows, Integer insertId, String info, Integer serverStatus, Integer warningStatus) {
+    public AssistanceRequest(Integer fieldCount, Integer affectedRows, Integer insertId, String info, Integer serverStatus, Integer warningStatus) {
         this.fieldCount = fieldCount;
         this.affectedRows = affectedRows;
         this.insertId = insertId;

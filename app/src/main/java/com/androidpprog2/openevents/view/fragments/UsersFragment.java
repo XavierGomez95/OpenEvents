@@ -55,9 +55,9 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
 
         apiCall();
 
-                // TEMPORAL
-                for (User u : userList)
-                    Log.d("User list:", u.getName());
+        // TEMPORAL
+        for (User u : userList)
+            Log.d("User list:", u.getName());
 
         //searchUserView = new SearchView(getContext());
         searchUserView = view.findViewById(R.id.search_bar);
@@ -78,7 +78,7 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
                     if (response.isSuccessful()) {
                         userList = response.body();
                         usersRecyclerView = view.findViewById(R.id.recycler_view_users);
-                        usersAdapter = new UsersAdapter(userList);
+                        usersAdapter = new UsersAdapter(userList, getContext());
                         usersRecyclerView.setLayoutManager(linearLayoutManager);
                         usersRecyclerView.setAdapter(usersAdapter);
                     }
