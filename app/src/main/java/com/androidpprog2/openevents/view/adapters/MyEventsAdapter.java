@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.view;
+package com.androidpprog2.openevents.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;

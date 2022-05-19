@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.api.APIEvents;
+import com.androidpprog2.openevents.persistance.api.APIEvents;
 import com.androidpprog2.openevents.business.AssistanceRequest;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;

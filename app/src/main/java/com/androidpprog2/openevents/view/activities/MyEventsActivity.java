@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
-import com.androidpprog2.openevents.view.MyEventsAdapter;
+import com.androidpprog2.openevents.view.adapters.MyEventsAdapter;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import java.util.ArrayList;

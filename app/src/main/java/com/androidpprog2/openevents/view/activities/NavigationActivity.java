@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.api.APIUser;
+import com.androidpprog2.openevents.persistance.api.APIUser;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.databinding.ActivityTabBarBinding;
@@ -90,6 +90,7 @@ public class NavigationActivity extends AppCompatActivity {
                 for (User u : response.body()) {
                     if (u.getEmail().equals(email[0])) {
                         user = u;
+                        //profileFragment.loadImg();
                         Log.d("IRIS", "USER" + user.getEmail());
                         break;
                     }

@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.api;
+package com.androidpprog2.openevents.persistance.api;
 
 import com.androidpprog2.openevents.business.FriendRequest;
 import com.androidpprog2.openevents.business.Stats;

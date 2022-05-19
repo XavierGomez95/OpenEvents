@@ -6,6 +6,8 @@ import android.view.CollapsibleActionView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.api.APIUser;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
-import com.androidpprog2.openevents.view.UsersAdapter;
+import com.androidpprog2.openevents.persistance.api.APIUser;
+import com.androidpprog2.openevents.view.adapters.UsersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,9 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
     private UsersAdapter usersAdapter;
     private LinearLayoutManager linearLayoutManager;
     private List<User> filteredList;
+    private List<String> spinnerListCategories = new ArrayList<>();
     private SearchView searchUserView;
+    private Spinner spinner;
     private View view;
     private static final String TAG = "UsersFragment";
 
@@ -59,13 +63,28 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
         for (User u : userList)
             Log.d("User list:", u.getName());
 
-        //searchUserView = new SearchView(getContext());
+
+        spinner = view.findViewById(R.id.action_bar_spinner_events);
+
         searchUserView = view.findViewById(R.id.search_bar);
         searchUserView.clearFocus();
 
         searchUsers();
+        //spinnerCall();
 
         return view;
+    }
+
+    private void spinnerCall() {
+        spinnerListCategories.add("");
+        spinnerListCategories.add("");
+        spinnerListCategories.add("");
+        spinnerListCategories.add("");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
+                (getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
+
+        spinner.setAdapter(arrayAdapter);
     }
 
 

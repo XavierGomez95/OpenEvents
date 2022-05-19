@@ -1,8 +1,9 @@
-package com.androidpprog2.openevents.view;
+package com.androidpprog2.openevents.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.api.APIUser;
+import com.androidpprog2.openevents.persistance.api.APIUser;
 import com.androidpprog2.openevents.business.FriendRequest;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 
 import com.androidpprog2.openevents.view.activities.UserDetailActivity;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.List;
@@ -64,14 +66,16 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }*/
 
 
+
+
     /**
      * VIEW HOLDER CLASS
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView, lastNameTextView;
-        ImageView imageView;
         ImageButton addUser;
         RelativeLayout row_fragment;
+        ImageView imageView;
 
         /**
          *
@@ -79,7 +83,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         ViewHolder(View view) {
             super(view);
             nameTextView = view.findViewById(R.id.user_item_tittle_textView);
-            addUser=view.findViewById(R.id.btn_add_user);
+            imageView = view.findViewById(R.id.icon_image_user_id);
+            addUser = view.findViewById(R.id.btn_add_user);
             row_fragment = view.findViewById(R.id.row_fragment);
             //lastNameTextView = view.findViewById(R.id.);
         }
@@ -89,7 +94,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
          */
         public void bind(int pos) {
             nameTextView.setText(userList.get(pos).getName()+" "+userList.get(pos).getLast_name());
-
+            loadImg(pos);
 //            delete_btn.setOnClickListener(v -> deleteItem(pos));
 //            edit_btn.setOnClickListener(v -> editItem(pos));
             row_fragment.setOnClickListener(view -> {
@@ -112,8 +117,25 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                     }
                 });
             });
-
         }
 
+        private void loadImg(int pos) {
+            String imageURL, image = userList.get(pos).getImage();
+
+            if (image != null) {
+                if ((image.startsWith("http") || image.startsWith("https"))
+                        && (image.endsWith(".jpg") || image.endsWith(".png")
+                        || image.endsWith(".JPG") || image.endsWith(".PNG")))
+                    imageURL = image;
+                else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+            } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+
+            Log.d("EVENT NAME : ", image);
+            Log.d("URL : ", image);
+
+            Picasso.with(context).load(imageURL).into(imageView);
+        }
     }
+
+
 }

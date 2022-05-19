@@ -11,6 +11,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Circular Image View  -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/event_description_image"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="50dp"
+                android:gravity="center" />
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/tittleDescriptionTextView"
             android:layout_width="wrap_content"

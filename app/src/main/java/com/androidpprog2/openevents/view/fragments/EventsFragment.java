@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,11 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.api.APIEvents;
+import com.androidpprog2.openevents.persistance.api.APIEvents;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
-import com.androidpprog2.openevents.view.EventsAdapter;
+import com.androidpprog2.openevents.view.adapters.EventsAdapter;
 import com.androidpprog2.openevents.view.activities.MyEventsActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
@@ -38,7 +37,6 @@ public class EventsFragment extends Fragment {
     private EventsAdapter eventsAdapter;
     private static final String TAG = "EventFragment";
     private View view;
-    private ImageView imageView;
 
     private ExtendedFloatingActionButton myEvents_fab;
     private User user = null;
@@ -63,9 +61,6 @@ public class EventsFragment extends Fragment {
 
         user = searchUser(getContext());
         apiEventsCall();
-
-
-        imageView = view.findViewById(R.id.icon_image_event_id);
 
 
         myEvents_fab = view.findViewById(R.id.my_events);

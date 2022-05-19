@@ -1,6 +1,5 @@
 package com.androidpprog2.openevents.view.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -11,11 +10,9 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.api.APIEvents;
-import com.androidpprog2.openevents.api.APIUser;
+import com.androidpprog2.openevents.persistance.api.APIEvents;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
-import com.androidpprog2.openevents.business.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.androidpprog2.openevents.view;
+package com.androidpprog2.openevents.view.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,6 +30,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 //        ImageButton delete_btn;
 //        ImageButton edit_btn;
+        ImageView imageView;
         TextView textView;
         FrameLayout flameLayoutclic1;
 
@@ -73,6 +74,24 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
         }
 
+        private void loadImg(int pos) {
+            String imageURL, image = list.get(pos).getImage();
+
+            if (image != null) {
+                if ((image.startsWith("http") || image.startsWith("https"))
+                        && (image.endsWith(".jpg") || image.endsWith(".png")
+                        || image.endsWith(".JPG") || image.endsWith(".PNG")))
+                    imageURL = image;
+                else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+            } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+
+            Log.d("EVENT NAME : ", image);
+            Log.d("URL : ", image);
+
+            Picasso.with(context).load(imageURL).into(imageView);
+
+        }
+
 
         public void deleteItem(int pos) {
 
@@ -88,22 +107,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
     }
 
-    private void loadImg(int pos) {
-        String imageURL;
 
-        if (list.get(pos).getImage() != null) {
-            if ((list.get(pos).getImage().startsWith("http") || list.get(pos).getImage().startsWith("https"))
-                    && (list.get(pos).getImage().endsWith(".jpg") || list.get(pos).getImage().endsWith(".png")
-                    || list.get(pos).getImage().endsWith(".JPG") || list.get(pos).getImage().endsWith(".PNG")))
-                imageURL = list.get(pos).getImage();
-            else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-        } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-
-        Log.d("EVENT NAME : ", list.get(pos).getName());
-        Log.d("URL : ", list.get(pos).getImage());
-
-        Picasso.with(context).load(imageURL).into(imageView);
-    }
 
 
     /**

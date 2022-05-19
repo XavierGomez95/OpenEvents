@@ -7,29 +7,29 @@
     android:orientation="vertical"
     tools:context=".view.activities.NavigationActivity">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-            <androidx.appcompat.widget.SearchView
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:id="@+id/search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="40sp"
-                android:layout_marginEnd="20dp"
-                app:queryHint="search"
-                app:iconifiedByDefault="false"/>
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            app:iconifiedByDefault="false"
+            app:queryHint="search" />
 
         <LinearLayout
             android:id="@+id/users_fragment_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="80dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="40dp"
                 android:id="@+id/recycler_view_users"
                 android:layout_width="match_parent"
                 tools:context=".fragments.UsersFragment"
@@ -38,6 +38,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,7 +1,5 @@
 package com.androidpprog2.openevents.view.fragments;
 
-import static com.androidpprog2.openevents.view.activities.NavigationActivity.searchUser;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,17 +20,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.api.APIUser;
 import com.androidpprog2.openevents.business.Stats;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
+import com.androidpprog2.openevents.persistance.api.APIUser;
 import com.androidpprog2.openevents.view.activities.LoginActivity;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,7 +38,7 @@ import retrofit2.Response;
 public class ProfileFragment extends Fragment {
     private TextView logout, textViewEmail, textViewName, textViewLastName, textViewStats, numFriends;
     private String imageURL;
-    private CircleImageView circleImageView;
+    private ImageView circleImageView;
     private AlertDialog dialogEmail, dialogName, dialogLastName;
     private EditText editTextEmail, editTextName, editTextLastName;
     private View view;
@@ -54,7 +52,6 @@ public class ProfileFragment extends Fragment {
                                           @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_profile, container, false);
-        myUser = searchUser(getContext());
         logout = view.findViewById(R.id.profile_logout_id);
 
         circleImageView = view.findViewById(R.id.profile_image);
@@ -67,13 +64,13 @@ public class ProfileFragment extends Fragment {
         editTextName = new EditText(getActivity());
         editTextLastName = new EditText(getActivity());
 
-        if (myUser != null) {
-            loadText();
-        }
+        loadViews();
+        searchUser();
+
 
         // TODO: QUE SE CARGUE LA IMAGEN AL INICIAR EL FRAGMENT
         // SI LA PONGO EN LOS EDITORES DE TEXTO FUNCIONA
-        loadImg();
+//        loadImg();
 
 
         dialogEmail.setTitle(" Edit Email ");
@@ -187,7 +184,24 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void loadImg() {
+    public void loadImg() {
+        String imageURL, image = myUser.getImage();
+
+        if (image != null) {
+            if ((image.startsWith("http") || image.startsWith("https"))
+                    && (image.endsWith(".jpg") || image.endsWith(".png")
+                    || image.endsWith(".JPG") || image.endsWith(".PNG")))
+                imageURL = image;
+            else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+        } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+
+        Log.d("EVENT NAME : ", image);
+        Log.d("URL : ", image);
+
+        Picasso.with(getContext()).load(imageURL).into(circleImageView);
+    }
+
+    /*private void loadImg() {
         if (myUser.getImage() != null) {
             if (myUser.getImage().startsWith("http") || myUser.getImage().startsWith("https"))
                 imageURL = myUser.getImage();
@@ -195,16 +209,17 @@ public class ProfileFragment extends Fragment {
         }
 
         Picasso.with(getActivity()).load(imageURL).into(circleImageView);
+    }*/
+
+    private void loadViews() {
+        textViewEmail = view.findViewById(R.id.profile_email);
+        textViewName = view.findViewById(R.id.profile_name);
+        textViewLastName = view.findViewById(R.id.profile_last_name);
     }
 
-    private void loadText() {
-        textViewEmail = view.findViewById(R.id.profile_email);
+    private void setText() {
         textViewEmail.setText(myUser.getEmail());
-
-        textViewName = view.findViewById(R.id.profile_name);
         textViewName.setText(myUser.getName());
-
-        textViewLastName = view.findViewById(R.id.profile_last_name);
         textViewLastName.setText(myUser.getLast_name());
         getStats();
         getNumFriends();
@@ -243,6 +258,32 @@ public class ProfileFragment extends Fragment {
                 DynamicToast.makeError(getContext(), "Error loading friends").show();
 
             }
+        });
+    }
+
+    private void searchUser() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        String sPEmail = sharedPreferences.getString("email", "Error, information does not exist.");
+        APIUser.getInstance().getListUsers(Token.getToken(getContext()), new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                for (User u : response.body()) {
+                    if (u.getEmail().equals(sPEmail)) {
+                        myUser = u;
+                        setText();
+                        loadImg();
+                        Log.d("IRIS", "USER" + myUser.getEmail());
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Log.d("IRIS", "FAIL");
+
+            }
+
         });
     }
 
