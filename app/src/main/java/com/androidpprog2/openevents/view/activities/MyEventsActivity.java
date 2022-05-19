@@ -2,10 +2,8 @@ package com.androidpprog2.openevents.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,8 +26,8 @@ public class MyEventsActivity extends AppCompatActivity {
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_events);
 
         intent = getIntent();
@@ -47,6 +45,8 @@ public class MyEventsActivity extends AppCompatActivity {
 
         myEventsRecyclerView = findViewById(R.id.my_events_recycler_view);
         myEventsAdapter = new MyEventsAdapter(myEventList, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+
         myEventsRecyclerView.setAdapter(myEventsAdapter);
     }
 }
