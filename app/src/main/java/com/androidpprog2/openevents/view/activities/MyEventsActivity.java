@@ -38,14 +38,14 @@ public class MyEventsActivity extends AppCompatActivity {
         for (Event e : myEventList)
             Log.d("My Event List: ", e.getName());
 
-        /*createEvent_fab = findViewById(R.id.create_event_floating_button);
+        createEvent_fab = findViewById(R.id.create_event_floating_button);
         createEvent_fab.setOnClickListener(view -> {
             startActivity(new Intent(this, CreateEventActivity.class));
-        });*/
+        });
 
         myEventsRecyclerView = findViewById(R.id.my_events_recycler_view);
         myEventsAdapter = new MyEventsAdapter(myEventList, this);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
 
         myEventsRecyclerView.setAdapter(myEventsAdapter);
     }
