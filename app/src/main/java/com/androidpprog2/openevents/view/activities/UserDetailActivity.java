@@ -1,6 +1,7 @@
 package com.androidpprog2.openevents.view.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -32,7 +33,7 @@ public class UserDetailActivity extends AppCompatActivity {
     private Button friendRequest_btn;
     private ImageView imageView;
     private String imageURL;
-    private User myUser;
+    private User user;
 
 
     @SuppressLint("SetTextI18n")
@@ -41,8 +42,11 @@ public class UserDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         List<User> userList = (List<User>) getIntent().getSerializableExtra("userList");
-        int position = (int) getIntent().getSerializableExtra("position");
-        myUser = userList.get(position);
+        int position = getIntent().getIntExtra("position", -1);
+        boolean friend = getIntent().getBooleanExtra("friend", false);
+        boolean request = getIntent().getBooleanExtra("request", false);
+
+        user = userList.get(position);
 
         TextView name = findViewById(R.id.user_name);
         TextView email = findViewById(R.id.user_email);
@@ -52,14 +56,21 @@ public class UserDetailActivity extends AppCompatActivity {
         imageView = findViewById(R.id.user_image);
 
         loadImg();
-        name.setText(myUser.getName() + " " + myUser.getLast_name());
-        email.setText(myUser.getEmail());
+        name.setText(user.getName() + " " + user.getLast_name());
+        email.setText(user.getEmail());
         getStats();
         getNumFriends();
+        if (friend) {
+            friendRequest_btn.setText("FRIEND");
+            friendRequest_btn.setEnabled(false);
+        } else if (request) {
+            friendRequest_btn.setText("ACCEPT REQUEST");
+            acceptRequest();
+        }
         friendRequest_btn.setOnClickListener(view -> {
             if (!friendRequest_btn.getText().equals("REQUESTED")) {
                 APIUser api = APIUser.getInstance();
-                api.addFriendRequest(Token.getToken(this), myUser.getId(), new Callback<FriendRequest>() {
+                api.addFriendRequest(Token.getToken(this), user.getId(), new Callback<FriendRequest>() {
                     @Override
                     public void onResponse(@NonNull Call<FriendRequest> call, @NonNull Response<FriendRequest> response) {
                         friendRequest_btn.setText("REQUESTED");
@@ -80,7 +91,7 @@ public class UserDetailActivity extends AppCompatActivity {
     }
 
     private void loadImg() {
-        String imageURL, image = myUser.getImage();
+        String imageURL, image = user.getImage();
 
         if (image != null) {
             if ((image.startsWith("http") || image.startsWith("https"))
@@ -88,10 +99,12 @@ public class UserDetailActivity extends AppCompatActivity {
                     || image.endsWith(".jpeg") || image.endsWith(".JPG")
                     || image.endsWith(".PNG") || image.endsWith(".JPEG")))
                 imageURL = image;
-            else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-        } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+            else
+                imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+        } else
+            imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-        Log.d("EVENT NAME : ", myUser.getName());
+        Log.d("EVENT NAME : ", user.getName());
         Log.d("URL : ", image);
 
         Picasso.with(getApplicationContext()).load(imageURL).into(imageView);
@@ -99,7 +112,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
     private void getStats() {
         stats = findViewById(R.id.stats);
-        APIUser.getInstance().getUserStats(Token.getToken(this), myUser.getId(), new Callback<Stats>() {
+        APIUser.getInstance().getUserStats(Token.getToken(this), user.getId(), new Callback<Stats>() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<Stats> call, @NonNull Response<Stats> response) {
@@ -118,7 +131,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
     private void getNumFriends() {
         num_friends = findViewById(R.id.numFriends);
-        APIUser.getInstance().getFiends(Token.getToken(this), myUser.getId(), new Callback<List<User>>() {
+        APIUser.getInstance().getFriends(Token.getToken(this), user.getId(), new Callback<List<User>>() {
 
             @SuppressLint("SetTextI18n")
             @Override
@@ -133,6 +146,25 @@ public class UserDetailActivity extends AppCompatActivity {
                 DynamicToast.makeError(getApplicationContext(), "Error loading friends").show();
 
             }
+        });
+    }
+
+    private void acceptRequest() {
+        Context context = this;
+        friendRequest_btn.setOnClickListener(view -> {
+            APIUser.getInstance().addFriendRequest(Token.getToken(context), user.getId(), new Callback<FriendRequest>() {
+                @Override
+                public void onResponse(Call<FriendRequest> call, Response<FriendRequest> response) {
+                    DynamicToast.makeSuccess(context, "REQUEST ACCEPTED").show();
+                    friendRequest_btn.setText("FRIEND");
+                    friendRequest_btn.setEnabled(false);
+                }
+
+                @Override
+                public void onFailure(Call<FriendRequest> call, Throwable t) {
+                    DynamicToast.makeError(context, "API ERROR").show();
+                }
+            });
         });
     }
 }

@@ -16,5 +16,6 @@
     <string name="image">Image ulr</string>
 
     <string name="logout">LogOut</string>
+    <string name="my_friends">My Friends</string>
 
 </resources>

@@ -17,7 +17,7 @@ Event implements Serializable {
     private String date;
 
 
-    public Event(String name, String image, String location,
+ /*   public Event(String name, String image, String location,
                  String description, String eventStart_date, String eventEnd_date, int n_participators, String type, int owner_id, String date) {
         this.name = name;
         this.image = image;
@@ -30,7 +30,7 @@ Event implements Serializable {
         this.owner_id = owner_id;
         this.date = date;
 
-    }
+    }*/
 
     public Event(String name, String image, String location,
                  String description, String eventStart_date, String eventEnd_date, int n_participators, String type) {

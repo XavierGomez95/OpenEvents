@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.view.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.CollapsibleActionView;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.api.APIUser;
+import com.androidpprog2.openevents.view.activities.MyFriendsActivity;
 import com.androidpprog2.openevents.view.adapters.UsersAdapter;
 
 import java.util.ArrayList;
@@ -49,6 +52,7 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
 
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+
     }
 
 
@@ -76,10 +80,10 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
     }
 
     private void spinnerCall() {
-        spinnerListCategories.add("");
-        spinnerListCategories.add("");
-        spinnerListCategories.add("");
-        spinnerListCategories.add("");
+        spinnerListCategories.add("Esport");
+        spinnerListCategories.add("Concert");
+        spinnerListCategories.add("Museu");
+        spinnerListCategories.add("Educacio");
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
                 (getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);

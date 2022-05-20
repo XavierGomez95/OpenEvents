@@ -17,7 +17,7 @@
         android:padding="4dp">
 
         <ImageView
-            android:id="@+id/icon_image_event_id"
+            android:id="@+id/icon_image_user_id"
             android:layout_marginLeft="20dp"
             android:layout_width="70dp"
             android:layout_height="70dp"
@@ -34,7 +34,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="4dp"
-            android:layout_toEndOf="@+id/icon_image_event_id"
+            android:layout_toEndOf="@+id/icon_image_user_id"
             android:orientation="horizontal">
 
             <TextView

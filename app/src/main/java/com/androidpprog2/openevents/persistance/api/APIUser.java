@@ -67,8 +67,19 @@ public class APIUser {
     public void addFriendRequest(String token, int id, Callback<FriendRequest> callback) {
         this.service.addFriendRequest(token, id).enqueue(callback);
     }
-    public void getFiends(String token, int id, Callback<List<User>> callback) {
+
+    public void getFriends(String token, int id, Callback<List<User>> callback) {
         this.service.getFriends(token, id).enqueue(callback);
     }
 
+    public void getFriendRequests(String token, Callback<List<User>> listCallback) {
+        this.service.getFriendRequests(token).enqueue(listCallback);
+    }
+
+    public void acceptFriend(String token, int id, Callback<FriendRequest> callback) {
+        this.service.acceptFriend(token, id).enqueue(callback);
+    }
+    public void declineFriend(String token, int id, Callback<FriendRequest> callback) {
+        this.service.declineFriend(token, id).enqueue(callback);
+    }
 }

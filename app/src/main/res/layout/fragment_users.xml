@@ -26,15 +26,17 @@
             android:id="@+id/users_fragment_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="80dp">
+            android:layout_marginTop="80dp"
+            android:orientation="vertical">
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_users"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 tools:context=".fragments.UsersFragment"
-                tools:listitem="@layout/list_user_element"
-                android:layout_height="match_parent"/>
+                tools:listitem="@layout/list_user_element" />
 
         </LinearLayout>
 

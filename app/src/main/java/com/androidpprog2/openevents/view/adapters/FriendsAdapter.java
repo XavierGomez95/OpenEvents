@@ -16,11 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
-import com.androidpprog2.openevents.persistance.api.APIUser;
 import com.androidpprog2.openevents.business.FriendRequest;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
-
+import com.androidpprog2.openevents.persistance.api.APIUser;
 import com.androidpprog2.openevents.view.activities.UserDetailActivity;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.squareup.picasso.Picasso;
@@ -32,23 +31,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
+public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
     private List<User> userList;
     private Context context;
     private Activity activity;
 
-    public UsersAdapter(List<User> userList, Context context) {
+    public FriendsAdapter(List<User> userList, Context context) {
         this.userList = userList;
         this.context = context;
         this.activity = (Activity) context;
     }
 
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_user_element, parent, false);
-        return new UsersAdapter.ViewHolder(itemView);
+                .inflate(R.layout.list_friends_element, parent, false);
+        return new FriendsAdapter.ViewHolder(itemView);
     }
 
     @Override
@@ -61,9 +61,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         return userList.size();
     }
 
-    /*public void setFilteredList(List<User> filteredList) {
-        this.userList = filteredList;
-    }*/
 
 
     /**
@@ -71,7 +68,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
-        ImageButton addUser;
         RelativeLayout row_fragment;
         ImageView imageView;
 
@@ -80,11 +76,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
          */
         ViewHolder(View view) {
             super(view);
-            nameTextView = view.findViewById(R.id.user_item_tittle_textView);
+            nameTextView = view.findViewById(R.id.textView);
             imageView = view.findViewById(R.id.icon_image_user_id);
-            addUser = view.findViewById(R.id.btn_add_user);
             row_fragment = view.findViewById(R.id.row_fragment);
-            //lastNameTextView = view.findViewById(R.id.);
         }
 
         /**
@@ -93,30 +87,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         public void bind(int pos) {
             nameTextView.setText(userList.get(pos).getName() + " " + userList.get(pos).getLast_name());
             loadImg(pos);
-            addUser.setVisibility(View.VISIBLE);
-
-//            delete_btn.setOnClickListener(v -> deleteItem(pos));
-//            edit_btn.setOnClickListener(v -> editItem(pos));
             row_fragment.setOnClickListener(view -> {
                 Intent intent = new Intent(activity, UserDetailActivity.class);
                 intent.putExtra("position", pos);
                 intent.putExtra("userList", (Serializable) userList);
+                intent.putExtra("friend", true);
 
                 context.startActivity(intent);
-            });
-            addUser.setOnClickListener(view -> {
-                APIUser.getInstance().addFriendRequest(Token.getToken(context), userList.get(pos).getId(), new Callback<FriendRequest>() {
-                    @Override
-                    public void onResponse(Call<FriendRequest> call, Response<FriendRequest> response) {
-                        DynamicToast.makeSuccess(context, "Successful friend request").show();
-                        addUser.setVisibility(View.INVISIBLE);
-                    }
-
-                    @Override
-                    public void onFailure(Call<FriendRequest> call, Throwable t) {
-
-                    }
-                });
             });
         }
 
@@ -126,15 +103,14 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             if (image != null) {
                 if ((image.startsWith("http") || image.startsWith("https"))
                         && (image.endsWith(".jpg") || image.endsWith(".png")
-                        || image.endsWith(".jpeg") || image.endsWith(".JPG")
-                        || image.endsWith(".PNG") || image.endsWith(".JPEG")))
+                        || image.endsWith(".JPG") || image.endsWith(".PNG")))
                     imageURL = image;
                 else
                     imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
             } else
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-            Log.d("EVENT NAME : ", userList.get(pos).getName());
+            Log.d("EVENT NAME : ", image);
             Log.d("URL : ", image);
 
             Picasso.with(context).load(imageURL).into(imageView);

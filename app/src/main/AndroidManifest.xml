@@ -12,10 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OpenEvents"
         android:usesCleartextTraffic="true">
-        <!--<meta-data
+        <activity
+            android:name=".view.activities.MyFriendsActivity"
+            android:exported="false" />
+        <!--
+        <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/list_event_element" />-->
-
+            android:resource="@xml/list_event_element" />
+        -->
         <activity
             android:name=".view.activities.MyEventsActivity"
             android:exported="false" />

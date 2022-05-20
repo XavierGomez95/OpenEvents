@@ -1,5 +1,7 @@
 package com.androidpprog2.openevents.view.fragments;
 
+import static com.androidpprog2.openevents.view.activities.NavigationActivity.searchUser;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,16 +23,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.androidpprog2.openevents.R;
+import com.androidpprog2.openevents.persistance.api.APIUser;
 import com.androidpprog2.openevents.business.Stats;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
-import com.androidpprog2.openevents.persistance.api.APIUser;
 import com.androidpprog2.openevents.view.activities.LoginActivity;
+import com.androidpprog2.openevents.view.activities.MyFriendsActivity;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +49,7 @@ public class ProfileFragment extends Fragment {
     private View view;
     private User myUser = null;
     private APIUser apiUser;
+    private Button btnfriends;
 
 
     @Nullable
@@ -52,6 +58,12 @@ public class ProfileFragment extends Fragment {
                                           @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_profile, container, false);
+        btnfriends = view.findViewById(R.id.friends_btn);
+        btnfriends.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), MyFriendsActivity.class);
+            intent.putExtra("id", myUser.getId());
+            startActivity(intent);
+        });
         logout = view.findViewById(R.id.profile_logout_id);
 
         circleImageView = view.findViewById(R.id.profile_image);
@@ -192,8 +204,10 @@ public class ProfileFragment extends Fragment {
                     && (image.endsWith(".jpg") || image.endsWith(".png")
                     || image.endsWith(".JPG") || image.endsWith(".PNG")))
                 imageURL = image;
-            else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-        } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+            else
+                imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+        } else
+            imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
         Log.d("EVENT NAME : ", image);
         Log.d("URL : ", image);
@@ -245,7 +259,7 @@ public class ProfileFragment extends Fragment {
 
     private void getNumFriends() {
         numFriends = view.findViewById(R.id.numFriends);
-        APIUser.getInstance().getFiends(Token.getToken(getContext()), myUser.getId(), new Callback<List<User>>() {
+        APIUser.getInstance().getFriends(Token.getToken(getContext()), myUser.getId(), new Callback<List<User>>() {
 
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {

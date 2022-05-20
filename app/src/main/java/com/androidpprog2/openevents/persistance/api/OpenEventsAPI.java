@@ -68,11 +68,21 @@ public interface OpenEventsAPI {
     @GET("users/{id}/assistances/finished")
     Call<List<Event>> getAssistFinishedEvents(@Header("Authorization") String token, @Path("id") Integer id);
 
+    //-------------FRIENDS--------------
     @GET("users/{id}/friends")
     Call<List<User>> getFriends(@Header("Authorization") String token, @Path("id") Integer id);
 
     @POST("friends/{id}")
     Call<FriendRequest> addFriendRequest(@Header("Authorization") String token, @Path("id") Integer id);
+
+    @GET("friends/requests")
+    Call<List<User>> getFriendRequests(@Header("Authorization") String token);
+
+    @PUT("friends/{id}")
+    Call<FriendRequest> acceptFriend(@Header("Authorization") String token, @Path("id") Integer id);
+
+    @DELETE("friends/{id}")
+    Call<FriendRequest> declineFriend(@Header("Authorization") String token, @Path("id") Integer id);
 
     //-------------EVENTS--------------
     @POST("events")
@@ -111,6 +121,5 @@ public interface OpenEventsAPI {
     @DELETE("events/{id}/assistances")
     Call<AssistanceRequest> deleteAssistance(@Header("Authorization") String token, @Path("id") Integer id);
 
-    //-------------ASSISTANCES--------------
 
 }

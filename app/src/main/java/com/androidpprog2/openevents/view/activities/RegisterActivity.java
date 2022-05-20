@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         EditText passAgain = findViewById(R.id.r_password_again);
 
         if (pass.getText().toString().equals(passAgain.getText().toString())) {
-            User u = new User(name.getText().toString(), lastName.getText().toString(), email.getText().toString(), pass.getText().toString(), "https://thumbs.dreamstime.com/b/nature-forest-trees-growing-to-upward-to-sun-wallpaper-42907586.jpg");
+            User u = new User(name.getText().toString(), lastName.getText().toString(), email.getText().toString(), pass.getText().toString(), "https://i.dlpng.com/static/png/6695634_preview.png");
             APIUser api = APIUser.getInstance();
             api.addUser(u, new Callback<User>() {
                 @Override
