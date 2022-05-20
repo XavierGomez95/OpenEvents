@@ -41,7 +41,7 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
     private List<User> filteredList;
     private List<String> spinnerListCategories = new ArrayList<>();
     private SearchView searchUserView;
-    private Spinner spinner;
+//    private Spinner spinner;
     private View view;
     private static final String TAG = "UsersFragment";
 
@@ -68,7 +68,7 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
             Log.d("User list:", u.getName());
 
 
-        spinner = view.findViewById(R.id.action_bar_spinner_events);
+//        spinner = view.findViewById(R.id.action_bar_spinner_events);
 
         searchUserView = view.findViewById(R.id.search_bar);
         searchUserView.clearFocus();
@@ -79,7 +79,7 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
         return view;
     }
 
-    private void spinnerCall() {
+    /*private void spinnerCall() {
         spinnerListCategories.add("Esport");
         spinnerListCategories.add("Concert");
         spinnerListCategories.add("Museu");
@@ -89,7 +89,7 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
                 (getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
         spinner.setAdapter(arrayAdapter);
-    }
+    }*/
 
 
     private void apiCall() {

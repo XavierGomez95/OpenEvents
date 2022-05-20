@@ -28,8 +28,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
      * VIEW HOLDER CLASS
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-//        ImageButton delete_btn;
-//        ImageButton edit_btn;
         ImageView imageView;
         TextView textView;
         FrameLayout flameLayoutclic1;
@@ -76,10 +74,14 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                         || image.endsWith(".jpeg") || image.endsWith(".JPG")
                         || image.endsWith(".PNG") || image.endsWith(".JPEG")))
                     imageURL = image;
-                else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-            } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+                else
+                    imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+            } else
+                imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-            Log.d("EVENT NAME : ", image);
+            //TODO TEMPORAL
+            Log.d("EVENT NAME : ", list.get(pos).getName());
+            Log.d("EVENT NAME : ", list.get(pos).getType());
             Log.d("URL : ", image);
 
             Picasso.with(context).load(imageURL).into(imageView);
@@ -109,7 +111,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     private List<Event> list;
     private Context context;
     private Activity activity;
-    private ImageView imageView;
 
 
     public EventsAdapter(List<Event> list, Context context) {
@@ -131,7 +132,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_event_element, parent, false);
-        return new ViewHolder(itemView);
+        return new EventsAdapter.ViewHolder(itemView);
     }
 
     /**

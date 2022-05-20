@@ -47,7 +47,7 @@ public class APIEvents {
     }
 
     public void getEventsSearch(String token, String location, String keyword, String date, Callback<List<Event>> callback) {
-        this.service.getEventsSearch(location, keyword, date).enqueue(callback);
+        this.service.getEventsSearch(token, location, keyword, date).enqueue(callback);
     }
 
     public void editEvent(String token, Event event, Callback<Event> callback) {

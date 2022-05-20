@@ -33,39 +33,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
-    private List<User> userList;
-    private Context context;
-    private Activity activity;
-
-    public UsersAdapter(List<User> userList, Context context) {
-        this.userList = userList;
-        this.context = context;
-        this.activity = (Activity) context;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_user_element, parent, false);
-        return new UsersAdapter.ViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return userList.size();
-    }
-
-    /*public void setFilteredList(List<User> filteredList) {
-        this.userList = filteredList;
-    }*/
-
-
     /**
      * VIEW HOLDER CLASS
      */
@@ -84,7 +51,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             imageView = view.findViewById(R.id.icon_image_user_id);
             addUser = view.findViewById(R.id.btn_add_user);
             row_fragment = view.findViewById(R.id.row_fragment);
-            //lastNameTextView = view.findViewById(R.id.);
         }
 
         /**
@@ -94,9 +60,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             nameTextView.setText(userList.get(pos).getName() + " " + userList.get(pos).getLast_name());
             loadImg(pos);
             addUser.setVisibility(View.VISIBLE);
-
-//            delete_btn.setOnClickListener(v -> deleteItem(pos));
-//            edit_btn.setOnClickListener(v -> editItem(pos));
             row_fragment.setOnClickListener(view -> {
                 Intent intent = new Intent(activity, UserDetailActivity.class);
                 intent.putExtra("position", pos);
@@ -140,6 +103,41 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             Picasso.with(context).load(imageURL).into(imageView);
         }
     }
+
+    private List<User> userList;
+    private Context context;
+    private Activity activity;
+
+    public UsersAdapter(List<User> userList, Context context) {
+        this.userList = userList;
+        this.context = context;
+        this.activity = (Activity) context;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_user_element, parent, false);
+        return new UsersAdapter.ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return userList.size();
+    }
+
+    /*public void setFilteredList(List<User> filteredList) {
+        this.userList = filteredList;
+    }*/
+
+
+
 
 
 }
