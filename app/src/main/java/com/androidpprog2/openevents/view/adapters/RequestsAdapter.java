@@ -102,11 +102,16 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                 APIUser.getInstance().acceptFriend(Token.getToken(context), userList.get(pos).getId(), new Callback<FriendRequest>() {
                     @Override
                     public void onResponse(Call<FriendRequest> call, Response<FriendRequest> response) {
+                        deleteUser(pos);
                         DynamicToast.makeSuccess(context, "Successful friend request").show();
+                        activity.finish();
+                        activity.startActivity(activity.getIntent());
+
                     }
 
                     @Override
                     public void onFailure(Call<FriendRequest> call, Throwable t) {
+                        deleteUser(pos);
                         DynamicToast.makeError(context, "ONFAILURE").show();
 
                     }

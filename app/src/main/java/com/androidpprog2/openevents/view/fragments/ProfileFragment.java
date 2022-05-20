@@ -3,6 +3,7 @@ package com.androidpprog2.openevents.view.fragments;
 import static com.androidpprog2.openevents.view.activities.NavigationActivity.searchUser;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -50,6 +51,7 @@ public class ProfileFragment extends Fragment {
     private User myUser = null;
     private APIUser apiUser;
     private Button btnfriends;
+    private int id;
 
 
     @Nullable
@@ -61,7 +63,7 @@ public class ProfileFragment extends Fragment {
         btnfriends = view.findViewById(R.id.friends_btn);
         btnfriends.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), MyFriendsActivity.class);
-            intent.putExtra("id", myUser.getId());
+            intent.putExtra("id", id);
             startActivity(intent);
         });
         logout = view.findViewById(R.id.profile_logout_id);
@@ -80,9 +82,6 @@ public class ProfileFragment extends Fragment {
         searchUser();
 
 
-        // TODO: QUE SE CARGUE LA IMAGEN AL INICIAR EL FRAGMENT
-        // SI LA PONGO EN LOS EDITORES DE TEXTO FUNCIONA
-//        loadImg();
 
 
         dialogEmail.setTitle(" Edit Email ");
@@ -92,22 +91,36 @@ public class ProfileFragment extends Fragment {
                 (dialogInterface, i) -> {
                     apiUser = APIUser.getInstance();
                     String oldEmail = myUser.getEmail();
-                    myUser.setEmail(editTextEmail.getText().toString());
-                    apiUser.editUser(Token.getToken(getContext()), myUser, new Callback<User>() {
-                        @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
-                            textViewEmail.setText(myUser.getEmail());
-                            DynamicToast.makeSuccess(getContext(), "Email edited successfully").show();
-                        }
+                    Activity activity = this.getActivity();
+                    if (!oldEmail.equals(editTextEmail.getText().toString())) {
+                        User editedUser = new User(null, null, editTextEmail.getText().toString());
+                        apiUser.editUser(Token.getToken(getContext()), editedUser, new Callback<User>() {
+                            @Override
+                            public void onResponse(Call<User> call, Response<User> response) {
+                                if (response.body() != null) {
+                                    myUser = response.body();
+                                    textViewEmail.setText(myUser.getEmail());
+                                    DynamicToast.makeSuccess(getContext(), "Email edited successfully").show();
+                                    SharedPreferences sharedPreferences = activity.getSharedPreferences
+                                            ("credenciales", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.apply();
+                                    editor.putString("email", myUser.getEmail());
 
-                        @Override
-                        public void onFailure(Call<User> call, Throwable t) {
-                            myUser.setEmail(oldEmail);
-                            DynamicToast.makeError(getContext(), "Error editing email").show();
+                                    editor.commit();
+                                    //TODO SHARED PREFERENCES GUARDAR NUEVO EMAIL!
+                                }
 
-                        }
-                    });
-                    loadImg(); // TODO: SI HAGO ESTO SE CARGA LA IMAGEN
+                            }
+
+                            @Override
+                            public void onFailure(Call<User> call, Throwable t) {
+                                myUser.setEmail(oldEmail);
+                                DynamicToast.makeError(getContext(), "Error editing email").show();
+
+                            }
+                        });
+                    }
                 });
 
 
@@ -119,12 +132,16 @@ public class ProfileFragment extends Fragment {
                     apiUser = APIUser.getInstance();
                     String oldName = myUser.getName();
                     if (!oldName.equals(editTextName.getText().toString())) {
-                        myUser.setName(editTextName.getText().toString());
-                        apiUser.editUser(Token.getToken(getContext()), myUser, new Callback<User>() {
+                        User editedUser = new User(editTextName.getText().toString(), null, null);
+                        apiUser.editUser(Token.getToken(getContext()), editedUser, new Callback<User>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
-                                textViewName.setText(myUser.getName());
-                                DynamicToast.makeSuccess(getContext(), "Name edited successfully").show();
+                                if (response.body() != null) {
+                                    myUser = response.body();
+                                    textViewName.setText(myUser.getName());
+                                    DynamicToast.makeSuccess(getContext(), "Name edited successfully").show();
+                                }
+
                             }
 
                             @Override
@@ -135,7 +152,6 @@ public class ProfileFragment extends Fragment {
                             }
                         });
                     }
-                    loadImg(); // TODO: SI HAGO ESTO SE CARGA LA IMAGEN
                 });
 
 
@@ -148,12 +164,16 @@ public class ProfileFragment extends Fragment {
                     String oldLastName = myUser.getLast_name();
                     if (!oldLastName.equals(editTextLastName.getText().toString())) {
 
-                        myUser.setLast_name(editTextLastName.getText().toString());
-                        apiUser.editUser(Token.getToken(getContext()), myUser, new Callback<User>() {
+                        User editedUser = new User(null, editTextLastName.getText().toString(), null);
+
+                        apiUser.editUser(Token.getToken(getContext()), editedUser, new Callback<User>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
-                                textViewLastName.setText(myUser.getLast_name());
-                                DynamicToast.makeSuccess(getContext(), "Last Name edited successfully").show();
+                                if (response.body() != null) {
+                                    myUser = response.body();
+                                    textViewLastName.setText(myUser.getLast_name());
+                                    DynamicToast.makeSuccess(getContext(), "Last Name edited successfully").show();
+                                }
                             }
 
                             @Override
@@ -164,7 +184,6 @@ public class ProfileFragment extends Fragment {
                             }
                         });
                     }
-                    loadImg(); // TODO: SI HAGO ESTO SE CARGA LA IMAGEN
                 });
 
 
@@ -182,10 +201,6 @@ public class ProfileFragment extends Fragment {
             editTextLastName.setText(textViewLastName.getText());
             dialogLastName.show();
         });
-
-
-//        token = new Token(savedInstanceState.getString("tokenStr")); // Como pasar el objeto token
-//        Log.e("TAG", "Profile token: " + token.getAccessToken()); // TEMPORAL
 
 
         logout.setOnClickListener(v -> {
@@ -215,15 +230,6 @@ public class ProfileFragment extends Fragment {
         Picasso.with(getContext()).load(imageURL).into(circleImageView);
     }
 
-    /*private void loadImg() {
-        if (myUser.getImage() != null) {
-            if (myUser.getImage().startsWith("http") || myUser.getImage().startsWith("https"))
-                imageURL = myUser.getImage();
-            else imageURL = "http://puigmal.salle.url.edu/img/" + myUser.getImage();
-        }
-
-        Picasso.with(getActivity()).load(imageURL).into(circleImageView);
-    }*/
 
     private void loadViews() {
         textViewEmail = view.findViewById(R.id.profile_email);
@@ -284,9 +290,9 @@ public class ProfileFragment extends Fragment {
                 for (User u : response.body()) {
                     if (u.getEmail().equals(sPEmail)) {
                         myUser = u;
+                        id = myUser.getId();
                         setText();
                         loadImg();
-                        Log.d("IRIS", "USER" + myUser.getEmail());
                         break;
                     }
                 }
@@ -316,5 +322,6 @@ public class ProfileFragment extends Fragment {
         // Start LoginActivity and finish this one
         startActivity(new Intent(getContext(), LoginActivity.class));
     }
+
 
 }

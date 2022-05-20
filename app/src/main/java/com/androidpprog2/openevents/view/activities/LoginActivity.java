@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     if (token.getAccessToken() != null) {
                         // Saving the token
-                        safeToken(token);
+                        saveToken(token);
                         DynamicToast.makeSuccess(context, "Successful Login").show();
 
                         Intent intent = new Intent(LoginActivity.this, NavigationActivity.class);
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-            private void safeToken(Token token) {
+            private void saveToken(Token token) {
                 SharedPreferences sharedPreferences = getSharedPreferences
                         ("credenciales", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
