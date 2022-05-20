@@ -47,16 +47,6 @@
 
             </TextView>
 
-            <!--<TextView
-                android:id="@+id/lastNameTextView"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold">
-
-            </TextView>-->
         </LinearLayout>
 
         <LinearLayout
@@ -74,6 +64,7 @@
                 android:id="@+id/btn_add_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/dark_blue"
                 android:src="@drawable/ic_baseline_person_add_24" />
         </LinearLayout>
 

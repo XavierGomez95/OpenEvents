@@ -25,24 +25,26 @@
                 android:id="@+id/icon_image_event_id"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                android:layout_gravity="center"
+                android:layout_marginLeft="50dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:srcCompat="@drawable/ic_events" />
 
             <ImageButton
                 android:id="@+id/myEvents_element_edit_btn"
+                android:layout_marginStart="240dp"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginStart="260dp"
+                android:backgroundTint="@color/edit_button_cian"
                 android:layout_marginTop="70dp"
                 android:src="@drawable/ic_baseline_edit_24" />
 
             <ImageButton
                 android:id="@+id/myEvents_element_delete_btn"
-                android:layout_marginStart="260dp"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
+                android:layout_marginStart="240dp"
+                android:backgroundTint="@color/delete_button_red"
                 android:src="@drawable/ic_baseline_delete_forever_24" />
 
         </FrameLayout>
