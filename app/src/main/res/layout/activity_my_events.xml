@@ -13,6 +13,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView_noEvents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -28,10 +34,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
-                android:text="Add event"
                 android:textColor="@color/white"
-                android:textSize="16dp"
                 app:icon="@android:drawable/ic_input_add"
+                app:iconSize="50dp"
                 app:iconTint="@color/white" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -40,10 +45,10 @@
                 android:layout_height="match_parent"
                 app:layoutManager="LinearLayoutManager"
                 tools:context=".fragments.EventsFragment"
-                tools:listitem="@layout/list_my_events_element" />
+                tools:listitem="@layout/list_my_events_element"
+                />
 
         </FrameLayout>
-
 
 
     </RelativeLayout>

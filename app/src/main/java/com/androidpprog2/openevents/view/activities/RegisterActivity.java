@@ -40,12 +40,12 @@ public class RegisterActivity extends AppCompatActivity {
         lastName = findViewById(R.id.r_last_name);
         email = findViewById(R.id.r_email);
         pass = findViewById(R.id.r_password);
-        image= findViewById(R.id.r_image);
+        image = findViewById(R.id.r_image);
         Context context = this;
         EditText passAgain = findViewById(R.id.r_password_again);
 
         if (pass.getText().toString().equals(passAgain.getText().toString())) {
-            User u = new User(name.getText().toString(), lastName.getText().toString(), email.getText().toString(), pass.getText().toString(), "https://i.dlpng.com/static/png/6695634_preview.png");
+            User u = new User(name.getText().toString(), lastName.getText().toString(), email.getText().toString(), pass.getText().toString(), image.getText().toString());
             APIUser api = APIUser.getInstance();
             api.addUser(u, new Callback<User>() {
                 @Override
@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (response.body() != null) {
                         DynamicToast.makeSuccess(context, "Register Successful").show();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                    }else{
+                    } else {
                         DynamicToast.makeError(context, "Error with the inputs").show();
                     }
                 }
@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                     DynamicToast.makeError(context, "Error while connecting to the API").show();
                 }
             });
-        }else{
+        } else {
             DynamicToast.makeError(context, "The password is not the same in both inputs").show();
         }
     }

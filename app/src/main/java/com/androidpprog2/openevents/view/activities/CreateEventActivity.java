@@ -41,7 +41,6 @@ public class CreateEventActivity extends AppCompatActivity {
         btn_add_event = findViewById(R.id.btn_add_event);
 
         btn_add_event.setOnClickListener(view -> {
-            Log.d("IRIS", "TRUEEEEE");
             checkData();
         });
     }
@@ -61,14 +60,14 @@ public class CreateEventActivity extends AppCompatActivity {
         String startDate = getStringDate(startDatePicker, startTimePicker);
         String endDate = getStringDate(endDatePicker, endTimePicker);
         Log.d("IRIS", "date" + startDate);
-        Log.d("IRIS", "date" + startDate);
+        Log.d("IRIS", "date" + endDate);
 
 
         n_participators = findViewById(R.id.ce_participators);
         type = findViewById(R.id.ce_event_type);
 
         int num = Integer.parseInt(n_participators.getText().toString());
-        Event e = new Event(name.getText().toString(), "https://eldoce.es/wp-content/uploads/2017/10/doce-estrategia-digital-difusion-de-un-evento-1-1000x668.jpg", location.getText().toString(), description.getText().toString(), startDate, endDate, 60, type.getText().toString());
+        Event e = new Event(name.getText().toString(), image.getText().toString(), location.getText().toString(), description.getText().toString(), startDate, endDate, num, type.getText().toString());
 
         APIEvents api = APIEvents.getInstance();
         api.addEvent(Token.getToken(this), e, new Callback<Event>() {

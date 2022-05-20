@@ -68,17 +68,7 @@ public class EventsFragment extends Fragment {
             user = searchUser(getContext());
             apiMyEventsCall();
 
-            Intent intent = new Intent(getActivity(), MyEventsActivity.class);
-            Bundle args = new Bundle();
-            args.putSerializable("MyEventList", (Serializable) eventList); // myEventList CAMBIAR LA LISTA
-            intent.putExtra("BUNDLE", args);
 
-
-            // TODO TEMPORAL
-            for (Event e : eventList)
-                Log.d("Event List: ", e.getName());
-
-            startActivity(intent);
         });
 
 
@@ -90,17 +80,25 @@ public class EventsFragment extends Fragment {
         apiEvents.getMyEvents(Token.getToken(getContext()), user.getId(), new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                Intent intent = new Intent(getActivity(), MyEventsActivity.class);
                 try {
+
                     if (response.isSuccessful()) {
-                        myEventList.addAll(eventList);
-//                        myEventList = response.body();
-//                        myEventsRecyclerView = view.findViewById(R.id.recycler_view_events);
-//                        myEventsAdapter = new MyEventsAdapter(myEventList, getContext());
-//                        myEventsRecyclerView.setAdapter(myEventsAdapter);
+                        Log.d("HOLAAA", "AA" + response.body().get(0).getName());
+                        //myEventList.addAll(eventList);
+                        myEventList = response.body();
+                        Bundle args = new Bundle();
+                        args.putSerializable("MyEventList", (Serializable) myEventList); // myEventList CAMBIAR LA LISTA
+                        intent.putExtra("BUNDLE", args);
+                        // TODO TEMPORAL
+                        for (Event e : eventList)
+                            Log.d("Event List: ", e.getName());
                     }
+
                 } catch (Exception exception) {
                     Log.e("TAG", exception.getMessage());
                 }
+                startActivity(intent);
             }
 
             @Override
