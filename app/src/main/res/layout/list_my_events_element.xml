@@ -10,68 +10,64 @@
     android:clickable="true"
     android:focusable="true">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/row_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/icon_image_event_id"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            app:srcCompat="@drawable/ic_events" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/icon_image_event_id"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:srcCompat="@drawable/ic_events" />
+
+            <ImageButton
+                android:id="@+id/myEvents_element_edit_btn"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="260dp"
+                android:layout_marginTop="70dp"
+                android:src="@drawable/ic_baseline_edit_24" />
+
+            <ImageButton
+                android:id="@+id/myEvents_element_delete_btn"
+                android:layout_marginStart="260dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/ic_baseline_delete_forever_24" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/textView_width"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="4dp"
-            android:layout_toEndOf="@+id/icon_image_event_id"
-            android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold">
 
             </TextView>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="4dp"
-            android:layout_toEndOf="@+id/textView_width"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/myEvents_element_edit_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:src="@drawable/ic_baseline_edit_24" />
-
-            <ImageButton
-                android:id="@+id/myEvents_element_delete_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:src="@drawable/ic_baseline_delete_forever_24" />
-        </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

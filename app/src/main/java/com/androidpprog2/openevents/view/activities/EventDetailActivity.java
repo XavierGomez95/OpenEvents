@@ -3,6 +3,7 @@ package com.androidpprog2.openevents.view.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import com.androidpprog2.openevents.persistance.api.APIEvents;
 import com.androidpprog2.openevents.business.AssistanceRequest;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -21,12 +23,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EventDetailActivity extends AppCompatActivity {
+    private ImageView imageView;
     private TextView tittleDescriptionTextView;
     private TextView descriptionTextView;
     private TextView dateStart;
     private TextView dateEnd;
     private TextView location;
     private Button attendButton;
+    private Event event;
 
 
     @Override
@@ -36,7 +40,8 @@ public class EventDetailActivity extends AppCompatActivity {
 
         List<Event> eventList = (List<Event>) getIntent().getSerializableExtra("eventlist");
         int position = (int) getIntent().getSerializableExtra("position");
-        Event event = eventList.get(position);
+        event = eventList.get(position);
+        imageView = findViewById(R.id.event_description_image);
         tittleDescriptionTextView = findViewById(R.id.tittleDescriptionTextView);
         descriptionTextView = findViewById(R.id.descriptionTextView);
         dateStart = findViewById(R.id.dateStartTextView);
@@ -45,6 +50,7 @@ public class EventDetailActivity extends AppCompatActivity {
         attendButton = findViewById(R.id.btn_attend);
 
 
+        loadImg();
         tittleDescriptionTextView.setText(eventList.get(position).getName());
         descriptionTextView.setText(event.getDescription() + " participators" + event.getN_participators());
         dateStart.setText(event.getEventStart_date());
@@ -88,5 +94,23 @@ public class EventDetailActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    private void loadImg() {
+        String imageURL, image = event.getImage();
+
+        if (image != null) {
+            if ((image.startsWith("http") || image.startsWith("https"))
+                    && (image.endsWith(".jpg") || image.endsWith(".png")
+                    || image.endsWith(".jpeg") || image.endsWith(".JPG")
+                    || image.endsWith(".PNG") || image.endsWith(".JPEG")))
+                imageURL = image;
+            else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+        } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+
+        Log.d("EVENT NAME : ", event.getName());
+        Log.d("URL : ", image);
+
+        Picasso.with(getApplicationContext()).load(imageURL).into(imageView);
     }
 }

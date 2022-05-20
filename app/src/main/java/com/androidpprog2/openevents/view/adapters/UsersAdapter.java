@@ -125,12 +125,13 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             if (image != null) {
                 if ((image.startsWith("http") || image.startsWith("https"))
                         && (image.endsWith(".jpg") || image.endsWith(".png")
-                        || image.endsWith(".JPG") || image.endsWith(".PNG")))
+                        || image.endsWith(".jpeg") || image.endsWith(".JPG")
+                        || image.endsWith(".PNG") || image.endsWith(".JPEG")))
                     imageURL = image;
                 else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
             } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-            Log.d("EVENT NAME : ", image);
+            Log.d("EVENT NAME : ", userList.get(pos).getName());
             Log.d("URL : ", image);
 
             Picasso.with(context).load(imageURL).into(imageView);

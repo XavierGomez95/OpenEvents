@@ -30,7 +30,7 @@ public class UserDetailActivity extends AppCompatActivity {
     private TextView stats;
     private TextView num_friends;
     private Button friendRequest_btn;
-    private ImageView circleImageView;
+    private ImageView imageView;
     private String imageURL;
     private User myUser;
 
@@ -49,7 +49,7 @@ public class UserDetailActivity extends AppCompatActivity {
         stats = findViewById(R.id.stats);
         num_friends = findViewById(R.id.numFriends);
         friendRequest_btn = findViewById(R.id.friendRequestbtn);
-        circleImageView = findViewById(R.id.user_image);
+        imageView = findViewById(R.id.user_image);
 
         loadImg();
         name.setText(myUser.getName() + " " + myUser.getLast_name());
@@ -80,13 +80,21 @@ public class UserDetailActivity extends AppCompatActivity {
     }
 
     private void loadImg() {
-        if (myUser.getImage() != null) {
-            if (myUser.getImage().startsWith("http") || myUser.getImage().startsWith("https"))
-                imageURL = myUser.getImage();
-            else imageURL = "http://puigmal.salle.url.edu/img/" + myUser.getImage();
-        }
+        String imageURL, image = myUser.getImage();
 
-        Picasso.with(this).load(imageURL).into(circleImageView);
+        if (image != null) {
+            if ((image.startsWith("http") || image.startsWith("https"))
+                    && (image.endsWith(".jpg") || image.endsWith(".png")
+                    || image.endsWith(".jpeg") || image.endsWith(".JPG")
+                    || image.endsWith(".PNG") || image.endsWith(".JPEG")))
+                imageURL = image;
+            else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+        } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+
+        Log.d("EVENT NAME : ", myUser.getName());
+        Log.d("URL : ", image);
+
+        Picasso.with(getApplicationContext()).load(imageURL).into(imageView);
     }
 
     private void getStats() {

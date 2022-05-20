@@ -44,8 +44,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             textView = view.findViewById(R.id.textView);
             imageView = view.findViewById(R.id.icon_image_event_id);
             flameLayoutclic1 = view.findViewById(R.id.row_fragment);
-//            delete_btn = view.findViewById(R.id.myEvent_element_delete_btn);
-//            edit_btn = view.findViewById(R.id.myEvent_element_edit_btn);
         }
 
         /**
@@ -59,17 +57,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         public void bind(int pos) {
             textView.setText(list.get(pos).getName());
             loadImg(pos);
-//            delete_btn.setOnClickListener(v -> deleteItem(pos));
-//            edit_btn.setOnClickListener(v -> editItem(pos));
-            flameLayoutclic1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            flameLayoutclic1.setOnClickListener(v -> {
                     Intent intent = new Intent(activity, EventDetailActivity.class);
                     intent.putExtra("position", pos);
                     intent.putExtra("eventlist", (Serializable) list);
 
                     context.startActivity(intent);
-                }
             });
 
         }
@@ -80,7 +73,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             if (image != null) {
                 if ((image.startsWith("http") || image.startsWith("https"))
                         && (image.endsWith(".jpg") || image.endsWith(".png")
-                        || image.endsWith(".JPG") || image.endsWith(".PNG")))
+                        || image.endsWith(".jpeg") || image.endsWith(".JPG")
+                        || image.endsWith(".PNG") || image.endsWith(".JPEG")))
                     imageURL = image;
                 else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
             } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
@@ -89,7 +83,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             Log.d("URL : ", image);
 
             Picasso.with(context).load(imageURL).into(imageView);
-
         }
 
 
