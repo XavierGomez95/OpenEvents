@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,29 +53,46 @@ public class MyEventsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         setContentView(R.layout.activity_my_events);
+
         apiEvents = APIEvents.getInstance();
 
-        createEvent_fab = findViewById(R.id.create_event_floating_button);
-        createEvent_fab.setOnClickListener(view -> {
-            DynamicToast.makeError(this, "Entra").show();
-            Intent editIntent = new Intent(this, CreateEventActivity.class);
-            startActivity(editIntent);
-        });
+        loadViews();
 
+        if (myEventList.isEmpty()) textView_noEvents.setText("No event created yet, Add an event!");
+
+        createEvent_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DynamicToast.makeError(getApplicationContext(), "Entra").show();
+                Intent editIntent = new Intent(getApplicationContext(), CreateEventActivity.class);
+                startActivity(editIntent);
+            }
+        });
 
         intent = getIntent();
         id = intent.getIntExtra("id", -1);
         apiMyEventsCall();
     }
 
-    @Override
+    /**
+     * Method called to load the views.
+     */
+    private void loadViews() {
+        textView_noEvents = findViewById(R.id.textView_noEvents);
+        createEvent_fab = findViewById(R.id.create_event_floating_button);
+        myEventsRecyclerView = findViewById(R.id.my_events_recycler_view);
+    }
+
+    /*@Override
     protected void onResume() {
         super.onResume();
         setContentView(R.layout.activity_my_events);
         apiMyEventsCall();
 
-    }
+    }*/
 
     /**
      * Method used to get a list of all the events created by the user with the session started
@@ -91,11 +109,9 @@ public class MyEventsActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         myEventList = response.body();
                         if (myEventList != null && !myEventList.isEmpty()) {
-                            myEventsRecyclerView = findViewById(R.id.my_events_recycler_view);
                             myEventsAdapter = new MyEventsAdapter(myEventList, c);
                             myEventsRecyclerView.setAdapter(myEventsAdapter);
                         } else {
-                            textView_noEvents = findViewById(R.id.textView_noEvents);
                             textView_noEvents.setText("No event created yet, Add an event!");
                         }
 

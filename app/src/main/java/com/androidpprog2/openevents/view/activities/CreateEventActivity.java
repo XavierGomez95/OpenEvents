@@ -98,12 +98,19 @@ public class CreateEventActivity extends AppCompatActivity {
     private void checkData() {
         String startDate = getStringDate(startDatePicker, startTimePicker);
         String endDate = getStringDate(endDatePicker, endTimePicker);
+        int num = Integer.parseInt(n_participators.getText().toString());
 
         // TODO: ELIMINAR CUANDO FUNCIONE TODO
-        Log.d("IRIS", "date" + startDate);
-        Log.d("IRIS", "date" + endDate);
+        Log.d("IRIS", "date: " + startDate);
+        Log.d("IRIS", "date: " + endDate);
+        Log.d("IRIS", "num: " + num);
+        Log.d("IRIS", "name: " + name.getText().toString());
+        Log.d("IRIS", "image: " + image.getText().toString());
+        Log.d("IRIS", "location: " + location.getText().toString());
+        Log.d("IRIS", "description: " + description.getText().toString());
+        Log.d("IRIS", "type: " + type.getText().toString());
 
-        int num = Integer.parseInt(n_participators.getText().toString());
+
         Event e = new Event(name.getText().toString(), image.getText().toString(),
                 location.getText().toString(), description.getText().toString(),
                 startDate, endDate, num, type.getText().toString()
