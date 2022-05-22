@@ -33,6 +33,60 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
+    private List<User> userList;
+    private Context context;
+    private Activity activity;
+
+    /**
+     * Constructor.
+     *
+     * @param userList of users.
+     * @param context UsersFragment context.
+     */
+    public UsersAdapter(List<User> userList, Context context) {
+        this.userList = userList;
+        this.context = context;
+        this.activity = (Activity) context;
+    }
+
+
+    /**
+     * Called by the recyclerView when it needs to represent a new item.
+     *
+     * @param parent ViewGroup into which the new View will be added.
+     * @param viewType the View type of the new View.
+     * @return a new ViewHolder of the viewType.
+     */
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_user_element, parent, false);
+        return new UsersAdapter.ViewHolder(itemView);
+    }
+
+    /**
+     * Called by the recyclerView to display the data at the specified position.
+     * Calls {@link MyEventsAdapter.ViewHolder #bind(int)}
+     *
+     * @param holder represent the contents of the item at the given position in the data set.
+     * @param position Element position in the data set.
+     */
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(position);
+    }
+
+    /**
+     *
+     * @return userList size.
+     */
+    @Override
+    public int getItemCount() {
+        return userList.size();
+    }
+
+
     /**
      * VIEW HOLDER CLASS
      */
@@ -42,8 +96,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         RelativeLayout row_fragment;
         ImageView imageView;
 
+
         /**
+         * Initializes checkbox and buttons finding by id.
          *
+         * @param view
          */
         ViewHolder(View view) {
             super(view);
@@ -53,13 +110,17 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             row_fragment = view.findViewById(R.id.row_fragment);
         }
 
+
         /**
+         * Data displacement.
          *
+         * @param pos Element position in the data set.
          */
         public void bind(int pos) {
             nameTextView.setText(userList.get(pos).getName() + " " + userList.get(pos).getLast_name());
             loadImg(pos);
             addUser.setVisibility(View.VISIBLE);
+
             row_fragment.setOnClickListener(view -> {
                 Intent intent = new Intent(activity, UserDetailActivity.class);
                 intent.putExtra("position", pos);
@@ -67,6 +128,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
                 context.startActivity(intent);
             });
+
             addUser.setOnClickListener(view -> {
                 APIUser.getInstance().addFriendRequest(Token.getToken(context), userList.get(pos).getId(), new Callback<FriendRequest>() {
                     @Override
@@ -83,6 +145,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             });
         }
 
+
+        /**
+         * Method used to load the users profile images.
+         *
+         * @param pos position of the recycle view.
+         */
         private void loadImg(int pos) {
             String imageURL, image = userList.get(pos).getImage();
 
@@ -97,47 +165,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             } else
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
+            //TODO TEMPORAL
             Log.d("EVENT NAME : ", userList.get(pos).getName());
             Log.d("URL : ", image);
 
             Picasso.with(context).load(imageURL).into(imageView);
         }
     }
-
-    private List<User> userList;
-    private Context context;
-    private Activity activity;
-
-    public UsersAdapter(List<User> userList, Context context) {
-        this.userList = userList;
-        this.context = context;
-        this.activity = (Activity) context;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_user_element, parent, false);
-        return new UsersAdapter.ViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(position);
-    }
-
-    @Override
-    public int getItemCount() {
-        return userList.size();
-    }
-
-    /*public void setFilteredList(List<User> filteredList) {
-        this.userList = filteredList;
-    }*/
-
-
-
-
-
 }

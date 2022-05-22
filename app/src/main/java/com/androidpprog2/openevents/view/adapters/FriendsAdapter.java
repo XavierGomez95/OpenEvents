@@ -31,18 +31,33 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * FRIENDS ADAPTER CLASS
+ */
 public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
     private List<User> userList;
     private Context context;
     private Activity activity;
 
+    /**
+     * Constructor.
+     *
+     * @param userList A list of friends (class User).
+     * @param context MyFriendsActivity context.
+     */
     public FriendsAdapter(List<User> userList, Context context) {
         this.userList = userList;
         this.context = context;
         this.activity = (Activity) context;
     }
 
-
+    /**
+     * Called by the recyclerView when it needs to represent a new item.
+     *
+     * @param parent ViewGroup into which the new View will be added.
+     * @param viewType the View type of the new View.
+     * @return a new ViewHolder of the viewType.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,11 +66,23 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         return new FriendsAdapter.ViewHolder(itemView);
     }
 
+    /**
+     * Called by the recyclerView to display the data at the specified position.
+     * Calls {@link MyEventsAdapter.ViewHolder #bind(int)}
+     *
+     * @param holder represent the contents of the item at the given position in the data set.
+     * @param position Element position in the data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(position);
     }
 
+    /**
+     *
+     *
+     * @return userList size
+     */
     @Override
     public int getItemCount() {
         return userList.size();
@@ -72,7 +99,9 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         ImageView imageView;
 
         /**
+         * Initializes checkbox and buttons finding by id.
          *
+         * @param view
          */
         ViewHolder(View view) {
             super(view);
@@ -82,11 +111,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
         }
 
         /**
+         * Set the friend image, name and last name, and manage the onClickListener of the cardView.
          *
+         * @param pos Element position in the data set.
          */
         public void bind(int pos) {
             nameTextView.setText(userList.get(pos).getName() + " " + userList.get(pos).getLast_name());
             loadImg(pos);
+
             row_fragment.setOnClickListener(view -> {
                 Intent intent = new Intent(activity, UserDetailActivity.class);
                 intent.putExtra("position", pos);
@@ -97,6 +129,11 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             });
         }
 
+        /**
+         * Method used to load the friends profile images.
+         *
+         * @param pos position of the recycle view.
+         */
         private void loadImg(int pos) {
             String imageURL, image = userList.get(pos).getImage();
 
@@ -110,12 +147,11 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             } else
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
+            // TODO: ELIMINAR CUANDO ACABEMOS
             Log.d("EVENT NAME : ", image);
             Log.d("URL : ", image);
 
             Picasso.with(context).load(imageURL).into(imageView);
         }
     }
-
-
 }

@@ -2,6 +2,9 @@ package com.androidpprog2.openevents.business;
 
 import java.io.Serializable;
 
+/**
+ * ASSISTANCE REQUEST CLASS
+ */
 public class AssistanceRequest implements Serializable {
     private Integer fieldCount;
     private Integer affectedRows;
@@ -10,6 +13,10 @@ public class AssistanceRequest implements Serializable {
     private Integer serverStatus;
     private Integer warningStatus;
 
+    /**
+     * Constructor.
+     *
+     */
     public AssistanceRequest(Integer fieldCount, Integer affectedRows, Integer insertId, String info, Integer serverStatus, Integer warningStatus) {
         this.fieldCount = fieldCount;
         this.affectedRows = affectedRows;

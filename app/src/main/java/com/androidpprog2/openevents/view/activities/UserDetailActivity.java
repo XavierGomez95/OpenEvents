@@ -27,39 +27,42 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * USER DETAIL ACTIVITY CLASS
+ */
 public class UserDetailActivity extends AppCompatActivity {
-    private TextView stats;
-    private TextView num_friends;
+    private TextView stats, num_friends, name, email;
     private Button friendRequest_btn;
     private ImageView imageView;
     private String imageURL;
     private User user;
 
 
+    /**
+     * Setting the essential layout parameters.
+     * load views, load image, setting name, last name, email, status and number of friends.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         List<User> userList = (List<User>) getIntent().getSerializableExtra("userList");
+
         int position = getIntent().getIntExtra("position", -1);
         boolean friend = getIntent().getBooleanExtra("friend", false);
         boolean request = getIntent().getBooleanExtra("request", false);
 
         user = userList.get(position);
 
-        TextView name = findViewById(R.id.user_name);
-        TextView email = findViewById(R.id.user_email);
-        stats = findViewById(R.id.stats);
-        num_friends = findViewById(R.id.numFriends);
-        friendRequest_btn = findViewById(R.id.friendRequestbtn);
-        imageView = findViewById(R.id.user_image);
-
+        loadViews();
         loadImg();
-        name.setText(user.getName() + " " + user.getLast_name());
-        email.setText(user.getEmail());
-        getStats();
-        getNumFriends();
+        setTexts();
+        setStats();
+        setNumFriends();
+
         if (friend) {
             friendRequest_btn.setText("FRIEND");
             friendRequest_btn.setEnabled(false);
@@ -67,6 +70,7 @@ public class UserDetailActivity extends AppCompatActivity {
             friendRequest_btn.setText("ACCEPT REQUEST");
             acceptRequest();
         }
+
         friendRequest_btn.setOnClickListener(view -> {
             if (!friendRequest_btn.getText().equals("REQUESTED")) {
                 APIUser api = APIUser.getInstance();
@@ -90,6 +94,29 @@ public class UserDetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method used to set the views.
+     */
+    private void loadViews() {
+        name = findViewById(R.id.user_name);
+        email = findViewById(R.id.user_email);
+        stats = findViewById(R.id.stats);
+        num_friends = findViewById(R.id.numFriends);
+        friendRequest_btn = findViewById(R.id.friendRequestbtn);
+        imageView = findViewById(R.id.user_image);
+    }
+
+    /**
+     * Method used to set the textViews of the current user profile.
+     */
+    private void setTexts() {
+        name.setText(user.getName() + " " + user.getLast_name());
+        email.setText(user.getEmail());
+    }
+
+    /**
+     * Method called to load the image shown in the details of an user.
+     */
     private void loadImg() {
         String imageURL, image = user.getImage();
 
@@ -104,13 +131,17 @@ public class UserDetailActivity extends AppCompatActivity {
         } else
             imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
+        // TODO: REVISAR SI SE HA DE ELIMINAR AL FINAL
         Log.d("EVENT NAME : ", user.getName());
         Log.d("URL : ", image);
 
         Picasso.with(getApplicationContext()).load(imageURL).into(imageView);
     }
 
-    private void getStats() {
+    /**
+     * Method called to set the information stats in the
+     */
+    private void setStats() {
         stats = findViewById(R.id.stats);
         APIUser.getInstance().getUserStats(Token.getToken(this), user.getId(), new Callback<Stats>() {
             @SuppressLint("SetTextI18n")
@@ -123,13 +154,14 @@ public class UserDetailActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Stats> call, @NonNull Throwable t) {
                 DynamicToast.makeError(getApplicationContext(), "Error loading stadistics").show();
-
-
             }
         });
     }
 
-    private void getNumFriends() {
+    /**
+     * Call APIUser to get the quantity of friends, and set it on the textView.
+     */
+    private void setNumFriends() {
         num_friends = findViewById(R.id.numFriends);
         APIUser.getInstance().getFriends(Token.getToken(this), user.getId(), new Callback<List<User>>() {
 
@@ -149,6 +181,9 @@ public class UserDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Call APIUser accept or decline the friend request.
+     */
     private void acceptRequest() {
         Context context = this;
         friendRequest_btn.setOnClickListener(view -> {

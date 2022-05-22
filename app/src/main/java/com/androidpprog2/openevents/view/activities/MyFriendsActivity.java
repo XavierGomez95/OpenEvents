@@ -22,7 +22,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * MY FRIENDS ACTIVITY CLASS
+ */
 public class MyFriendsActivity extends AppCompatActivity {
     private List<User> requests;
     private List<User> friends;
@@ -31,11 +33,16 @@ public class MyFriendsActivity extends AppCompatActivity {
     private RecyclerView friendsRecyclerView;
     private FriendsAdapter friendsAdapter;
     private RequestsAdapter requestsAdapter;
-    private Context c = this;
-    private User myUser;
+    private Context context = this;
+    private User myUser; // TODO: ELIMINAR SI NO LO USAMOS
     private int id;
 
 
+    /**
+     * Setting the essential layout parameters.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +58,12 @@ public class MyFriendsActivity extends AppCompatActivity {
         linearLayoutManagerR.setOrientation(RecyclerView.VERTICAL);
         getListRequests();
         getListFriends();
-
     }
 
+    /**
+     * Call the API to get the list of requests of the current user.
+     */
     private void getListRequests() {
-
         APIUser.getInstance().getFriendRequests(Token.getToken(this), new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
@@ -63,7 +71,7 @@ public class MyFriendsActivity extends AppCompatActivity {
                     requests = response.body();
                     if (!requests.isEmpty()) {
                         Log.d("REQUEST", "" + requests.get(0).getEmail());
-                        requestsAdapter = new RequestsAdapter(requests, c);
+                        requestsAdapter = new RequestsAdapter(requests, context);
                         requestsRecyclerView.setLayoutManager(linearLayoutManagerR);
                         requestsRecyclerView.setAdapter(requestsAdapter);
                     }
@@ -73,14 +81,14 @@ public class MyFriendsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
                 Log.d("ERROR", "");
-
             }
         });
-
     }
 
+    /**
+     * Call the API to get the list of friends of the current user.
+     */
     private void getListFriends() {
-
         APIUser.getInstance().getFriends(Token.getToken(this), id, new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
@@ -88,7 +96,7 @@ public class MyFriendsActivity extends AppCompatActivity {
                     friends = response.body();
                     if (!friends.isEmpty()) {
                         Log.d("DENTRO", " " + friends.get(0).getEmail());
-                        friendsAdapter = new FriendsAdapter(friends, c);
+                        friendsAdapter = new FriendsAdapter(friends, context);
                         friendsRecyclerView.setLayoutManager(linearLayoutManagerF);
                         friendsRecyclerView.setAdapter(friendsAdapter);
                     }
@@ -98,10 +106,9 @@ public class MyFriendsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
+                // TODO: GENERAR UNA ALERTA ADECUADA
                 Log.d("ERROR", "");
-
             }
         });
-
     }
 }

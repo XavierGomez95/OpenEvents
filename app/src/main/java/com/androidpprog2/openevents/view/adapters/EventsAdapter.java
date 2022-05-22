@@ -22,8 +22,66 @@ import com.squareup.picasso.Picasso;
 import java.io.Serializable;
 import java.util.List;
 
-
+/**
+ * EVENTS ADAPTER CLASS
+ */
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder> {
+    private List<Event> eventList;
+    private Context context;
+    private Activity activity;
+
+    /**
+     * Constructor.
+     *
+     * @param list A list of events (class Event).
+     * @param context EventsFragment context.
+     */
+    public EventsAdapter(List<Event> list, Context context) {
+        this.eventList = list;
+        this.context = context;
+        this.activity = (Activity) context;
+    }
+
+
+    /**
+     * Called by the recyclerView when it needs to represent a new item.
+     *
+     * @param parent ViewGroup into which the new View will be added.
+     * @param viewType the View type of the new View.
+     * @return a new ViewHolder of the viewType.
+     */
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_event_element, parent, false);
+        return new EventsAdapter.ViewHolder(itemView);
+    }
+
+
+    /**
+     * Called by the recyclerView to display the data at the specified position.
+     * Calls {@link MyEventsAdapter.ViewHolder #bind(int)}
+     *
+     * @param holder represent the contents of the item at the given position in the data set.
+     * @param position Element position in the data set.
+     */
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(position);
+    }
+
+
+    /**
+     *
+     * @return eventsList size.
+     */
+    @Override
+    public int getItemCount() {
+        return eventList.size();
+    }
+
+
     /**
      * VIEW HOLDER CLASS
      */
@@ -45,28 +103,33 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         }
 
         /**
-         * Sets the Task name in the checkbox
-         * Knows if a task checkbox has been checked and updates the Task boolean
-         * onClickListener of delete and edit buttons
-         * sets the buttons invisible  for default tasks
+         * Set the events image and name, and manage the onClickListener of the cardView.
+         * Calls {@link ViewHolder #loadImg(int)}
          *
-         * @param pos position of the recycle view
+         * @param pos Element position in the data set.
          */
         public void bind(int pos) {
-            textView.setText(list.get(pos).getName());
+            textView.setText(eventList.get(pos).getName());
             loadImg(pos);
+
             flameLayoutclic1.setOnClickListener(v -> {
                     Intent intent = new Intent(activity, EventDetailActivity.class);
                     intent.putExtra("position", pos);
-                    intent.putExtra("eventlist", (Serializable) list);
+                    intent.putExtra("eventlist", (Serializable) eventList);
 
                     context.startActivity(intent);
             });
 
         }
 
+
+        /**
+         * Method used to load the events profile images.
+         *
+         * @param pos position of the recycle view.
+         */
         private void loadImg(int pos) {
-            String imageURL, image = list.get(pos).getImage();
+            String imageURL, image = eventList.get(pos).getImage();
 
             if (image != null) {
                 if ((image.startsWith("http") || image.startsWith("https"))
@@ -80,84 +143,31 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
             //TODO TEMPORAL
-            Log.d("EVENT NAME : ", list.get(pos).getName());
-            Log.d("EVENT NAME : ", list.get(pos).getType());
+            Log.d("EVENT NAME : ", eventList.get(pos).getName());
+            Log.d("EVENT TYPE : ", eventList.get(pos).getType());
             Log.d("URL : ", image);
 
             Picasso.with(context).load(imageURL).into(imageView);
         }
 
 
+        /**
+         * Method called to delete a item of the eventsList.
+         *
+         * @param pos item position.
+         */
         public void deleteItem(int pos) {
 
         }
 
         /**
-         * @param pos
+         * Method called to edit a item of the eventsList.
+         *
+         * @param pos item position.
          */
         public void editItem(int pos) {
 
-
         }
-
     }
-
-
-
-
-    /**
-     * ADAPTER TASK CLASS
-     */
-    private List<Event> list;
-    private Context context;
-    private Activity activity;
-
-
-    public EventsAdapter(List<Event> list, Context context) {
-        this.list = list;
-        this.context = context;
-        this.activity = (Activity) context;
-    }
-
-
-    /**
-     * Methods that calls an item of a task ui (fragment_task.xml)
-     *
-     * @param parent   Viewgroup
-     * @param viewType int
-     * @return itemview
-     */
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_event_element, parent, false);
-        return new EventsAdapter.ViewHolder(itemView);
-    }
-
-    /**
-     * Function that manages the position of each task
-     * calls {@link ViewHolder #bind(int)}
-     *
-     * @param holder   view
-     * @param position integer of tasks
-     */
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(position);
-    }
-
-
-    /**
-     * Returns the list size
-     *
-     * @return size of items in list
-     */
-    @Override
-    public int getItemCount() {
-        return list.size();
-    }
-
-
 }
 

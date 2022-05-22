@@ -25,7 +25,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * NAVIGATION ACTIVITY CLASS
+ */
 public class NavigationActivity extends AppCompatActivity {
     private static final String TAG = "NavigationActivity";
     private Bundle bundle = new Bundle();
@@ -35,36 +37,33 @@ public class NavigationActivity extends AppCompatActivity {
     private UsersFragment usersFragment = new UsersFragment();
     public static User user = null;
 
+    /**
+     * Setting the essential layout parameters.
+     * Manage of the fragments.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityTabBarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Predefined fragment
-        selectFragment(eventsFragment);
+        selectFragment(eventsFragment); // Predefined fragment
         searchUser(this);
         binding.bottomNavigationView.setSelectedItemId(R.id.events); // Predefined button
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.search_users:
                     selectFragment(usersFragment);
-
-//                  Log.e("3", "---- OPTION 1 !!!!");
                     break;
 
                 case R.id.events:
                     selectFragment(eventsFragment);
-
-
-//                  Log.e("2", "---- OPTION 2 !!!!");
                     break;
 
                 case R.id.profile:
                     selectFragment(profileFragment);
-
-//                  Log.e("3", "---- OPTION 3 !!!!");
                     break;
 
                 default:
@@ -74,6 +73,10 @@ public class NavigationActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     *
+     * @param incomingFragment object if an specific fragment.
+     */
     public void selectFragment(Fragment incomingFragment) {
         FragmentManager fragment = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragment.beginTransaction();
@@ -81,10 +84,15 @@ public class NavigationActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    public static User searchUser(Context c) {
-        SharedPreferences sharedPreferences = c.getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+    /**
+     *
+     * @param context of this activity.
+     * @return user.
+     */
+    public static User searchUser(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         final String[] email = {sharedPreferences.getString("email", "Error, information does not exist.")};
-        APIUser.getInstance().getListUsers(Token.getToken(c), new Callback<List<User>>() {
+        APIUser.getInstance().getListUsers(Token.getToken(context), new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 for (User u : response.body()) {
@@ -100,13 +108,9 @@ public class NavigationActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
                 Log.d("IRIS", "FAIL");
-
             }
-
         });
-
         return user;
     }
-
 }
 

@@ -18,7 +18,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * CREATED EVENT ACTIVITY CLASS
+ */
 public class CreateEventActivity extends AppCompatActivity {
     private Button btn_add_event;
     private EditText name;
@@ -33,59 +35,84 @@ public class CreateEventActivity extends AppCompatActivity {
     private EditText type;
 
 
+    /**
+     * Setting the essential layout parameters.
+     * Load views and manage add event functions.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
-        btn_add_event = findViewById(R.id.btn_add_event);
+        loadViews();
 
         btn_add_event.setOnClickListener(view -> {
             checkData();
         });
     }
 
-    private void checkData() {
+    /**
+     * Method called to load all views.
+     */
+    private void loadViews() {
         name = findViewById(R.id.ce_name);
         image = findViewById(R.id.ce_image);
         location = findViewById(R.id.ce_location);
         description = findViewById(R.id.ce_description);
         startDatePicker = findViewById(R.id.start_date);
-        startDatePicker = findViewById(R.id.start_date);
         startTimePicker = findViewById(R.id.start_time);
         endDatePicker = findViewById(R.id.end_date);
         endTimePicker = findViewById(R.id.end_time);
         type = findViewById(R.id.ce_event_type);
+        btn_add_event = findViewById(R.id.btn_add_event);
+        n_participators = findViewById(R.id.ce_participators);
+        type = findViewById(R.id.ce_event_type);
+    }
 
+    /**
+     * Method called to check the entrances of information and to add the event to the API.
+     */
+    private void checkData() {
         String startDate = getStringDate(startDatePicker, startTimePicker);
         String endDate = getStringDate(endDatePicker, endTimePicker);
+
+        // TODO: ELIMINAR CUANDO FUNCIONE TODO
         Log.d("IRIS", "date" + startDate);
         Log.d("IRIS", "date" + endDate);
 
-
-        n_participators = findViewById(R.id.ce_participators);
-        type = findViewById(R.id.ce_event_type);
-
         int num = Integer.parseInt(n_participators.getText().toString());
-        Event e = new Event(name.getText().toString(), image.getText().toString(), location.getText().toString(), description.getText().toString(), startDate, endDate, num, type.getText().toString());
+        Event e = new Event(name.getText().toString(), image.getText().toString(),
+                        location.getText().toString(), description.getText().toString(),
+                        startDate, endDate, num, type.getText().toString()
+        );
 
         APIEvents api = APIEvents.getInstance();
         api.addEvent(Token.getToken(this), e, new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
                 Event e = response.body();
-                Log.d("IRIS", "TRUEEEEE" + response.body());
+                // TODO: CAMBIAR POR OTRO AVISO
+                Log.d("IRIS", "TRUEEEEE " + response.body());
                 finish();
             }
 
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
+                // TODO: CAMBIAR POR OTRO AVISO
                 Log.d("IRIS", "FALSEEE" + t.toString());
             }
         });
-
     }
 
+    /**
+     * Method called to convert the given date format to the required String type.
+     *
+     * @param datePicker contains the date in DatePicker format.
+     * @param timePicker contains the date in TimePicker format.
+     * @return a date String needed for the API.
+     */
     private String getStringDate(DatePicker datePicker, TimePicker timePicker) {
         Log.d("IRIS", "ENTRA");
         int day = datePicker.getDayOfMonth();

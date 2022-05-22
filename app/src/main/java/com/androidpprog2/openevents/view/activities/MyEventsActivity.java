@@ -17,6 +17,9 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * MY EVENTS ACTIVITY CLASS
+ */
 public class MyEventsActivity extends AppCompatActivity {
     private Intent intent;
     private List<Event> myEventList = new ArrayList<>();
@@ -27,6 +30,12 @@ public class MyEventsActivity extends AppCompatActivity {
     private TextView textView_noEvents;
 
 
+    /**
+     * Setting the essential layout parameters.
+     * Manage the functions of the create event button.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +52,7 @@ public class MyEventsActivity extends AppCompatActivity {
             textView_noEvents.setText("No event created yet, Add an event!");
         }
 
-        // TODO TEMPORAL
+        // TODO ELIMINAR AL FINAL
         for (Event e : myEventList)
             Log.d("My Event List: ", e.getName());
 
@@ -54,13 +63,6 @@ public class MyEventsActivity extends AppCompatActivity {
 
         myEventsRecyclerView = findViewById(R.id.my_events_recycler_view);
         myEventsAdapter = new MyEventsAdapter(myEventList, this);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-
         myEventsRecyclerView.setAdapter(myEventsAdapter);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 }

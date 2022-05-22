@@ -20,6 +20,9 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * OPEN EVENTS API INTERFACE
+ */
 public interface OpenEventsAPI {
 
     //-------------USERS--------------
@@ -89,7 +92,7 @@ public interface OpenEventsAPI {
     Call<Event> addEvent(@Header("Authorization") String token, @Body Event event);
 
     @GET("events")
-    Call<List<Event>> getListEvents();
+    Call<List<Event>> getListEvents(@Header("Authorization") String token);
 
     @GET("events/{id}")
     Call<Event> getEventId(@Path("id") Integer id);

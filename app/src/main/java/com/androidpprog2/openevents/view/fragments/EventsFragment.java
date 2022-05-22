@@ -5,7 +5,6 @@ import static com.androidpprog2.openevents.view.activities.NavigationActivity.se
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.CollapsibleActionView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +36,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EventsFragment extends Fragment implements CollapsibleActionView {
+/**
+ * EVENTS FRAGMENT CLASS
+ */
+public class EventsFragment extends Fragment {
     private APIEvents apiEvents;
-    private List<Event> eventList, myEventList, filteredList = new ArrayList<>();
+    private List<Event> eventList, myEventList;
     private RecyclerView eventsRecyclerView;
     private EventsAdapter eventsAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -47,103 +49,44 @@ public class EventsFragment extends Fragment implements CollapsibleActionView {
     private View view;
     private ExtendedFloatingActionButton myEvents_fab;
     private User user = null;
-
     private Spinner spinner;
     private SearchView searchEventsView;
-    private String[] spinnerListCategories = {"All events", "sports-grup7", "Excursió",
+    private final String[] spinnerListCategories = {"All events", "sports-grup7", "Excursió",
                                                 "art-grup7", "music-grup7", "nightlife-grup7"};
 
-    public EventsFragment() {
-        apiEventsCall();
-    }
 
+    /**
+     * Setting the essential layout parameters.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
     }
 
-  /*  @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-*/
 
-
+    /**
+     * Inflating the layout of the EventsFragment.
+     * Loading views, api calls, and management of buttons, spinners, and search views.
+     *
+     * @param inflater object used to inflate any views in the fragment.
+     * @param container used to generate the LayoutParams of the view.
+     * @param savedInstanceState not used.
+     * @return EventsFragment view.
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_events, container, false);
 
-//        user = searchUser(getContext());
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, spinnerListCategories);
-
+        loadViews();
         apiEventsCall();
 
-        searchEventsView = view.findViewById(R.id.search_bar_events);
         searchEventsView.clearFocus();
-        searchEvents();
-
-
-        spinner = view.findViewById(R.id.action_bar_spinner_events);
-        spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("ON ITEM SELECTED SPINNER: ", spinner.getSelectedItem().toString());
-                /*for (Event event : eventList) {
-                    if (event.getType().equals(spinner.getSelectedItem().toString())) {
-                        Log.d("EVENTO: ", event.getName());
-                        filteredList.add(event);
-                    }
-                }*/
-                if (spinner.getSelectedItem().toString().equals("All events")) {
-                    eventsAdapter = new EventsAdapter(eventList, getContext());
-                    eventsRecyclerView.setAdapter(eventsAdapter);
-                } else {
-                    String type = spinner.getSelectedItem().toString();
-                    filteredList.clear();
-                    for (Event event : eventList) {
-                        if (event.getType().equals(type)) filteredList.add(event);
-                    }
-                    eventsAdapter = new EventsAdapter(filteredList, getContext());
-                    eventsRecyclerView.setAdapter(eventsAdapter);
-//                getFilteredList();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-
-        myEvents_fab = view.findViewById(R.id.my_events);
-        myEvents_fab.setOnClickListener(view -> {
-            user = searchUser(getContext());
-            apiMyEventsCall();
-        });
-
-
-        return view;
-    }
-
-    public void getFilteredList() {
-        String type = spinner.getSelectedItem().toString();
-        for (Event event : eventList) {
-            if (event.getType().equals(type)) filteredList.add(event);
-        }
-        eventsAdapter = new EventsAdapter(filteredList, getContext());
-        eventsRecyclerView.setAdapter(eventsAdapter);
-    }
-
-    private void searchEvents() {
         searchEventsView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -152,123 +95,163 @@ public class EventsFragment extends Fragment implements CollapsibleActionView {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filterEventsList(newText);
+                getFilteredListBySearch(newText);
                 return false;
             }
         });
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, spinnerListCategories);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                getFilteredListByCategory();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        myEvents_fab.setOnClickListener(view -> {
+            user = searchUser(getContext());
+            apiMyEventsCall();
+        });
+        return view;
     }
 
 
-    private void filterEventsList(String s) {
+    /**
+     * Method used to set the views.
+     */
+    private void loadViews() {
+        eventsRecyclerView = view.findViewById(R.id.recycler_view_events);
+        searchEventsView = view.findViewById(R.id.search_bar_events);
+        spinner = view.findViewById(R.id.action_bar_spinner_events);
+        myEvents_fab = view.findViewById(R.id.my_events);
+    }
+
+
+    /**
+     * Method used to filter events by a specific selection.
+     */
+    public void getFilteredListByCategory() {
+        String type = spinner.getSelectedItem().toString();
+        List<Event> copyList = new ArrayList<>();
+        if (type.equals("All events")) {
+            eventsAdapter = new EventsAdapter(eventList, getContext());
+        } else {
+            for (Event event : eventList) {
+                if (event.getType().equals(type)) copyList.add(event);
+            }
+            eventsAdapter = new EventsAdapter(copyList, getContext());
+        }
+        eventsRecyclerView.setAdapter(eventsAdapter);
+    }
+
+
+    /**
+     * Method used to filter events by a string entered in a SearchView.
+     */
+    private void getFilteredListBySearch(String incomingString) {
         // Llamada a la API para filtrar lo del searcher
-        apiEvents.getEventsSearch(Token.getToken(getContext()), s, s, s, new Callback<List<Event>>() {
+        apiEvents.getEventsSearch(Token.getToken(getContext()), incomingString, incomingString,
+                incomingString, new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 try {
                     if (response.isSuccessful()) {
-                        eventList.clear();
-                        eventList.addAll(response.body());
-                        eventsAdapter.notifyDataSetChanged();
+                        // TODO: REVISAR SI SE HA DE ELIMINAR
+                        Log.d("RESPONSE BODY: ", response.body().toString());
+
+                        eventsAdapter = new EventsAdapter(response.body(), getContext());
+                        eventsRecyclerView.setAdapter(eventsAdapter);
                     }
                 } catch (Exception exception) {
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
                     Log.e("TAG", exception.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
+                // TODO: REVISAR SI SE HA DE ELIMINAR
                 Log.d("onFailure:", "Fallo de lectura API filterEventsList");
             }
         });
     }
 
 
-
-
-
-
+    /**
+     * Method used to get a list of all the events created by the user with the session started
+     * from the API.
+     */
     private void apiMyEventsCall() {
-        apiEvents = APIEvents.getInstance();
         apiEvents.getMyEvents(Token.getToken(getContext()), user.getId(), new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 Intent intent = new Intent(getActivity(), MyEventsActivity.class);
                 try {
-
                     if (response.isSuccessful()) {
+                        // TODO: REVISAR SI SE HA DE ELIMINAR
                         Log.d("HOLAAA", "AA" + response.body().get(0).getName());
                         //myEventList.addAll(eventList);
                         myEventList = response.body();
                         Bundle args = new Bundle();
                         args.putSerializable("MyEventList", (Serializable) myEventList); // myEventList CAMBIAR LA LISTA
                         intent.putExtra("BUNDLE", args);
-                        // TODO TEMPORAL
-                        for (Event e : eventList)
-                            Log.d("Event List: ", e.getName());
                     }
-
                 } catch (Exception exception) {
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
                     Log.e("TAG", exception.getMessage());
+                } finally {
+                    startActivity(intent);
                 }
-                startActivity(intent);
             }
 
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
-
+                // TODO: REVISAR SI SE HA DE ELIMINAR
+                Log.e(TAG, "Connection Error on apiMyEventsCall");
+                Log.e(TAG, t.toString());
             }
         });
     }
 
+
+    /**
+     * Method used to get a list of all the events from the API.
+     */
     private void apiEventsCall() {
         apiEvents = APIEvents.getInstance();
-        apiEvents.getListEvents(new Callback<List<Event>>() {
+        apiEvents.getListEvents(Token.getToken(getContext()), new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 try {
                     if (response.isSuccessful()) {
                         eventList = response.body();
-                        eventsRecyclerView = view.findViewById(R.id.recycler_view_events);
                         eventsAdapter = new EventsAdapter(eventList, getContext());
+                        eventsRecyclerView.setLayoutManager(linearLayoutManager);
                         eventsRecyclerView.setAdapter(eventsAdapter);
                     }
                 } catch (Exception exception) {
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
                     Log.e("TAG", exception.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
-                Log.e(TAG, "Connection Error on eventList");
-                Log.e(TAG, t.toString());
+                // TODO: REVISAR SI SE HA DE ELIMINAR
+                Log.d("onFailure:", "Fallo de lectura API");
             }
-
         });
-
-
-        /*// TODO: DELETE TEMPORAL
-        for (Event e : eventList)
-            Log.d("EventsFragment List", e.getName());*/
-
-
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
+    // TODO: ELIMINAR SI NO SE USA
     public List<Event> getEventList() {
         return eventList;
-    }
-
-    @Override
-    public void onActionViewExpanded() {
-
-    }
-
-    @Override
-    public void onActionViewCollapsed() {
-
     }
 }

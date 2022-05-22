@@ -1,15 +1,10 @@
 package com.androidpprog2.openevents.view.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.CollapsibleActionView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,7 +17,6 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.api.APIUser;
-import com.androidpprog2.openevents.view.activities.MyFriendsActivity;
 import com.androidpprog2.openevents.view.adapters.UsersAdapter;
 
 import java.util.ArrayList;
@@ -32,66 +26,70 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UsersFragment extends Fragment implements CollapsibleActionView {
+/**
+ * USERS FRAGMENT CLASS
+ */
+public class UsersFragment extends Fragment {
     private APIUser apiUser;
     private List<User> userList = new ArrayList<>();
     private RecyclerView usersRecyclerView;
     private UsersAdapter usersAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private List<User> filteredList;
-    private List<String> spinnerListCategories = new ArrayList<>();
     private SearchView searchUserView;
-//    private Spinner spinner;
     private View view;
-    private static final String TAG = "UsersFragment";
+    private static final String TAG = "UsersFragment: ";
 
 
+    /**
+     * Setting the essential layout parameters.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-
     }
 
 
+    /**
+     * Inflating the layout of the UsersFragment.
+     * Loading views, api calls and search views.
+     *
+     * @param inflater object used to inflate any views in the fragment.
+     * @param container used to generate the LayoutParams of the view.
+     * @param savedInstanceState not used.
+     * @return UserFragment view.
+     */
     @Nullable
     @Override
-    public android.view.View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                                          @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_users, container, false);
+
+        loadViews();
 
         apiCall();
 
-        // TEMPORAL
-        for (User u : userList)
-            Log.d("User list:", u.getName());
-
-
-//        spinner = view.findViewById(R.id.action_bar_spinner_events);
-
-        searchUserView = view.findViewById(R.id.search_bar);
         searchUserView.clearFocus();
-
         searchUsers();
-        //spinnerCall();
 
         return view;
     }
 
-    /*private void spinnerCall() {
-        spinnerListCategories.add("Esport");
-        spinnerListCategories.add("Concert");
-        spinnerListCategories.add("Museu");
-        spinnerListCategories.add("Educacio");
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
-                (getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-
-        spinner.setAdapter(arrayAdapter);
-    }*/
+    /**
+     * Method used to set the views.
+     */
+    private void loadViews() {
+        searchUserView = view.findViewById(R.id.search_bar);
+    }
 
 
+    /**
+     * Method used to get the users list from the API.
+     */
     private void apiCall() {
         apiUser = APIUser.getInstance();
         apiUser.getListUsers(Token.getToken(getContext()), new Callback<List<User>>() {
@@ -106,18 +104,23 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
                         usersRecyclerView.setAdapter(usersAdapter);
                     }
                 } catch (Exception exception) {
-                    Log.e("TAG", exception.getMessage());
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
+                    Log.e(TAG, exception.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                Log.d("onFailure:", "Fallo de lectura API");
+                // TODO: REVISAR SI SE HA DE ELIMINAR
+                Log.d(TAG + "onFailure:", "Fallo de lectura API");
             }
         });
     }
 
 
+    /**
+     * Method used to search users by e-mail.
+     */
     private void searchUsers() {
         searchUserView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -128,43 +131,41 @@ public class UsersFragment extends Fragment implements CollapsibleActionView {
             @Override
             public boolean onQueryTextChange(String s) {
                 filterUsersList(s);
-                return true;
+                return false;
             }
         });
     }
 
-    private void filterUsersList(String s) {
+
+    /**
+     * Method used to filter the information by e-mail.
+     *
+     * @param incomingString text typed in the SearchView.
+     */
+    private void filterUsersList(String incomingString) {
         // Llamada a la API
-        apiUser.getUserSearch(Token.getToken(getContext()), s, new Callback<List<User>>() {
+        apiUser.getUserSearch(Token.getToken(getContext()), incomingString, new Callback<List<User>>() {
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 try {
                     if (response.isSuccessful()) {
-                        userList.clear();
-                        userList.addAll(response.body());
-                        usersAdapter.notifyDataSetChanged();
+                        // TODO: REVISAR SI SE HA DE ELIMINAR
+                        Log.d("RESPONSE BODY: ", response.body().toString());
+
+                        usersAdapter = new UsersAdapter(response.body(), getContext());
+                        usersRecyclerView.setAdapter(usersAdapter);
                     }
                 } catch (Exception exception) {
-                    Log.e("TAG", exception.getMessage());
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
+                    Log.e(TAG, exception.getMessage());
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                Log.d("onFailure:", "Fallo de lectura API filteredList");
+                // TODO: REVISAR SI SE HA DE ELIMINAR
+                Log.d(TAG + "onFailure:", "Fallo de lectura API filteredUsersList");
             }
         });
-
-//        if (!filteredList.isEmpty()) usersAdapter.setFilteredList(filteredList);
-    }
-
-    @Override
-    public void onActionViewExpanded() {
-
-    }
-
-    @Override
-    public void onActionViewCollapsed() {
-
     }
 }

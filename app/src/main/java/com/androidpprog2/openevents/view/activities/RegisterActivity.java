@@ -17,33 +17,48 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * REGISTER ACTIVITY CLASS
+ */
 public class RegisterActivity extends AppCompatActivity {
     private Button registerButton;
-    private EditText name, lastName, email, pass, image;
+    private EditText name, lastName, email, pass, image, passAgain;
 
-
+    /**
+     * Setting the essential layout parameters.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         registerButton = findViewById(R.id.btn_register);
-
         registerButton.setOnClickListener(view -> {
+            loadViews();
             checkData();
         });
     }
 
-    private void checkData() {
+    /**
+     * Method used to set the views.
+     */
+    private void loadViews() {
         name = findViewById(R.id.r_name);
         lastName = findViewById(R.id.r_last_name);
         email = findViewById(R.id.r_email);
         pass = findViewById(R.id.r_password);
         image = findViewById(R.id.r_image);
-        Context context = this;
-        EditText passAgain = findViewById(R.id.r_password_again);
+        passAgain = findViewById(R.id.r_password_again);
+    }
 
+    /**
+     * Method used to check the data entered in the editTexts, by calling the API. If the data is
+     * correct, the user is successfully registered, otherwise not.
+     */
+    private void checkData() {
+        Context context = this;
         if (pass.getText().toString().equals(passAgain.getText().toString())) {
             User u = new User(name.getText().toString(), lastName.getText().toString(), email.getText().toString(), pass.getText().toString(), image.getText().toString());
             APIUser api = APIUser.getInstance();

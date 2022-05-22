@@ -19,19 +19,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * LOGIN ACTIVITY CLASS
+ */
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton, goRegisterButton;
     private EditText email;
     private EditText pass;
 
 
+    /**
+     * Setting the essential layout parameters.
+     * Manage the login and the register button functions.
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginButton = findViewById(R.id.btn_login);
-        goRegisterButton = findViewById(R.id.btn_go_register);
+        loadViews();
 
         loginButton.setOnClickListener(view -> {
             checkData();
@@ -43,14 +51,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * get inputs email and pass editTexts and calls the api waiting the response of a token
+     * Method called to load the views.
      */
-    private void checkData() {
-        //if (email != null && pass != null) {
+    private void loadViews() {
+        loginButton = findViewById(R.id.btn_login);
+        goRegisterButton = findViewById(R.id.btn_go_register);
         email = findViewById(R.id.email);
         pass = findViewById(R.id.password);
-        Context context = this;
+    }
 
+    /**
+     * Get inputs email and pass editTexts and calls the api waiting the response of a token.
+     * Also safes the token for maintaining the session initialized.
+     */
+    private void checkData() {
+        Context context = this;
         User u = new User(email.getText().toString(), pass.getText().toString());
         APIUser api = APIUser.getInstance();
         api.loginUser(u, new Callback<Token>() {

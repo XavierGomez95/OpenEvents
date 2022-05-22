@@ -31,18 +31,36 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * REQUEST ADAPTER CLASS
+ */
 public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHolder> {
-    private List<User> userList;
+    private List<User> requestsList;
     private Context context;
     private Activity activity;
 
+
+
+    /**
+     * Constructor.
+     *
+     * @param userList A list of users (class User).
+     * @param context MyFriendsActivity context.
+     */
     public RequestsAdapter(List<User> userList, Context context) {
-        this.userList = userList;
+        this.requestsList = userList;
         this.context = context;
         this.activity = (Activity) context;
     }
 
 
+    /**
+     * Called by the recyclerView when it needs to represent a new item.
+     *
+     * @param parent ViewGroup into which the new View will be added.
+     * @param viewType the View type of the new View.
+     * @return a new ViewHolder of the viewType.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,14 +69,26 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         return new RequestsAdapter.ViewHolder(itemView);
     }
 
+
+    /**
+     * Called by the recyclerView to display the data at the specified position.
+     * Calls {@link MyEventsAdapter.ViewHolder #bind(int)}
+     *
+     * @param holder represent the contents of the item at the given position in the data set.
+     * @param position Element position in the data set.
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(position);
     }
 
+    /**
+     *
+     * @return requestsList size.
+     */
     @Override
     public int getItemCount() {
-        return userList.size();
+        return requestsList.size();
     }
 
 
@@ -72,7 +102,9 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
         ImageView imageView;
 
         /**
+         * Initializes checkbox and buttons finding by id.
          *
+         * @param view
          */
         ViewHolder(View view) {
             super(view);
@@ -85,40 +117,41 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
 
         /**
          *
+         *
+         * @param pos Element position in the data set.
          */
         public void bind(int pos) {
-            nameTextView.setText(userList.get(pos).getName() + " " + userList.get(pos).getLast_name());
+            nameTextView.setText(requestsList.get(pos).getName() + " " + requestsList.get(pos).getLast_name());
             loadImg(pos);
-//            delete_btn.setOnClickListener(v -> deleteItem(pos));
-//            edit_btn.setOnClickListener(v -> editItem(pos));
+
             row_fragment.setOnClickListener(view -> {
                 Intent intent = new Intent(activity, UserDetailActivity.class);
                 intent.putExtra("position", pos);
-                intent.putExtra("userList", (Serializable) userList);
+                intent.putExtra("userList", (Serializable) requestsList);
 
                 context.startActivity(intent);
             });
+
             acceptUser.setOnClickListener(view -> {
-                APIUser.getInstance().acceptFriend(Token.getToken(context), userList.get(pos).getId(), new Callback<FriendRequest>() {
+                APIUser.getInstance().acceptFriend(Token.getToken(context), requestsList.get(pos).getId(), new Callback<FriendRequest>() {
                     @Override
                     public void onResponse(Call<FriendRequest> call, Response<FriendRequest> response) {
                         deleteUser(pos);
                         DynamicToast.makeSuccess(context, "Successful friend request").show();
                         activity.finish();
                         activity.startActivity(activity.getIntent());
-
                     }
 
                     @Override
                     public void onFailure(Call<FriendRequest> call, Throwable t) {
                         deleteUser(pos);
                         DynamicToast.makeError(context, "ONFAILURE").show();
-
                     }
                 });
             });
+
             declineUser.setOnClickListener(view -> {
-                APIUser.getInstance().declineFriend(Token.getToken(context), userList.get(pos).getId(), new Callback<FriendRequest>() {
+                APIUser.getInstance().declineFriend(Token.getToken(context), requestsList.get(pos).getId(), new Callback<FriendRequest>() {
                     @Override
                     public void onResponse(Call<FriendRequest> call, Response<FriendRequest> response) {
                         deleteUser(pos);
@@ -129,20 +162,28 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
                     public void onFailure(Call<FriendRequest> call, Throwable t) {
                         deleteUser(pos);
                         DynamicToast.makeError(context, "ONFAILURE").show();
-
                     }
                 });
             });
         }
 
+        /**
+         *
+         * @param pos position of the recycle view.
+         */
         private void deleteUser(int pos) {
-            userList.remove(pos);
+            requestsList.remove(pos);
             notifyItemRemoved(pos);
-            notifyItemRangeChanged(pos, userList.size());
+            notifyItemRangeChanged(pos, requestsList.size());
         }
 
+        /**
+         * Method used to load the friends request profile images.
+         *
+         * @param pos position of the recycle view.
+         */
         private void loadImg(int pos) {
-            String imageURL, image = userList.get(pos).getImage();
+            String imageURL, image = requestsList.get(pos).getImage();
 
             if (image != null) {
                 if ((image.startsWith("http") || image.startsWith("https"))
@@ -154,6 +195,7 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.ViewHo
             } else
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
+            // TODO: ELIMINAR CUANDO ACABEMOS
             Log.d("EVENT NAME : ", image);
             Log.d("URL : ", image);
 

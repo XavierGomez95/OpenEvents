@@ -2,6 +2,9 @@ package com.androidpprog2.openevents.business;
 
 import java.io.Serializable;
 
+/**
+ * USER CLASS
+ */
 public class User implements Serializable {
     private Integer id;
     private String name;
@@ -9,9 +12,10 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String image;
-    //List<String> friends;
-    //List<String> events;
 
+    /**
+     * Overload constructor 3.
+     */
     public User(String name, String last_name, String email, String password, String image) {
         this.name = name;
         this.last_name = last_name;
@@ -20,6 +24,9 @@ public class User implements Serializable {
         this.image = image;
     }
 
+    /**
+     * Overload constructor 2.
+     */
     public User(String name, String last_name, String email, String image) {
         this.name = name;
         this.last_name = last_name;
@@ -27,53 +34,83 @@ public class User implements Serializable {
         this.image = image;
     }
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
+    /**
+     * Overload constructor 1.
+     */
     public User(String name, String last_name, String email) {
         this.name = name;
         this.last_name = last_name;
         this.email = email;
     }
 
+    /**
+     * Constructor.
+     */
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    /**
+     *
+     * @return the current user id.
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @return the current user name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @return the current user email.
+     */
     public String getEmail() {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
+    /**
+     *
+     * @return the current user last name.
+     */
     public String getLast_name() {
         return last_name;
     }
 
+    /**
+     *
+     * @return the current user image.
+     */
     public String getImage() {
         return image;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    /**
+     *
+     * @param email set an email to the current user.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     *
+     * @param name set a name to the current user.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @param last_name set a last name to the current user.
+     */
     public void setLast_name(String last_name) {
         this.last_name = last_name;
     }

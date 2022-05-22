@@ -22,6 +22,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * EVENT DETAIL ACTIVITY CLASS
+ */
 public class EventDetailActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView tittleDescriptionTextView;
@@ -33,6 +36,12 @@ public class EventDetailActivity extends AppCompatActivity {
     private Event event;
 
 
+    /**
+     * Setting the essential layout parameters.
+     * Manage the functions of assistance or no assistance.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,22 +49,13 @@ public class EventDetailActivity extends AppCompatActivity {
 
         List<Event> eventList = (List<Event>) getIntent().getSerializableExtra("eventlist");
         int position = (int) getIntent().getSerializableExtra("position");
+
         event = eventList.get(position);
-        imageView = findViewById(R.id.event_description_image);
-        tittleDescriptionTextView = findViewById(R.id.tittleDescriptionTextView);
-        descriptionTextView = findViewById(R.id.descriptionTextView);
-        dateStart = findViewById(R.id.dateStartTextView);
-        dateEnd = findViewById(R.id.dateEndTextView);
-        location = findViewById(R.id.locationTextView);
-        attendButton = findViewById(R.id.btn_attend);
 
-
+        loadViews();
         loadImg();
-        tittleDescriptionTextView.setText(eventList.get(position).getName());
-        descriptionTextView.setText(event.getDescription() + " participators" + event.getN_participators());
-        dateStart.setText(event.getEventStart_date());
-        dateEnd.setText(event.getEventEnd_date());
-        location.setText(event.getLocation());
+        setTexts(eventList, position);
+
         attendButton.setOnClickListener(view -> {
             if (attendButton.getText().equals("ATTEND")) {
                 APIEvents api = APIEvents.getInstance();
@@ -63,39 +63,66 @@ public class EventDetailActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<AssistanceRequest> call, Response<AssistanceRequest> response) {
                         attendButton.setText("UNATTEND");
+                        // TODO: CAMBIAR POR OTRO AVISO
                         Log.d("IRIS", "TRUEEE CREATE" + response.body());
                     }
 
                     @Override
                     public void onFailure(Call<AssistanceRequest> call, Throwable t) {
+                        // TODO: CAMBIAR POR OTRO AVISO
                         Log.d("IRIS", "FALSE");
-
                     }
                 });
-
             } else {
                 APIEvents api = APIEvents.getInstance();
                 api.deleteEventAssistance(Token.getToken(this), event.getId(), new Callback<AssistanceRequest>() {
                     @Override
                     public void onResponse(Call<AssistanceRequest> call, Response<AssistanceRequest> response) {
                         attendButton.setText("ATTEND");
+                        // TODO: CAMBIAR POR OTRO AVISO
                         Log.d("IRIS", "TRUEEE DELETE" + response.body());
                     }
 
                     @Override
                     public void onFailure(Call<AssistanceRequest> call, Throwable t) {
+                        // TODO: CAMBIAR POR OTRO AVISO
                         Log.d("IRIS", "FALSE");
-
                     }
                 });
-
-
             }
-
         });
-
     }
 
+    /**
+     * Method called to set all description text in the event details.
+     *
+     * @param eventList contains a list of events.
+     * @param position contains the current position of an event.
+     */
+    private void setTexts(List<Event> eventList, Integer position) {
+        tittleDescriptionTextView.setText(eventList.get(position).getName());
+        descriptionTextView.setText(event.getDescription() + " participators" + event.getN_participators());
+        dateStart.setText(event.getEventStart_date());
+        dateEnd.setText(event.getEventEnd_date());
+        location.setText(event.getLocation());
+    }
+
+    /**
+     * Method called to load the views.
+     */
+    private void loadViews() {
+        imageView = findViewById(R.id.event_description_image);
+        tittleDescriptionTextView = findViewById(R.id.tittleDescriptionTextView);
+        descriptionTextView = findViewById(R.id.descriptionTextView);
+        dateStart = findViewById(R.id.dateStartTextView);
+        dateEnd = findViewById(R.id.dateEndTextView);
+        location = findViewById(R.id.locationTextView);
+        attendButton = findViewById(R.id.btn_attend);
+    }
+
+    /**
+     * Method called to load the image shown in the events details screen.
+     */
     private void loadImg() {
         String imageURL, image = event.getImage();
 
@@ -105,9 +132,12 @@ public class EventDetailActivity extends AppCompatActivity {
                     || image.endsWith(".jpeg") || image.endsWith(".JPG")
                     || image.endsWith(".PNG") || image.endsWith(".JPEG")))
                 imageURL = image;
-            else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-        } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+            else
+                imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+        } else
+            imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
+        // TODO: ELIMINAR CUANDO TODO FUNCIONE
         Log.d("EVENT NAME : ", event.getName());
         Log.d("URL : ", image);
 

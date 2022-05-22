@@ -16,6 +16,11 @@ import com.androidpprog2.openevents.view.activities.NavigationActivity;
 public class SplashActivity extends AppCompatActivity {
     private String accessToken;
 
+    /**
+     * Setting the content view (splash screen).
+     *
+     * @param savedInstanceState reference to a Bundle object that is passed into the onCreate.
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +33,10 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 finish();
             } else {
-                // Initialize the new Activity (Navigation Activity)
                 Intent intent = new Intent(SplashActivity.this, NavigationActivity.class);
-                intent.putExtra("tokenStr", accessToken); // Casting to Parcelable
+                intent.putExtra("tokenStr", accessToken);
                 startActivity(intent);
+                // TODO: ELIMINAR EL sout
                 System.out.println(getAccessToken());
                 finish();
             }
