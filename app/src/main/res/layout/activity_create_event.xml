@@ -24,7 +24,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="5dp"
-                android:text="Create Event"
+                android:text="@string/create_event"
                 android:textAlignment="center"
                 android:textColor="@color/dark_blue"
                 android:textSize="50sp" />
@@ -37,7 +37,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Event Name"
+                android:hint="@string/create_event_event_name"
                 android:padding="15dp"
                 android:textSize="15sp" />
 
@@ -48,7 +48,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Event image"
+                android:hint="@string/create_event_event_image"
                 android:padding="15dp"
                 android:textSize="15sp" />
 
@@ -59,7 +59,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:hint="location"
+                android:hint="@string/create_event_location"
                 android:padding="15dp"
                 android:textSize="15sp" />
 
@@ -70,7 +70,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:hint="description"
+                android:hint="@string/create_event_description"
                 android:padding="15dp"
                 android:textSize="15sp" />
 
@@ -82,7 +82,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:hint="Participators"
+                android:hint="@string/create_event_participators"
                 android:inputType="number"
                 android:padding="15dp"
                 android:textSize="15sp" />
@@ -93,7 +93,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:hint="type of event"
+                android:hint="@string/create_event_type_of_event"
                 android:padding="15dp"
                 android:textSize="15sp" />
 
@@ -103,7 +103,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="5dp"
-                android:text="Start Date"
+                android:text="@string/create_event_start_date"
                 android:textAlignment="center"
                 android:textColor="@color/dark_blue"
                 android:textSize="20sp" />

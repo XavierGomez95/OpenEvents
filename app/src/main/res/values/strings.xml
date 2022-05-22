@@ -17,5 +17,24 @@
 
     <string name="logout">LogOut</string>
     <string name="my_friends">My Friends</string>
+    <string name="create_event">Create Event</string>
+
+    <string name="create_event_event_name">Event Name</string>
+    <string name="create_event_event_image">Event image</string>
+    <string name="create_event_location">Location</string>
+    <string name="create_event_description">Description</string>
+    <string name="create_event_participators">Participators</string>
+    <string name="create_event_type_of_event">Type of event</string>
+    <string name="create_event_start_date">Start Date</string>
+
+    <string name="description_event_tittle">Tittle</string>
+    <string name="description_event_details">Description</string>
+    <string name="description_event_datestart">DateStart</string>
+    <string name="description_event_date_end">Date End</string>
+    <string name="description_event_location">Location</string>
+    <string name="description_event_attend">ATTEND</string>
+    <string name="my_friend_requests">Friend Requests:</string>
+    <string name="my_friend">My Friends:</string>
+
 
 </resources>

@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Circular Image View  -->
             <ImageView
                 android:id="@+id/event_description_image"
                 android:layout_width="140dp"
@@ -31,7 +30,7 @@
             android:id="@+id/tittleDescriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tittle"
+            android:text="@string/description_event_tittle"
             android:textColor="@color/black"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -40,7 +39,7 @@
             android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="@string/description_event_details"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -48,7 +47,7 @@
             android:id="@+id/dateStartTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DateStart"
+            android:text="@string/description_event_datestart"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -56,7 +55,7 @@
             android:id="@+id/dateEndTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date End"
+            android:text="@string/description_event_date_end"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -64,7 +63,7 @@
             android:id="@+id/locationTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location"
+            android:text="@string/description_event_location"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="normal" />
@@ -73,12 +72,8 @@
             android:id="@+id/btn_attend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ATTEND"/>
-
+            android:text="@string/description_event_attend"/>
 
     </LinearLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
