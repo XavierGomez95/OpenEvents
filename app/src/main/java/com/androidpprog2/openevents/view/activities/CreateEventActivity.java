@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -33,6 +34,8 @@ public class CreateEventActivity extends AppCompatActivity {
     private TimePicker endTimePicker;
     private EditText n_participators;
     private EditText type;
+    private Event editEvent;
+    private boolean edit = false;
 
 
     /**
@@ -45,12 +48,30 @@ public class CreateEventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-
         loadViews();
-
+        Intent intent = getIntent();
+        editEvent = (Event) intent.getSerializableExtra("event");
+        if (editEvent != null) {
+            edit = true;
+            setEventText();
+        }
         btn_add_event.setOnClickListener(view -> {
             checkData();
         });
+    }
+
+    /**
+     * se text when you want to edit an event
+     */
+    private void setEventText() {
+        name.setText(editEvent.getName());
+        image.setText(editEvent.getImage());
+        location.setText(editEvent.getLocation());
+        description.setText(editEvent.getDescription());
+        String startDate = editEvent.getEventStart_date().split("T")[0];
+        String[] ymd = startDate.split("-");
+        Log.d("TEST", "DATE" + startDate);
+        startDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]), Integer.parseInt(ymd[2]));
     }
 
     /**
@@ -84,8 +105,8 @@ public class CreateEventActivity extends AppCompatActivity {
 
         int num = Integer.parseInt(n_participators.getText().toString());
         Event e = new Event(name.getText().toString(), image.getText().toString(),
-                        location.getText().toString(), description.getText().toString(),
-                        startDate, endDate, num, type.getText().toString()
+                location.getText().toString(), description.getText().toString(),
+                startDate, endDate, num, type.getText().toString()
         );
 
         APIEvents api = APIEvents.getInstance();
@@ -114,7 +135,6 @@ public class CreateEventActivity extends AppCompatActivity {
      * @return a date String needed for the API.
      */
     private String getStringDate(DatePicker datePicker, TimePicker timePicker) {
-        Log.d("IRIS", "ENTRA");
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
         int year = datePicker.getYear();

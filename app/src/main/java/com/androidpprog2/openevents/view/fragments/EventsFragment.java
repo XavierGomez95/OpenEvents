@@ -2,6 +2,7 @@ package com.androidpprog2.openevents.view.fragments;
 
 import static com.androidpprog2.openevents.view.activities.NavigationActivity.searchUser;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.adapters.EventsAdapter;
 import com.androidpprog2.openevents.view.activities.MyEventsActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class EventsFragment extends Fragment {
     private Spinner spinner;
     private SearchView searchEventsView;
     private final String[] spinnerListCategories = {"All events", "sports-grup7", "Excursió",
-                                                "art-grup7", "music-grup7", "nightlife-grup7"};
+            "art-grup7", "music-grup7", "nightlife-grup7"};
 
 
     /**
@@ -72,8 +74,8 @@ public class EventsFragment extends Fragment {
      * Inflating the layout of the EventsFragment.
      * Loading views, api calls, and management of buttons, spinners, and search views.
      *
-     * @param inflater object used to inflate any views in the fragment.
-     * @param container used to generate the LayoutParams of the view.
+     * @param inflater           object used to inflate any views in the fragment.
+     * @param container          used to generate the LayoutParams of the view.
      * @param savedInstanceState not used.
      * @return EventsFragment view.
      */
@@ -82,6 +84,7 @@ public class EventsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_events, container, false);
+        apiEvents = APIEvents.getInstance();
 
         loadViews();
         apiEventsCall();
@@ -117,7 +120,9 @@ public class EventsFragment extends Fragment {
 
         myEvents_fab.setOnClickListener(view -> {
             user = searchUser(getContext());
-            apiMyEventsCall();
+            Intent intent = new Intent(getActivity(), MyEventsActivity.class);
+            intent.putExtra("id", user.getId());
+            startActivity(intent);
         });
         return view;
     }
@@ -159,65 +164,28 @@ public class EventsFragment extends Fragment {
         // Llamada a la API para filtrar lo del searcher
         apiEvents.getEventsSearch(Token.getToken(getContext()), incomingString, incomingString,
                 incomingString, new Callback<List<Event>>() {
-            @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.d("RESPONSE BODY: ", response.body().toString());
+                    @Override
+                    public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                // TODO: REVISAR SI SE HA DE ELIMINAR
+                                Log.d("RESPONSE BODY: ", response.body().toString());
 
-                        eventsAdapter = new EventsAdapter(response.body(), getContext());
-                        eventsRecyclerView.setAdapter(eventsAdapter);
+                                eventsAdapter = new EventsAdapter(response.body(), getContext());
+                                eventsRecyclerView.setAdapter(eventsAdapter);
+                            }
+                        } catch (Exception exception) {
+                            // TODO: REVISAR SI SE HA DE ELIMINAR
+                            Log.e("TAG", exception.getMessage());
+                        }
                     }
-                } catch (Exception exception) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.e("TAG", exception.getMessage());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
-                // TODO: REVISAR SI SE HA DE ELIMINAR
-                Log.d("onFailure:", "Fallo de lectura API filterEventsList");
-            }
-        });
-    }
-
-
-    /**
-     * Method used to get a list of all the events created by the user with the session started
-     * from the API.
-     */
-    private void apiMyEventsCall() {
-        apiEvents.getMyEvents(Token.getToken(getContext()), user.getId(), new Callback<List<Event>>() {
-            @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                Intent intent = new Intent(getActivity(), MyEventsActivity.class);
-                try {
-                    if (response.isSuccessful()) {
+                    @Override
+                    public void onFailure(Call<List<Event>> call, Throwable t) {
                         // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.d("HOLAAA", "AA" + response.body().get(0).getName());
-                        //myEventList.addAll(eventList);
-                        myEventList = response.body();
-                        Bundle args = new Bundle();
-                        args.putSerializable("MyEventList", (Serializable) myEventList); // myEventList CAMBIAR LA LISTA
-                        intent.putExtra("BUNDLE", args);
+                        Log.d("onFailure:", "Fallo de lectura API filterEventsList");
                     }
-                } catch (Exception exception) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.e("TAG", exception.getMessage());
-                } finally {
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
-                // TODO: REVISAR SI SE HA DE ELIMINAR
-                Log.e(TAG, "Connection Error on apiMyEventsCall");
-                Log.e(TAG, t.toString());
-            }
-        });
+                });
     }
 
 
@@ -225,7 +193,7 @@ public class EventsFragment extends Fragment {
      * Method used to get a list of all the events from the API.
      */
     private void apiEventsCall() {
-        apiEvents = APIEvents.getInstance();
+        Context c = getContext();
         apiEvents.getListEvents(Token.getToken(getContext()), new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
@@ -237,15 +205,14 @@ public class EventsFragment extends Fragment {
                         eventsRecyclerView.setAdapter(eventsAdapter);
                     }
                 } catch (Exception exception) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.e("TAG", exception.getMessage());
+                    DynamicToast.makeError(c, "Error API on response").show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
-                // TODO: REVISAR SI SE HA DE ELIMINAR
-                Log.d("onFailure:", "Fallo de lectura API");
+                DynamicToast.makeError(c, "Error API connection").show();
             }
         });
     }

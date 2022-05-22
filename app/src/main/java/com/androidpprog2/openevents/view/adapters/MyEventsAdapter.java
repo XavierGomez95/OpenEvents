@@ -17,11 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
+import com.androidpprog2.openevents.business.Token;
+import com.androidpprog2.openevents.persistance.api.APIEvents;
+import com.androidpprog2.openevents.view.activities.CreateEventActivity;
 import com.androidpprog2.openevents.view.activities.EventDetailActivity;
+import com.androidpprog2.openevents.view.activities.UserDetailActivity;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * MyY EVENTS ADAPTER CLASS
@@ -35,7 +44,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
     /**
      * Constructor.
      *
-     * @param list of events.
+     * @param list    of events.
      * @param context MyEventsActivity context.
      */
     public MyEventsAdapter(List<Event> list, Context context) {
@@ -49,7 +58,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
      * Called by the recyclerView when it needs to represent a new item.
      * calls {@link EventsAdapter.ViewHolder #bind(int)}
      *
-     * @param parent ViewGroup into which the new View will be added.
+     * @param parent   ViewGroup into which the new View will be added.
      * @param viewType the View type of the new View.
      * @return a new ViewHolder of the viewType.
      */
@@ -66,7 +75,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
      * Called by the recyclerView to display the data at the specified position.
      * Calls {@link ViewHolder #bind(int)}
      *
-     * @param holder represent the contents of the item at the given position in the data set.
+     * @param holder   represent the contents of the item at the given position in the data set.
      * @param position Element position in the data set.
      */
     @Override
@@ -76,7 +85,6 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
 
 
     /**
-     *
      * @return myEventsList size
      */
     @Override
@@ -124,11 +132,11 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             loadImg(pos);
 
             linearLayoutclic1.setOnClickListener(v -> {
-                    Intent intent = new Intent(activity, EventDetailActivity.class);
-                    intent.putExtra("position", pos);
-                    intent.putExtra("eventlist", (Serializable) myEventsList);
+                Intent intent = new Intent(activity, EventDetailActivity.class);
+                intent.putExtra("position", pos);
+                intent.putExtra("eventlist", (Serializable) myEventsList);
 
-                    context.startActivity(intent);
+                context.startActivity(intent);
             });
 
         }
@@ -147,8 +155,10 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
                         || image.endsWith(".jpeg") || image.endsWith(".JPG")
                         || image.endsWith(".PNG") || image.endsWith(".JPEG")))
                     imageURL = image;
-                else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-            } else imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+                else
+                    imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
+            } else
+                imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
             // TODO: REVISAR ESTOS Log.d
             Log.d("EVENT NAME : ", image);
@@ -163,6 +173,23 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
          * @param pos item position.
          */
         public void deleteItem(int pos) {
+            APIEvents apiEvents = new APIEvents();
+            apiEvents.deleteEvent(Token.getToken(context), myEventsList.get(pos).getId(), new Callback<Event>() {
+                @Override
+                public void onResponse(Call<Event> call, Response<Event> response) {
+                    DynamicToast.makeSuccess(context, "The " + myEventsList.get(pos).getName() + " event has been deleted").show();
+                    myEventsList.remove(pos);
+                    notifyItemRemoved(pos);
+                    notifyItemRangeChanged(pos, myEventsList.size());
+                }
+
+                @Override
+                public void onFailure(Call<Event> call, Throwable t) {
+                    DynamicToast.makeError(context, "Error API connection").show();
+
+                }
+            });
+
 
         }
 
@@ -172,12 +199,12 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
          * @param pos item position.
          */
         public void editItem(int pos) {
-
-
+            Intent intent = new Intent(activity, CreateEventActivity.class);
+            intent.putExtra("event", myEventsList.get(pos));
+            context.startActivity(intent);
         }
 
     }
-
 
 
 }
