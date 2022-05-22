@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.view.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.persistance.api.APIEvents;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,6 +70,9 @@ public class CreateEventActivity extends AppCompatActivity {
         image.setText(editEvent.getImage());
         location.setText(editEvent.getLocation());
         description.setText(editEvent.getDescription());
+        n_participators.setText(editEvent.getN_participators());
+        type.setText(editEvent.getType());
+        Log.d("TEST", "DATE" + editEvent.getEventStart_date());
         String startDate = editEvent.getEventStart_date().split("T")[0];
         String[] ymd = startDate.split("-");
         Log.d("TEST", "DATE" + startDate);
@@ -96,6 +101,7 @@ public class CreateEventActivity extends AppCompatActivity {
      * Method called to check the entrances of information and to add the event to the API.
      */
     private void checkData() {
+        Context context = this;
         String startDate = getStringDate(startDatePicker, startTimePicker);
         String endDate = getStringDate(endDatePicker, endTimePicker);
         int num = Integer.parseInt(n_participators.getText().toString());
@@ -113,23 +119,26 @@ public class CreateEventActivity extends AppCompatActivity {
 
         Event e = new Event(name.getText().toString(), image.getText().toString(),
                 location.getText().toString(), description.getText().toString(),
-                startDate, endDate, num, type.getText().toString()
-        );
+                startDate, endDate, num, type.getText().toString());
 
         APIEvents api = APIEvents.getInstance();
         api.addEvent(Token.getToken(this), e, new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
-                Event e = response.body();
-                // TODO: CAMBIAR POR OTRO AVISO
-                Log.d("IRIS", "TRUEEEEE " + response.body());
-                finish();
+                if (response.body() != null) {
+                    Event e = response.body();
+                    DynamicToast.makeSuccess(context, "Event created successfully!").show();
+                    finish();
+                } else {
+                    DynamicToast.makeError(context, "Error in input").show();
+
+                }
+
             }
 
             @Override
             public void onFailure(Call<Event> call, Throwable t) {
-                // TODO: CAMBIAR POR OTRO AVISO
-                Log.d("IRIS", "FALSEEE" + t.toString());
+                DynamicToast.makeError(context, "Error while connecting to the API").show();
             }
         });
     }
@@ -142,11 +151,21 @@ public class CreateEventActivity extends AppCompatActivity {
      * @return a date String needed for the API.
      */
     private String getStringDate(DatePicker datePicker, TimePicker timePicker) {
-        int day = datePicker.getDayOfMonth();
-        int month = datePicker.getMonth();
-        int year = datePicker.getYear();
-        int hour = timePicker.getHour();
-        int minute = timePicker.getMinute();
+        String day = String.valueOf(datePicker.getDayOfMonth());
+        String month = String.valueOf(datePicker.getMonth());
+        String year = String.valueOf(datePicker.getYear());
+        String hour = String.valueOf(timePicker.getHour());
+        String minute = String.valueOf(timePicker.getMinute());
+        Log.d("DSAADS", "ENTRA"+day);
+
+        if (day.length() == 1) {
+            Log.d("DSAADS", "ENTRA");
+            day = "0" + day;
+        }
+        if (month.length() == 1) {
+            Log.d("DSAADS", "month");
+            month = "0" + month;
+        }
 
         return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":00.000Z";
     }

@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.view.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import com.androidpprog2.openevents.persistance.api.APIEvents;
 import com.androidpprog2.openevents.business.AssistanceRequest;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private TextView location;
     private Button attendButton;
     private Event event;
+    private Context c = this;
 
 
     /**
@@ -58,19 +61,19 @@ public class EventDetailActivity extends AppCompatActivity {
 
         attendButton.setOnClickListener(view -> {
             if (attendButton.getText().equals("ATTEND")) {
+
                 APIEvents api = APIEvents.getInstance();
                 api.addEventAssistance(Token.getToken(this), event.getId(), new Callback<AssistanceRequest>() {
                     @Override
                     public void onResponse(Call<AssistanceRequest> call, Response<AssistanceRequest> response) {
                         attendButton.setText("UNATTEND");
-                        // TODO: CAMBIAR POR OTRO AVISO
-                        Log.d("IRIS", "TRUEEE CREATE" + response.body());
+                        DynamicToast.makeSuccess(c, "You will attend to the event!").show();
                     }
 
                     @Override
                     public void onFailure(Call<AssistanceRequest> call, Throwable t) {
-                        // TODO: CAMBIAR POR OTRO AVISO
-                        Log.d("IRIS", "FALSE");
+                        DynamicToast.makeError(c, "Error while connecting to the API").show();
+
                     }
                 });
             } else {
@@ -85,8 +88,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<AssistanceRequest> call, Throwable t) {
-                        // TODO: CAMBIAR POR OTRO AVISO
-                        Log.d("IRIS", "FALSE");
+                        DynamicToast.makeError(c, "Error while connecting to the API").show();
                     }
                 });
             }
@@ -97,11 +99,12 @@ public class EventDetailActivity extends AppCompatActivity {
      * Method called to set all description text in the event details.
      *
      * @param eventList contains a list of events.
-     * @param position contains the current position of an event.
+     * @param position  contains the current position of an event.
      */
     private void setTexts(List<Event> eventList, Integer position) {
         tittleDescriptionTextView.setText(eventList.get(position).getName());
         descriptionTextView.setText(event.getDescription() + " participators" + event.getN_participators());
+        Log.d("TAG", "EVENT DATE" + event.getEventStart_date());
         dateStart.setText(event.getEventStart_date());
         dateEnd.setText(event.getEventEnd_date());
         location.setText(event.getLocation());

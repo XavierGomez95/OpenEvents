@@ -19,7 +19,7 @@ public class Event implements Serializable {
     private String date;
 
 
- /*   public Event(String name, String image, String location,
+    public Event(String name, String image, String location,
                  String description, String eventStart_date, String eventEnd_date, int n_participators, String type, int owner_id, String date) {
         this.name = name;
         this.image = image;
@@ -32,7 +32,7 @@ public class Event implements Serializable {
         this.owner_id = owner_id;
         this.date = date;
 
-    }*/
+    }
 
     /**
      * Constructor.
@@ -44,7 +44,6 @@ public class Event implements Serializable {
         this.image = image;
         this.location = location;
         this.description = description;
-        this.date = "2022-02-01";
         this.eventStart_date = eventStart_date;
         this.eventEnd_date = eventEnd_date;
         this.n_participators = n_participators;

@@ -63,13 +63,9 @@ public class MyEventsActivity extends AppCompatActivity {
 
         if (myEventList.isEmpty()) textView_noEvents.setText("No event created yet, Add an event!");
 
-        createEvent_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DynamicToast.makeError(getApplicationContext(), "Entra").show();
-                Intent editIntent = new Intent(getApplicationContext(), CreateEventActivity.class);
-                startActivity(editIntent);
-            }
+        createEvent_fab.setOnClickListener(view -> {
+            Intent editIntent = new Intent(getApplicationContext(), CreateEventActivity.class);
+            startActivity(editIntent);
         });
 
         intent = getIntent();
@@ -77,6 +73,12 @@ public class MyEventsActivity extends AppCompatActivity {
         apiMyEventsCall();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        apiMyEventsCall();
+
+    }
     /**
      * Method called to load the views.
      */
@@ -111,6 +113,8 @@ public class MyEventsActivity extends AppCompatActivity {
                         if (myEventList != null && !myEventList.isEmpty()) {
                             myEventsAdapter = new MyEventsAdapter(myEventList, c);
                             myEventsRecyclerView.setAdapter(myEventsAdapter);
+                            textView_noEvents.setText("");
+
                         } else {
                             textView_noEvents.setText("No event created yet, Add an event!");
                         }
@@ -129,8 +133,6 @@ public class MyEventsActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 
 }

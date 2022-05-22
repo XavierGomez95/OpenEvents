@@ -7,12 +7,20 @@
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_create_event.xml" value="0.25416666666666665" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_event_detail.xml" value="0.25416666666666665" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_my_events.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_my_friends.xml" value="0.25416666666666665" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_splash.xml" value="0.1634963768115942" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_tab_bar.xml" value="0.25416666666666665" />
-        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/fragment_events.xml" value="0.18613138686131386" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/activity_user_detail.xml" value="0.25416666666666665" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/fragment_events.xml" value="0.1" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/fragment_users.xml" value="0.25416666666666665" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/list_event_element.xml" value="0.1" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/list_friendRequest_element.xml" value="0.25416666666666665" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/list_friends_element.xml" value="0.25416666666666665" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/list_friends_request_element.xml" value="0.25416666666666665" />
+        <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/list_my_events_element.xml" value="0.25416666666666665" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/layout/list_user_element.xml" value="0.1" />
         <entry key="..\:/OneDrive - La Salle/Curs 21-22/Android/ProjecteFinal/app/src/main/res/mipmap-anydpi-v26/ic_add_user.xml" value="0.1" />
       </map>

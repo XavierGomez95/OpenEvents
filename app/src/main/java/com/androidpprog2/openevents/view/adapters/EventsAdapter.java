@@ -33,7 +33,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     /**
      * Constructor.
      *
-     * @param list A list of events (class Event).
+     * @param list    A list of events (class Event).
      * @param context EventsFragment context.
      */
     public EventsAdapter(List<Event> list, Context context) {
@@ -46,7 +46,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     /**
      * Called by the recyclerView when it needs to represent a new item.
      *
-     * @param parent ViewGroup into which the new View will be added.
+     * @param parent   ViewGroup into which the new View will be added.
      * @param viewType the View type of the new View.
      * @return a new ViewHolder of the viewType.
      */
@@ -63,7 +63,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
      * Called by the recyclerView to display the data at the specified position.
      * Calls {@link MyEventsAdapter.ViewHolder #bind(int)}
      *
-     * @param holder represent the contents of the item at the given position in the data set.
+     * @param holder   represent the contents of the item at the given position in the data set.
      * @param position Element position in the data set.
      */
     @Override
@@ -73,7 +73,6 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
 
     /**
-     *
      * @return eventsList size.
      */
     @Override
@@ -113,11 +112,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             loadImg(pos);
 
             flameLayoutclic1.setOnClickListener(v -> {
-                    Intent intent = new Intent(activity, EventDetailActivity.class);
-                    intent.putExtra("position", pos);
-                    intent.putExtra("eventlist", (Serializable) eventList);
+                Intent intent = new Intent(activity, EventDetailActivity.class);
+                intent.putExtra("position", pos);
+                intent.putExtra("eventlist", (Serializable) eventList);
 
-                    context.startActivity(intent);
+                context.startActivity(intent);
             });
 
         }
