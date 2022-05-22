@@ -35,7 +35,7 @@ import retrofit2.Response;
 public class MyEventsActivity extends AppCompatActivity {
     private Intent intent;
     private List<Event> myEventList = new ArrayList<>();
-    private int id;
+    private Integer id;
     private RecyclerView myEventsRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private MyEventsAdapter myEventsAdapter;
@@ -108,8 +108,10 @@ public class MyEventsActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
                 try {
-                    if (response.isSuccessful()) {
+                    if (response.code() == 200) {
                         myEventList = response.body();
+                        // TODO: DELETE THIS LOG.D
+                        Log.d("RESPONSE.BODY: ", call.request().toString());
                         if (myEventList != null && !myEventList.isEmpty()) {
                             myEventsAdapter = new MyEventsAdapter(myEventList, c);
                             myEventsRecyclerView.setAdapter(myEventsAdapter);

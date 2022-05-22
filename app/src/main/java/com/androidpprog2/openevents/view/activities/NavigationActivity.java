@@ -99,7 +99,8 @@ public class NavigationActivity extends AppCompatActivity {
                     if (u.getEmail().equals(email[0])) {
                         user = u;
                         //profileFragment.loadImg();
-                        Log.d("IRIS", "USER" + user.getEmail());
+                        // TODO: REVISAR ESTE Log.d
+                        Log.d("IRIS", "USER: " + user.getEmail());
                         break;
                     }
                 }
@@ -107,6 +108,7 @@ public class NavigationActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
+                // TODO: REVISAR ESTE Log.d
                 Log.d("IRIS", "FAIL");
             }
         });

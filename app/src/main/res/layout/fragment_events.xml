@@ -24,6 +24,18 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
 
+        <Button
+            android:id="@+id/best_events"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="20dp"
+            app:srcCompat="@drawable/ic_baseline_star_24"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="@string/best_events"/>
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar_events"
             android:layout_width="200dp"
@@ -35,7 +47,7 @@
             app:queryHint="search" />
 
         <Spinner
-            android:id="@+id/action_bar_spinner_events"
+            android:id="@+id/searcher_spinner"
             android:layout_width="match_parent"
             android:layout_height="40sp"
             android:layout_marginStart="230dp"
@@ -44,10 +56,20 @@
             app:iconifiedByDefault="false"
             app:queryHint="search" />
 
+        <Spinner
+            android:id="@+id/action_bar_spinner_events"
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:layout_marginStart="230dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="20dp"
+            app:iconifiedByDefault="false"
+            app:queryHint="search" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="120dp"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView

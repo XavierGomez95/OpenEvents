@@ -35,6 +35,7 @@
     <string name="description_event_attend">ATTEND</string>
     <string name="my_friend_requests">Friend Requests:</string>
     <string name="my_friend">My Friends:</string>
+    <string name="best_events">Best events</string>
 
 
 </resources>

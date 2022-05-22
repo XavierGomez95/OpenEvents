@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -28,11 +29,13 @@ import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.adapters.EventsAdapter;
 import com.androidpprog2.openevents.view.activities.MyEventsActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,11 +53,14 @@ public class EventsFragment extends Fragment {
     private static final String TAG = "EventFragment";
     private View view;
     private ExtendedFloatingActionButton myEvents_fab;
+    private Button bestEvents_btn;
     private User user = null;
-    private Spinner spinner;
+    private Spinner spinner, searcherSpinner;
     private SearchView searchEventsView;
+    private String filterType = "";
     private final String[] spinnerListCategories = {"All events", "sports-grup7", "Excursió",
             "art-grup7", "music-grup7", "nightlife-grup7"};
+    private final String[] spinnerListFilters = {"location", "keyword", "date"};
 
 
     /**
@@ -89,6 +95,26 @@ public class EventsFragment extends Fragment {
         loadViews();
         apiEventsCall();
 
+
+        ArrayAdapter<String> searcherSpinnerAdapter = new ArrayAdapter<>(getContext(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, spinnerListFilters);
+        searcherSpinner.setAdapter(searcherSpinnerAdapter);
+        searcherSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                filterType = searcherSpinner.getSelectedItem().toString();
+                DynamicToast.makeSuccess(getContext(), filterType).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                filterType = spinnerListFilters[0];
+                DynamicToast.makeSuccess(getContext(), filterType).show();
+            }
+        });
+
+
+
         searchEventsView.clearFocus();
         searchEventsView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -98,14 +124,26 @@ public class EventsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                getFilteredListBySearch(newText);
+                switch (filterType) {
+                    case "location":
+                        DynamicToast.makeSuccess(getContext(), filterType + " searcher case").show();
+                        getFilteredListByLocation(newText);
+                        break;
+                    case "keyword":
+                        getFilteredListByKeyword(newText);
+                        break;
+                    case "date":
+                        getFilteredListByDate(newText);
+                        break;
+                }
                 return false;
             }
         });
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getContext(),
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, spinnerListCategories);
-        spinner.setAdapter(arrayAdapter);
+        spinner.setAdapter(spinnerAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -124,8 +162,105 @@ public class EventsFragment extends Fragment {
             intent.putExtra("id", user.getId());
             startActivity(intent);
         });
+
+
+        bestEvents_btn.setOnClickListener(view -> {
+            bestEventsFilter();
+        });
+
         return view;
     }
+
+
+    private void getFilteredListByLocation(String location) {
+        apiEvents.getEventsSearch(Token.getToken(getContext()), location, null,
+        null, new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        // TODO: REVISAR SI SE HA DE ELIMINAR
+                        Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
+                        eventList = response.body();
+                        eventsAdapter = new EventsAdapter(eventList, getContext());
+                        eventsRecyclerView.setLayoutManager(linearLayoutManager);
+                        eventsRecyclerView.setAdapter(eventsAdapter);
+                    }
+                } catch (Exception exception) {
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
+                    Log.e("TAG", exception.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                // TODO: REVISAR SI SE HA DE ELIMINAR
+                Log.d("onFailure:", "Fallo de lectura API filterEventsList");
+            }
+        });
+    }
+
+
+
+    private void getFilteredListByKeyword(String keyword) {
+        apiEvents.getEventsSearch(Token.getToken(getContext()), null, keyword,
+            null, new Callback<List<Event>>() {
+                @Override
+                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                    try {
+                        if (response.isSuccessful()) {
+                            // TODO: REVISAR SI SE HA DE ELIMINAR
+                            Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
+                            eventList = response.body();
+                            eventsAdapter = new EventsAdapter(eventList, getContext());
+                            eventsRecyclerView.setLayoutManager(linearLayoutManager);
+                            eventsRecyclerView.setAdapter(eventsAdapter);
+                        }
+                    } catch (Exception exception) {
+                        // TODO: REVISAR SI SE HA DE ELIMINAR
+                        Log.e("TAG", exception.getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Event>> call, Throwable t) {
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
+                    Log.d("onFailure:", "Fallo de lectura API filterEventsList");
+                }
+            });
+    }
+
+
+
+    private void getFilteredListByDate(String date) {
+        apiEvents.getEventsSearch(Token.getToken(getContext()), null, null,
+            date, new Callback<List<Event>>() {
+                @Override
+                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                    try {
+                        if (response.isSuccessful()) {
+                            // TODO: REVISAR SI SE HA DE ELIMINAR
+                            Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
+                            eventList = response.body();
+                            eventsAdapter = new EventsAdapter(eventList, getContext());
+                            eventsRecyclerView.setLayoutManager(linearLayoutManager);
+                            eventsRecyclerView.setAdapter(eventsAdapter);
+                        }
+                    } catch (Exception exception) {
+                        // TODO: REVISAR SI SE HA DE ELIMINAR
+                        Log.e("TAG", exception.getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<Event>> call, Throwable t) {
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
+                    Log.d("onFailure:", "Fallo de lectura API filterEventsList");
+                }
+            });
+    }
+
+
 
 
     /**
@@ -134,8 +269,30 @@ public class EventsFragment extends Fragment {
     private void loadViews() {
         eventsRecyclerView = view.findViewById(R.id.recycler_view_events);
         searchEventsView = view.findViewById(R.id.search_bar_events);
+        searcherSpinner = view.findViewById(R.id.searcher_spinner);
         spinner = view.findViewById(R.id.action_bar_spinner_events);
         myEvents_fab = view.findViewById(R.id.my_events);
+        bestEvents_btn = view.findViewById(R.id.best_events);
+    }
+
+
+    /**
+     * Method used to get the best events from the API.
+     */
+    private void bestEventsFilter() {
+        apiEvents.getEventsBest(Token.getToken(getContext()), new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                eventsAdapter = new EventsAdapter(response.body(), getContext());
+                eventsRecyclerView.setAdapter(eventsAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+
+            }
+        });
+
     }
 
 
@@ -169,7 +326,7 @@ public class EventsFragment extends Fragment {
                         try {
                             if (response.isSuccessful()) {
                                 // TODO: REVISAR SI SE HA DE ELIMINAR
-                                Log.d("RESPONSE BODY: ", response.body().toString());
+                                Log.d("RESPONSE BODY: ", call.request().toString());
 
                                 eventsAdapter = new EventsAdapter(response.body(), getContext());
                                 eventsRecyclerView.setAdapter(eventsAdapter);
@@ -190,6 +347,43 @@ public class EventsFragment extends Fragment {
 
 
     /**
+     * Method used to get a list of all the events created by the user with the session started
+     * from the API.
+     */
+    private void apiMyEventsCall() {
+        apiEvents.getMyEvents(Token.getToken(getContext()), user.getId(), new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                Intent intent = new Intent(getActivity(), MyEventsActivity.class);
+                try {
+                    if (response.isSuccessful()) {
+                        // TODO: REVISAR SI SE HA DE ELIMINAR
+                        Log.d("HOLAAA", "AA" + response.body().get(0).getName());
+                        //myEventList.addAll(eventList);
+                        myEventList = response.body();
+                        Bundle args = new Bundle();
+                        args.putSerializable("MyEventList", (Serializable) myEventList);
+                        intent.putExtra("BUNDLE", args);
+                    }
+                } catch (Exception exception) {
+                    // TODO: REVISAR SI SE HA DE ELIMINAR
+                    Log.e("TAG", exception.getMessage());
+                } finally {
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                // TODO: REVISAR SI SE HA DE ELIMINAR
+                Log.e(TAG, "Connection Error on apiMyEventsCall");
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
+
+
+    /**
      * Method used to get a list of all the events from the API.
      */
     private void apiEventsCall() {
@@ -206,7 +400,6 @@ public class EventsFragment extends Fragment {
                     }
                 } catch (Exception exception) {
                     DynamicToast.makeError(c, "Error API on response").show();
-
                 }
             }
 

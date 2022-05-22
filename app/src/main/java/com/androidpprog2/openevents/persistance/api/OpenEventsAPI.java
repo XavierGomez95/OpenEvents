@@ -98,7 +98,7 @@ public interface OpenEventsAPI {
     Call<Event> getEventId(@Path("id") Integer id);
 
     @GET("events/best")
-    Call<List<Event>> getEventsBest();
+    Call<List<Event>> getEventsBest(@Header("Authorization") String token);
 
     @GET("events/search")
     Call<List<Event>> getEventsSearch(@Header("Authorization") String token, @Query("location") String location, @Query("keyword") String keyword, @Query("date") String date);

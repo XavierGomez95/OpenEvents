@@ -77,8 +77,8 @@ public class APIEvents {
      *
      * @param callback
      */
-    public void getEventsBest(Callback<List<Event>> callback) {
-        this.service.getEventsBest().enqueue(callback);
+    public void getEventsBest(String token, Callback<List<Event>> callback) {
+        this.service.getEventsBest(token).enqueue(callback);
     }
 
     /**

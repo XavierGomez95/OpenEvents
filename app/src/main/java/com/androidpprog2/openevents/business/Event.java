@@ -35,7 +35,7 @@ public class Event implements Serializable {
     }
 
     /**
-     * Constructor.
+     * Constructor (add event).
      *
      */
     public Event(String name, String image, String location,

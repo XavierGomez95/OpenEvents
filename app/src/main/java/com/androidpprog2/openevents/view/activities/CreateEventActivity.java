@@ -94,7 +94,6 @@ public class CreateEventActivity extends AppCompatActivity {
         type = findViewById(R.id.ce_event_type);
         btn_add_event = findViewById(R.id.btn_add_event);
         n_participators = findViewById(R.id.ce_participators);
-        type = findViewById(R.id.ce_event_type);
     }
 
     /**
@@ -159,11 +158,11 @@ public class CreateEventActivity extends AppCompatActivity {
         Log.d("DSAADS", "ENTRA"+day);
 
         if (day.length() == 1) {
-            Log.d("DSAADS", "ENTRA");
+            Log.d("DSAADS", "ENTRA"); // TODO: ELIMINAR AL FINAL
             day = "0" + day;
         }
         if (month.length() == 1) {
-            Log.d("DSAADS", "month");
+            Log.d("DSAADS", "month"); // TODO: ELIMINAR AL FINAL
             month = "0" + month;
         }
 
