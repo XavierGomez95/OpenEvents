@@ -3,7 +3,6 @@ package com.androidpprog2.openevents.view.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,31 +140,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             } else
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-            //TODO TEMPORAL
-            Log.d("EVENT NAME : ", eventList.get(pos).getName());
-            Log.d("EVENT TYPE : ", eventList.get(pos).getType());
-            Log.d("URL : ", image);
-
             Picasso.with(context).load(imageURL).into(imageView);
-        }
-
-
-        /**
-         * Method called to delete a item of the eventsList.
-         *
-         * @param pos item position.
-         */
-        public void deleteItem(int pos) {
-
-        }
-
-        /**
-         * Method called to edit a item of the eventsList.
-         *
-         * @param pos item position.
-         */
-        public void editItem(int pos) {
-
         }
     }
 }

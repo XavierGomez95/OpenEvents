@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.view.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidpprog2.openevents.R;
@@ -24,7 +26,7 @@ import retrofit2.Response;
 /**
  * CREATED EVENT ACTIVITY CLASS
  */
-public class CreateEventActivity extends AppCompatActivity {
+public class CreateEditEventActivity extends AppCompatActivity {
     private Button btn_add_event;
     private EditText name;
     private EditText image;
@@ -58,7 +60,12 @@ public class CreateEventActivity extends AppCompatActivity {
             setEventText();
         }
         btn_add_event.setOnClickListener(view -> {
-            checkData();
+            if (edit) {
+                editEventApi();
+            } else {
+                addEventApi();
+            }
+
         });
     }
 
@@ -70,13 +77,14 @@ public class CreateEventActivity extends AppCompatActivity {
         image.setText(editEvent.getImage());
         location.setText(editEvent.getLocation());
         description.setText(editEvent.getDescription());
-        n_participators.setText(editEvent.getN_participators());
+        n_participators.setText(editEvent.getN_participators().toString());
         type.setText(editEvent.getType());
         Log.d("TEST", "DATE" + editEvent.getEventStart_date());
         String startDate = editEvent.getEventStart_date().split("T")[0];
         String[] ymd = startDate.split("-");
         Log.d("TEST", "DATE" + startDate);
-        startDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]), Integer.parseInt(ymd[2]));
+        startDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1, Integer.parseInt(ymd[2]));
+//TODO ACABAR DE PONER LA ENDDATE DEL EVENT Y LAS HORAS Y TODO
     }
 
     /**
@@ -94,26 +102,19 @@ public class CreateEventActivity extends AppCompatActivity {
         type = findViewById(R.id.ce_event_type);
         btn_add_event = findViewById(R.id.btn_add_event);
         n_participators = findViewById(R.id.ce_participators);
+        if (edit) btn_add_event.setText(R.string.edit_event);
     }
 
     /**
      * Method called to check the entrances of information and to add the event to the API.
      */
-    private void checkData() {
+    private void addEventApi() {
         Context context = this;
         String startDate = getStringDate(startDatePicker, startTimePicker);
         String endDate = getStringDate(endDatePicker, endTimePicker);
         int num = Integer.parseInt(n_participators.getText().toString());
-
         // TODO: ELIMINAR CUANDO FUNCIONE TODO
         Log.d("IRIS", "date: " + startDate);
-        Log.d("IRIS", "date: " + endDate);
-        Log.d("IRIS", "num: " + num);
-        Log.d("IRIS", "name: " + name.getText().toString());
-        Log.d("IRIS", "image: " + image.getText().toString());
-        Log.d("IRIS", "location: " + location.getText().toString());
-        Log.d("IRIS", "description: " + description.getText().toString());
-        Log.d("IRIS", "type: " + type.getText().toString());
 
 
         Event e = new Event(name.getText().toString(), image.getText().toString(),
@@ -123,9 +124,8 @@ public class CreateEventActivity extends AppCompatActivity {
         APIEvents api = APIEvents.getInstance();
         api.addEvent(Token.getToken(this), e, new Callback<Event>() {
             @Override
-            public void onResponse(Call<Event> call, Response<Event> response) {
+            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
                 if (response.body() != null) {
-                    Event e = response.body();
                     DynamicToast.makeSuccess(context, "Event created successfully!").show();
                     finish();
                 } else {
@@ -136,10 +136,47 @@ public class CreateEventActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Event> call, Throwable t) {
+            public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
                 DynamicToast.makeError(context, "Error while connecting to the API").show();
             }
         });
+    }
+
+    /**
+     * Method called to check the entrances of information and to add the event to the API.
+     */
+    private void editEventApi() {
+        Log.d("EDIT", "EVENT");
+        Context context = this;
+        String startDate = getStringDate(startDatePicker, startTimePicker);
+        String endDate = getStringDate(endDatePicker, endTimePicker);
+        int num = Integer.parseInt(n_participators.getText().toString());
+
+        Event e = new Event(name.getText().toString(), image.getText().toString(),
+                location.getText().toString(), description.getText().toString(),
+                startDate, endDate, num, type.getText().toString());
+        APIEvents api = APIEvents.getInstance();
+        Log.d("ID", "ID: " + editEvent.getId());
+        api.editEvent(Token.getToken(this), editEvent.getId(), e, new Callback<Event>() {
+            @Override
+            public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
+                if (response.body() != null) {
+                    Event eventtt = response.body();
+                    DynamicToast.makeSuccess(context, "Event edited successfully!").show();
+                    finish();
+                } else {
+                    DynamicToast.makeError(context, "Error in input").show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
+                DynamicToast.makeError(context, "Error while connecting to the API").show();
+
+            }
+        });
+
     }
 
     /**
@@ -151,18 +188,14 @@ public class CreateEventActivity extends AppCompatActivity {
      */
     private String getStringDate(DatePicker datePicker, TimePicker timePicker) {
         String day = String.valueOf(datePicker.getDayOfMonth());
-        String month = String.valueOf(datePicker.getMonth());
+        String month = String.valueOf(datePicker.getMonth() + 1);
         String year = String.valueOf(datePicker.getYear());
         String hour = String.valueOf(timePicker.getHour());
         String minute = String.valueOf(timePicker.getMinute());
-        Log.d("DSAADS", "ENTRA"+day);
-
         if (day.length() == 1) {
-            Log.d("DSAADS", "ENTRA"); // TODO: ELIMINAR AL FINAL
             day = "0" + day;
         }
         if (month.length() == 1) {
-            Log.d("DSAADS", "month"); // TODO: ELIMINAR AL FINAL
             month = "0" + month;
         }
 

@@ -319,8 +319,9 @@ public class EventsFragment extends Fragment {
      */
     private void getFilteredListBySearch(String incomingString) {
         // Llamada a la API para filtrar lo del searcher
-        apiEvents.getEventsSearch(Token.getToken(getContext()), incomingString, incomingString,
-                incomingString, new Callback<List<Event>>() {
+
+        apiEvents.getEventsSearch(Token.getToken(getContext()), incomingString, null,
+                null, new Callback<List<Event>>() {
                     @Override
                     public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                         try {

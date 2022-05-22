@@ -30,7 +30,7 @@
             android:name=".view.activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activities.CreateEventActivity"
+            android:name=".view.activities.CreateEditEventActivity"
             android:exported="false" />
         <activity
             android:name=".view.activities.EventDetailActivity"

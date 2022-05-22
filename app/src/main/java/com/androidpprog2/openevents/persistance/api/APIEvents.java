@@ -42,10 +42,8 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
-     * @param token authorization header with a Bearer Token value.
-     * @param event object with all the attributes.
+     * @param token    authorization header with a Bearer Token value.
+     * @param event    object with all the attributes.
      * @param callback
      */
     public void addEvent(String token, Event event, Callback<Event> callback) {
@@ -53,8 +51,6 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
      * @param id
      * @param callback
      */
@@ -63,9 +59,7 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
-     * @param token of the currently logged in user
+     * @param token    of the currently logged in user
      * @param callback
      */
     public void getListEvents(String token, Callback<List<Event>> callback) {
@@ -73,8 +67,6 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
      * @param callback
      */
     public void getEventsBest(String token, Callback<List<Event>> callback) {
@@ -82,9 +74,7 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
-     * @param token of the currently logged in user
+     * @param token    of the currently logged in user
      * @param location
      * @param keyword
      * @param date
@@ -95,20 +85,16 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
-     * @param token of the currently logged in user
+     * @param token    of the currently logged in user
      * @param event
      * @param callback
      */
-    public void editEvent(String token, Event event, Callback<Event> callback) {
-        this.service.editEvent(token, event).enqueue(callback);
+    public void editEvent(String token, Integer id, Event event, Callback<Event> callback) {
+        this.service.editEvent(token, id, event).enqueue(callback);
     }
 
     /**
-     *
-     *
-     * @param token of the currently logged in user
+     * @param token    of the currently logged in user
      * @param id
      * @param callback
      */
@@ -117,9 +103,7 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
-     * @param token of the currently logged in user
+     * @param token    of the currently logged in user
      * @param id
      * @param callback
      */
@@ -128,9 +112,7 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
-     * @param token of the currently logged in user
+     * @param token    of the currently logged in user
      * @param id
      * @param callback
      */
@@ -139,9 +121,7 @@ public class APIEvents {
     }
 
     /**
-     *
-     *
-     * @param token of the currently logged in user
+     * @param token    of the currently logged in user
      * @param id
      * @param callback
      */

@@ -3,7 +3,6 @@ package com.androidpprog2.openevents.view.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +18,8 @@ import com.androidpprog2.openevents.R;
 import com.androidpprog2.openevents.business.Event;
 import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.persistance.api.APIEvents;
-import com.androidpprog2.openevents.view.activities.CreateEventActivity;
+import com.androidpprog2.openevents.view.activities.CreateEditEventActivity;
 import com.androidpprog2.openevents.view.activities.EventDetailActivity;
-import com.androidpprog2.openevents.view.activities.UserDetailActivity;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import com.squareup.picasso.Picasso;
 
@@ -159,11 +157,6 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
                     imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
             } else
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-
-            // TODO: REVISAR ESTOS Log.d
-            Log.d("EVENT NAME : ", image);
-            Log.d("URL : ", image);
-
             Picasso.with(context).load(imageURL).into(imageView);
         }
 
@@ -176,7 +169,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
             APIEvents apiEvents = new APIEvents();
             apiEvents.deleteEvent(Token.getToken(context), myEventsList.get(pos).getId(), new Callback<Event>() {
                 @Override
-                public void onResponse(Call<Event> call, Response<Event> response) {
+                public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
                     DynamicToast.makeSuccess(context, "The " + myEventsList.get(pos).getName() + " event has been deleted").show();
                     myEventsList.remove(pos);
                     notifyItemRemoved(pos);
@@ -184,9 +177,8 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
                 }
 
                 @Override
-                public void onFailure(Call<Event> call, Throwable t) {
+                public void onFailure(@NonNull Call<Event> call, @NonNull Throwable t) {
                     DynamicToast.makeError(context, "Error API connection").show();
-
                 }
             });
 
@@ -199,7 +191,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.ViewHo
          * @param pos item position.
          */
         public void editItem(int pos) {
-            Intent intent = new Intent(activity, CreateEventActivity.class);
+            Intent intent = new Intent(activity, CreateEditEventActivity.class);
             intent.putExtra("event", myEventsList.get(pos));
             context.startActivity(intent);
         }

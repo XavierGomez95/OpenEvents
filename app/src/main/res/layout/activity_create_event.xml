@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".view.activities.CreateEventActivity">
+        tools:context=".view.activities.CreateEditEventActivity">
 
         <LinearLayout
             android:layout_width="match_parent"

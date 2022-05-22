@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,8 +43,6 @@ public class EventDetailActivity extends AppCompatActivity {
     /**
      * Setting the essential layout parameters.
      * Manage the functions of assistance or no assistance.
-     *
-     * @param savedInstanceState
      */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,18 +59,18 @@ public class EventDetailActivity extends AppCompatActivity {
         setTexts(eventList, position);
 
         attendButton.setOnClickListener(view -> {
-            if (attendButton.getText().equals("ATTEND")) {
+            if (attendButton.getText().equals(R.string.Attend)) {
 
                 APIEvents api = APIEvents.getInstance();
                 api.addEventAssistance(Token.getToken(this), event.getId(), new Callback<AssistanceRequest>() {
                     @Override
-                    public void onResponse(Call<AssistanceRequest> call, Response<AssistanceRequest> response) {
-                        attendButton.setText("UNATTEND");
+                    public void onResponse(@NonNull Call<AssistanceRequest> call, @NonNull Response<AssistanceRequest> response) {
+                        attendButton.setText(R.string.unattend);
                         DynamicToast.makeSuccess(c, "You will attend to the event!").show();
                     }
 
                     @Override
-                    public void onFailure(Call<AssistanceRequest> call, Throwable t) {
+                    public void onFailure(@NonNull Call<AssistanceRequest> call, @NonNull Throwable t) {
                         DynamicToast.makeError(c, "Error while connecting to the API").show();
 
                     }
@@ -80,14 +79,13 @@ public class EventDetailActivity extends AppCompatActivity {
                 APIEvents api = APIEvents.getInstance();
                 api.deleteEventAssistance(Token.getToken(this), event.getId(), new Callback<AssistanceRequest>() {
                     @Override
-                    public void onResponse(Call<AssistanceRequest> call, Response<AssistanceRequest> response) {
-                        attendButton.setText("ATTEND");
-                        // TODO: CAMBIAR POR OTRO AVISO
-                        Log.d("IRIS", "TRUEEE DELETE" + response.body());
+                    public void onResponse(@NonNull Call<AssistanceRequest> call, @NonNull Response<AssistanceRequest> response) {
+                        attendButton.setText(R.string.Attend);
+                        DynamicToast.make(c, "Your attendance have been canceled ").show();
                     }
 
                     @Override
-                    public void onFailure(Call<AssistanceRequest> call, Throwable t) {
+                    public void onFailure(@NonNull Call<AssistanceRequest> call, @NonNull Throwable t) {
                         DynamicToast.makeError(c, "Error while connecting to the API").show();
                     }
                 });
@@ -103,11 +101,12 @@ public class EventDetailActivity extends AppCompatActivity {
      */
     private void setTexts(List<Event> eventList, Integer position) {
         tittleDescriptionTextView.setText(eventList.get(position).getName());
-        descriptionTextView.setText(event.getDescription() + " participators" + event.getN_participators());
+        descriptionTextView.setText(event.getDescription() + "\nparticipators: " + event.getN_participators());
         Log.d("TAG", "EVENT DATE" + event.getEventStart_date());
         dateStart.setText(event.getEventStart_date());
         dateEnd.setText(event.getEventEnd_date());
         location.setText(event.getLocation());
+
     }
 
     /**
@@ -139,11 +138,6 @@ public class EventDetailActivity extends AppCompatActivity {
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
         } else
             imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
-
-        // TODO: ELIMINAR CUANDO TODO FUNCIONE
-        Log.d("EVENT NAME : ", event.getName());
-        Log.d("URL : ", image);
-
         Picasso.with(getApplicationContext()).load(imageURL).into(imageView);
     }
 }

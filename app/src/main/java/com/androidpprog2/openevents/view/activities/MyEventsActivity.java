@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +19,6 @@ import com.androidpprog2.openevents.view.adapters.MyEventsAdapter;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +61,7 @@ public class MyEventsActivity extends AppCompatActivity {
         if (myEventList.isEmpty()) textView_noEvents.setText("No event created yet, Add an event!");
 
         createEvent_fab.setOnClickListener(view -> {
-            Intent editIntent = new Intent(getApplicationContext(), CreateEventActivity.class);
+            Intent editIntent = new Intent(getApplicationContext(), CreateEditEventActivity.class);
             startActivity(editIntent);
         });
 

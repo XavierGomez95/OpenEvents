@@ -104,7 +104,7 @@ public interface OpenEventsAPI {
     Call<List<Event>> getEventsSearch(@Header("Authorization") String token, @Query("location") String location, @Query("keyword") String keyword, @Query("date") String date);
 
     @PUT("events/{id}")
-    Call<Event> editEvent(@Header("Authorization") String token, @Body Event event);
+    Call<Event> editEvent(@Header("Authorization") String token, @Path("id") Integer id, @Body Event event);
 
     @DELETE("events/{id}")
     Call<Event> deleteEvent(@Header("Authorization") String token, @Path("id") Integer id);
