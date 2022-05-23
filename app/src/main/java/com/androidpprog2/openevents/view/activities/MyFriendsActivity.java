@@ -1,5 +1,6 @@
 package com.androidpprog2.openevents.view.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.view.adapters.FriendsAdapter;
 import com.androidpprog2.openevents.view.adapters.RequestsAdapter;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.util.List;
 
@@ -34,7 +36,6 @@ public class MyFriendsActivity extends AppCompatActivity {
     private FriendsAdapter friendsAdapter;
     private RequestsAdapter requestsAdapter;
     private Context context = this;
-    private User myUser; // TODO: ELIMINAR SI NO LO USAMOS
     private int id;
 
 
@@ -66,7 +67,7 @@ public class MyFriendsActivity extends AppCompatActivity {
     private void getListRequests() {
         APIUser.getInstance().getFriendRequests(Token.getToken(this), new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if (response.isSuccessful()) {
                     requests = response.body();
                     if (!requests.isEmpty()) {
@@ -79,8 +80,8 @@ public class MyFriendsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                Log.d("ERROR", "");
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
+                DynamicToast.makeError(context, "Error on response API").show();
             }
         });
     }
@@ -89,13 +90,13 @@ public class MyFriendsActivity extends AppCompatActivity {
      * Call the API to get the list of friends of the current user.
      */
     private void getListFriends() {
+
         APIUser.getInstance().getFriends(Token.getToken(this), id, new Callback<List<User>>() {
             @Override
-            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+            public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if (response.isSuccessful()) {
                     friends = response.body();
                     if (!friends.isEmpty()) {
-                        Log.d("DENTRO", " " + friends.get(0).getEmail());
                         friendsAdapter = new FriendsAdapter(friends, context);
                         friendsRecyclerView.setLayoutManager(linearLayoutManagerF);
                         friendsRecyclerView.setAdapter(friendsAdapter);
@@ -105,9 +106,8 @@ public class MyFriendsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<User>> call, Throwable t) {
-                // TODO: GENERAR UNA ALERTA ADECUADA
-                Log.d("ERROR", "");
+            public void onFailure(@NonNull Call<List<User>> call, @NonNull Throwable t) {
+                DynamicToast.makeError(context, "Error on response API").show();
             }
         });
     }

@@ -68,7 +68,7 @@ public class CreateEditEventActivity extends AppCompatActivity {
     }
 
     /**
-     * se text when you want to edit an event
+     * set text when you want to edit an event
      */
     private void setEditedEventText() {
         name.setText(editEvent.getName());
@@ -86,7 +86,6 @@ public class CreateEditEventActivity extends AppCompatActivity {
         endDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1,
                 Integer.parseInt(ymd[2]));
 
-//TODO ACABAR DE PONER LA ENDDATE DEL EVENT Y LAS HORAS Y TODO
     }
 
     /**
@@ -191,6 +190,12 @@ public class CreateEditEventActivity extends AppCompatActivity {
         }
         if (month.length() == 1) {
             month = "0" + month;
+        }
+        if (hour.length() == 1) {
+            hour = "0" + hour;
+        }
+        if (minute.length() == 1) {
+            minute = "0" + minute;
         }
 
         return year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":00.000Z";

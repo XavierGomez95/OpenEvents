@@ -18,6 +18,20 @@ public class Event implements Serializable {
     private Integer owner_id;
     private String date;
 
+    /**
+     * Constructor (add event).
+     */
+    public Event(String name, String image, String location,
+                 String description, String eventStart_date, String eventEnd_date, int n_participators, String type) {
+        this.name = name;
+        this.image = image;
+        this.location = location;
+        this.description = description;
+        this.eventStart_date = eventStart_date;
+        this.eventEnd_date = eventEnd_date;
+        this.n_participators = n_participators;
+        this.type = type;
+    }
 
     public Event(String name, String image, String location,
                  String description, String eventStart_date, String eventEnd_date, int n_participators, String type, int owner_id, String date) {
@@ -35,24 +49,6 @@ public class Event implements Serializable {
     }
 
     /**
-     * Constructor (add event).
-     *
-     */
-    public Event(String name, String image, String location,
-                 String description, String eventStart_date, String eventEnd_date, int n_participators, String type) {
-        this.name = name;
-        this.image = image;
-        this.location = location;
-        this.description = description;
-        this.eventStart_date = eventStart_date;
-        this.eventEnd_date = eventEnd_date;
-        this.n_participators = n_participators;
-        this.type = type;
-    }
-
-
-    /**
-     *
      * @return events name.
      */
     public String getName() {
@@ -60,7 +56,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return image String name.
      */
     public String getImage() {
@@ -68,7 +63,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return events description.
      */
     public String getDescription() {
@@ -76,7 +70,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return events id.
      */
     public Integer getId() {
@@ -84,7 +77,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return events location.
      */
     public String getLocation() {
@@ -92,7 +84,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return events start date.
      */
     public String getEventStart_date() {
@@ -100,7 +91,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return events end date.
      */
     public String getEventEnd_date() {
@@ -108,7 +98,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return number of participants of an event.
      */
     public Integer getN_participators() {
@@ -116,7 +105,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return events type.
      */
     public String getType() {
@@ -124,7 +112,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return events owner id.
      */
     public Integer getOwner_id() {
@@ -132,7 +119,6 @@ public class Event implements Serializable {
     }
 
     /**
-     *
      * @return events date.
      */
     public String getDate() {

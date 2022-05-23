@@ -18,6 +18,7 @@ import com.androidpprog2.openevents.databinding.ActivityTabBarBinding;
 import com.androidpprog2.openevents.view.fragments.EventsFragment;
 import com.androidpprog2.openevents.view.fragments.ProfileFragment;
 import com.androidpprog2.openevents.view.fragments.UsersFragment;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.util.List;
 
@@ -98,9 +99,6 @@ public class NavigationActivity extends AppCompatActivity {
                 for (User u : response.body()) {
                     if (u.getEmail().equals(email[0])) {
                         user = u;
-                        //profileFragment.loadImg();
-                        // TODO: REVISAR ESTE Log.d
-                        Log.d("IRIS", "USER: " + user.getEmail());
                         break;
                     }
                 }
@@ -108,8 +106,7 @@ public class NavigationActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                // TODO: REVISAR ESTE Log.d
-                Log.d("IRIS", "FAIL");
+                DynamicToast.makeError(context, "Error on response API").show();
             }
         });
         return user;

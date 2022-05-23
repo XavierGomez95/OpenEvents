@@ -18,45 +18,4 @@ public class FriendRequest {
         this.warningStatus = warningStatus;
     }
 
-    // TODO: COMENTAR LOS GETTERS
-
-    /**
-     *
-     * @return
-     */
-    public Integer getFieldCount() {
-        return fieldCount;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getAffectedRows() {
-        return affectedRows;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getInfo() {
-        return info;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getServerStatus() {
-        return serverStatus;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Integer getWarningStatus() {
-        return warningStatus;
-    }
 }
