@@ -53,12 +53,12 @@ public class EventsFragment extends Fragment {
     private static final String TAG = "EventFragment";
     private View view;
     private ExtendedFloatingActionButton myEvents_fab;
-    private Button bestEvents_btn;
+    private Button bestEvents_btn, allEvents_btn;
     private User user = null;
     private Spinner spinner, searcherSpinner;
     private SearchView searchEventsView;
     private String filterType = "";
-    private final String[] spinnerListCategories = {"All events", "sports-grup7", "Excursió",
+    private final String[] spinnerListCategories = {"category filter", "sports-grup7", "Excursió",
             "art-grup7", "music-grup7", "nightlife-grup7"};
     private final String[] spinnerListFilters = {"location", "keyword", "date"};
 
@@ -109,6 +109,7 @@ public class EventsFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 filterType = spinnerListFilters[0];
+                // TODO: ELIMINAR ESTO
                 DynamicToast.makeSuccess(getContext(), filterType).show();
             }
         });
@@ -164,12 +165,23 @@ public class EventsFragment extends Fragment {
 
         bestEvents_btn.setOnClickListener(view -> {
             bestEventsFilter();
+            spinner.setSelection(0);
+        });
+
+        allEvents_btn.setOnClickListener(view -> {
+            apiEventsCall();
+            spinner.setSelection(0);
         });
 
         return view;
     }
 
 
+    /**
+     * Show the filtered list in the layout.
+     *
+     * @param location string wrote by the user in the SearchView.
+     */
     private void getFilteredListByLocation(String location) {
         apiEvents.getEventsSearch(Token.getToken(getContext()), location, null,
                 null, new Callback<List<Event>>() {
@@ -198,7 +210,11 @@ public class EventsFragment extends Fragment {
                 });
     }
 
-
+    /**
+     * Show the filtered list in the layout.
+     *
+     * @param keyword string wrote by the user in the SearchView.
+     */
     private void getFilteredListByKeyword(String keyword) {
         apiEvents.getEventsSearch(Token.getToken(getContext()), null, keyword,
                 null, new Callback<List<Event>>() {
@@ -227,7 +243,11 @@ public class EventsFragment extends Fragment {
                 });
     }
 
-
+    /**
+     * Show the filtered list in the layout
+     *
+     * @param date string wrote by the user in the SearchView.
+     */
     private void getFilteredListByDate(String date) {
         apiEvents.getEventsSearch(Token.getToken(getContext()), null, null,
                 date, new Callback<List<Event>>() {
@@ -257,6 +277,8 @@ public class EventsFragment extends Fragment {
     }
 
 
+
+
     /**
      * Method used to set the views.
      */
@@ -267,6 +289,7 @@ public class EventsFragment extends Fragment {
         spinner = view.findViewById(R.id.action_bar_spinner_events);
         myEvents_fab = view.findViewById(R.id.my_events);
         bestEvents_btn = view.findViewById(R.id.best_events);
+        allEvents_btn = view.findViewById(R.id.all_events);
     }
 
 
@@ -297,15 +320,15 @@ public class EventsFragment extends Fragment {
     public void getFilteredListByCategory() {
         String type = spinner.getSelectedItem().toString();
         List<Event> copyList = new ArrayList<>();
-        if (type.equals("All events")) {
-            eventsAdapter = new EventsAdapter(eventList, getContext());
+        if (type.equals("category filter")) {
+            apiEventsCall();
         } else {
             for (Event event : eventList) {
                 if (event.getType().equals(type)) copyList.add(event);
             }
             eventsAdapter = new EventsAdapter(copyList, getContext());
+            eventsRecyclerView.setAdapter(eventsAdapter);
         }
-        eventsRecyclerView.setAdapter(eventsAdapter);
     }
 
 
@@ -318,20 +341,25 @@ public class EventsFragment extends Fragment {
         apiEvents.getEventsSearch(Token.getToken(getContext()), incomingString, null,
                 null, new Callback<List<Event>>() {
                     @Override
-                    public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
+                    public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                         try {
                             if (response.isSuccessful()) {
+                                // TODO: REVISAR SI SE HA DE ELIMINAR
+                                Log.d("RESPONSE BODY: ", call.request().toString());
+
                                 eventsAdapter = new EventsAdapter(response.body(), getContext());
                                 eventsRecyclerView.setAdapter(eventsAdapter);
                             }
                         } catch (Exception exception) {
-                            DynamicToast.makeError(getContext(), "Error API on response").show();
+                            // TODO: REVISAR SI SE HA DE ELIMINAR
+                            Log.e("TAG", exception.getMessage());
                         }
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
-                        DynamicToast.makeError(getContext(), "Error API connection").show();
+                    public void onFailure(Call<List<Event>> call, Throwable t) {
+                        // TODO: REVISAR SI SE HA DE ELIMINAR
+                        Log.d("onFailure:", "Fallo de lectura API filterEventsList");
                     }
                 });
     }

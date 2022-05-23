@@ -26,14 +26,25 @@
 
         <Button
             android:id="@+id/best_events"
-            android:layout_width="200dp"
+            android:layout_width="94dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left|top"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="60dp"
             android:layout_marginLeft="20dp"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:text="@string/best_events"/>
+
+        <Button
+            android:id="@+id/all_events"
+            android:layout_width="94dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="128dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="All events"/>
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search_bar_events"
@@ -43,7 +54,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             app:iconifiedByDefault="false"
-            app:queryHint="search" />
+            app:queryHint="search by" />
 
         <Spinner
             android:id="@+id/searcher_spinner"

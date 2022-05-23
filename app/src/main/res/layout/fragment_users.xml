@@ -20,7 +20,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             app:iconifiedByDefault="false"
-            app:queryHint="search by email" />
+            app:queryHint="search by email, name or last name" />
 
         <LinearLayout
             android:id="@+id/users_fragment_id"

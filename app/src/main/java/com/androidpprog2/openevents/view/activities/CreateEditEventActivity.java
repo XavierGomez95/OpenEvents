@@ -79,10 +79,12 @@ public class CreateEditEventActivity extends AppCompatActivity {
         type.setText(editEvent.getType());
         String startDate = editEvent.getEventStart_date().split("T")[0];
         String[] ymd = startDate.split("-");
-        startDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1, Integer.parseInt(ymd[2]));
+        startDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1,
+                Integer.parseInt(ymd[2]));
         String endDate = editEvent.getEventEnd_date().split("T")[0];
         ymd = endDate.split("-");
-        endDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1, Integer.parseInt(ymd[2]));
+        endDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1,
+                Integer.parseInt(ymd[2]));
 
 //TODO ACABAR DE PONER LA ENDDATE DEL EVENT Y LAS HORAS Y TODO
     }
@@ -127,9 +129,7 @@ public class CreateEditEventActivity extends AppCompatActivity {
                     finish();
                 } else {
                     DynamicToast.makeError(context, "Error in input").show();
-
                 }
-
             }
 
             @Override
