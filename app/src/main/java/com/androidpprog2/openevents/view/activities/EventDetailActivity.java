@@ -101,11 +101,16 @@ public class EventDetailActivity extends AppCompatActivity {
      */
     private void setTexts(List<Event> eventList, Integer position) {
         tittleDescriptionTextView.setText(eventList.get(position).getName());
-        descriptionTextView.setText(event.getDescription() + "\nparticipators: " + event.getN_participators());
+        descriptionTextView.setText(event.getDescription());
         Log.d("TAG", "EVENT DATE" + event.getEventStart_date());
-        dateStart.setText(event.getEventStart_date());
-        dateEnd.setText(event.getEventEnd_date());
-        location.setText(event.getLocation());
+        if (event.getEventStart_date() == null) {
+            dateStart.setText("Start date: " + event.getDate());
+
+        } else {
+            dateStart.setText("Start date: " + event.getEventStart_date());
+        }
+        dateEnd.setText("End date: " + event.getEventEnd_date());
+        location.setText("Location: " + event.getLocation() + "\nParticipators: " + event.getN_participators() + "\nType: " + event.getType());
 
     }
 

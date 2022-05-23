@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,6 +77,7 @@ public class MyEventsActivity extends AppCompatActivity {
         apiMyEventsCall();
 
     }
+
     /**
      * Method called to load the views.
      */
@@ -84,14 +86,6 @@ public class MyEventsActivity extends AppCompatActivity {
         createEvent_fab = findViewById(R.id.create_event_floating_button);
         myEventsRecyclerView = findViewById(R.id.my_events_recycler_view);
     }
-
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        setContentView(R.layout.activity_my_events);
-        apiMyEventsCall();
-
-    }*/
 
     /**
      * Method used to get a list of all the events created by the user with the session started
@@ -107,18 +101,13 @@ public class MyEventsActivity extends AppCompatActivity {
                 try {
                     if (response.code() == 200) {
                         myEventList = response.body();
-                        // TODO: DELETE THIS LOG.D
-                        Log.d("RESPONSE.BODY: ", call.request().toString());
                         if (myEventList != null && !myEventList.isEmpty()) {
                             myEventsAdapter = new MyEventsAdapter(myEventList, c);
                             myEventsRecyclerView.setAdapter(myEventsAdapter);
                             textView_noEvents.setText("");
-
                         } else {
                             textView_noEvents.setText("No event created yet, Add an event!");
                         }
-
-
                     }
                 } catch (Exception exception) {
                     DynamicToast.makeError(c, "Error on response API").show();

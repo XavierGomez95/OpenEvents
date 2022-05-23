@@ -126,7 +126,6 @@ public class EventsFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 switch (filterType) {
                     case "location":
-                        DynamicToast.makeSuccess(getContext(), filterType + " searcher case").show();
                         getFilteredListByLocation(newText);
                         break;
                     case "keyword":

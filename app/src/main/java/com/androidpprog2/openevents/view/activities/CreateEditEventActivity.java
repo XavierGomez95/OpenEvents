@@ -1,6 +1,5 @@
 package com.androidpprog2.openevents.view.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,7 +56,7 @@ public class CreateEditEventActivity extends AppCompatActivity {
         editEvent = (Event) intent.getSerializableExtra("event");
         if (editEvent != null) {
             edit = true;
-            setEventText();
+            setEditedEventText();
         }
         btn_add_event.setOnClickListener(view -> {
             if (edit) {
@@ -72,7 +71,7 @@ public class CreateEditEventActivity extends AppCompatActivity {
     /**
      * se text when you want to edit an event
      */
-    private void setEventText() {
+    private void setEditedEventText() {
         name.setText(editEvent.getName());
         image.setText(editEvent.getImage());
         location.setText(editEvent.getLocation());
@@ -82,8 +81,13 @@ public class CreateEditEventActivity extends AppCompatActivity {
         Log.d("TEST", "DATE" + editEvent.getEventStart_date());
         String startDate = editEvent.getEventStart_date().split("T")[0];
         String[] ymd = startDate.split("-");
-        Log.d("TEST", "DATE" + startDate);
+        Log.d("TEST", "DATE START" + startDate);
         startDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1, Integer.parseInt(ymd[2]));
+        String endDate = editEvent.getEventEnd_date().split("T")[0];
+        ymd = endDate.split("-");
+        Log.d("TEST", "DATE END" + startDate);
+        endDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1, Integer.parseInt(ymd[2]));
+
 //TODO ACABAR DE PONER LA ENDDATE DEL EVENT Y LAS HORAS Y TODO
     }
 
@@ -115,7 +119,7 @@ public class CreateEditEventActivity extends AppCompatActivity {
         int num = Integer.parseInt(n_participators.getText().toString());
         // TODO: ELIMINAR CUANDO FUNCIONE TODO
         Log.d("IRIS", "date: " + startDate);
-
+        Log.d("IRIS", "date: " + endDate);
 
         Event e = new Event(name.getText().toString(), image.getText().toString(),
                 location.getText().toString(), description.getText().toString(),

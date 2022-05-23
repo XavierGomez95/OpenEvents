@@ -1,79 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.activities.EventDetailActivity">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        tools:context=".view.activities.EventDetailActivity">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/event_description_image"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="50dp"
-                android:gravity="center" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/event_description_image"
+                    android:layout_width="400dp"
+                    android:layout_height="140dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="50dp"
+                    android:gravity="center" />
 
-        <TextView
-            android:id="@+id/tittleDescriptionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/description_event_tittle"
-            android:textColor="@color/black"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/descriptionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/description_event_details"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/tittleDescriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="@string/description_event_tittle"
+                android:textColor="@color/dark_blue"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/dateStartTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/description_event_datestart"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/descriptionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:text="@string/description_event_details"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/dateEndTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/description_event_date_end"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/dateStartTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description_event_datestart"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/locationTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/description_event_location"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="normal" />
+            <TextView
+                android:id="@+id/dateEndTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description_event_date_end"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/btn_attend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/description_event_attend"/>
+            <TextView
+                android:id="@+id/locationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/description_event_location"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_attend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/description_event_attend" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
