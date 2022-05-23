@@ -16,7 +16,6 @@
             android:orientation="vertical">
 
 
-
             <TextView
                 android:id="@+id/tv_logo"
                 android:layout_width="wrap_content"
@@ -39,7 +38,9 @@
                 android:layout_marginBottom="10dp"
                 android:hint="@string/create_event_event_name"
                 android:padding="15dp"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:autofillHints="name"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/ce_image"
@@ -50,7 +51,8 @@
                 android:layout_marginBottom="10dp"
                 android:hint="@string/create_event_event_image"
                 android:padding="15dp"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                 />
 
             <EditText
                 android:id="@+id/ce_location"
@@ -61,7 +63,8 @@
                 android:layout_marginBottom="10dp"
                 android:hint="@string/create_event_location"
                 android:padding="15dp"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                 />
 
             <EditText
                 android:id="@+id/ce_description"
@@ -112,18 +115,17 @@
                 android:id="@+id/start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:datePickerMode="spinner"
-                android:calendarViewShown="false"
                 android:layout_gravity="center_horizontal"
-                />
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
 
             <TimePicker
                 android:id="@+id/start_time"
-                android:layout_weight="4"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
-                />
+                android:layout_weight="4"
+                android:timePickerMode="spinner" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,7 +133,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="5dp"
-                android:text="End Date"
+                android:text="@string/description_event_date_end"
                 android:textAlignment="center"
                 android:textColor="@color/dark_blue"
                 android:textSize="20sp" />
@@ -141,26 +143,24 @@
                 android:id="@+id/end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:datePickerMode="spinner"
-                android:calendarViewShown="false"
                 android:layout_gravity="center_horizontal"
-                />
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+
             <TimePicker
                 android:id="@+id/end_time"
-                android:layout_weight="4"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                />
+                android:layout_weight="4"
+                android:timePickerMode="spinner" />
 
             <Button
                 android:id="@+id/btn_add_event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="20dp"
-                android:text="Create event"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/create_event"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

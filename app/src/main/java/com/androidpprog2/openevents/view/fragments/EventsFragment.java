@@ -114,7 +114,6 @@ public class EventsFragment extends Fragment {
         });
 
 
-
         searchEventsView.clearFocus();
         searchEventsView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -173,93 +172,89 @@ public class EventsFragment extends Fragment {
 
     private void getFilteredListByLocation(String location) {
         apiEvents.getEventsSearch(Token.getToken(getContext()), location, null,
-        null, new Callback<List<Event>>() {
-            @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
-                        eventList = response.body();
-                        eventsAdapter = new EventsAdapter(eventList, getContext());
-                        eventsRecyclerView.setLayoutManager(linearLayoutManager);
-                        eventsRecyclerView.setAdapter(eventsAdapter);
+                null, new Callback<List<Event>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                // TODO: REVISAR SI SE HA DE ELIMINAR
+                                Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
+                                eventList = response.body();
+                                eventsAdapter = new EventsAdapter(eventList, getContext());
+                                eventsRecyclerView.setLayoutManager(linearLayoutManager);
+                                eventsRecyclerView.setAdapter(eventsAdapter);
+                            }
+                        } catch (Exception exception) {
+                            DynamicToast.makeError(getContext(), "Error API on response").show();
+
+                        }
                     }
-                } catch (Exception exception) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.e("TAG", exception.getMessage());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
-                // TODO: REVISAR SI SE HA DE ELIMINAR
-                Log.d("onFailure:", "Fallo de lectura API filterEventsList");
-            }
-        });
+                    @Override
+                    public void onFailure(@NonNull Call<List<Event>> call, Throwable t) {
+                        DynamicToast.makeError(getContext(), "Error API connection").show();
+
+                    }
+                });
     }
-
 
 
     private void getFilteredListByKeyword(String keyword) {
         apiEvents.getEventsSearch(Token.getToken(getContext()), null, keyword,
-            null, new Callback<List<Event>>() {
-                @Override
-                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                    try {
-                        if (response.isSuccessful()) {
-                            // TODO: REVISAR SI SE HA DE ELIMINAR
-                            Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
-                            eventList = response.body();
-                            eventsAdapter = new EventsAdapter(eventList, getContext());
-                            eventsRecyclerView.setLayoutManager(linearLayoutManager);
-                            eventsRecyclerView.setAdapter(eventsAdapter);
+                null, new Callback<List<Event>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                // TODO: REVISAR SI SE HA DE ELIMINAR
+                                Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
+                                eventList = response.body();
+                                eventsAdapter = new EventsAdapter(eventList, getContext());
+                                eventsRecyclerView.setLayoutManager(linearLayoutManager);
+                                eventsRecyclerView.setAdapter(eventsAdapter);
+                            }
+                        } catch (Exception exception) {
+                            DynamicToast.makeError(getContext(), "Error API on response").show();
+
                         }
-                    } catch (Exception exception) {
-                        // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.e("TAG", exception.getMessage());
                     }
-                }
 
-                @Override
-                public void onFailure(Call<List<Event>> call, Throwable t) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.d("onFailure:", "Fallo de lectura API filterEventsList");
-                }
-            });
+                    @Override
+                    public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
+                        DynamicToast.makeError(getContext(), "Error API connection").show();
+
+                    }
+                });
     }
-
 
 
     private void getFilteredListByDate(String date) {
         apiEvents.getEventsSearch(Token.getToken(getContext()), null, null,
-            date, new Callback<List<Event>>() {
-                @Override
-                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                    try {
-                        if (response.isSuccessful()) {
-                            // TODO: REVISAR SI SE HA DE ELIMINAR
-                            Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
-                            eventList = response.body();
-                            eventsAdapter = new EventsAdapter(eventList, getContext());
-                            eventsRecyclerView.setLayoutManager(linearLayoutManager);
-                            eventsRecyclerView.setAdapter(eventsAdapter);
+                date, new Callback<List<Event>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                // TODO: REVISAR SI SE HA DE ELIMINAR
+                                Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
+                                eventList = response.body();
+                                eventsAdapter = new EventsAdapter(eventList, getContext());
+                                eventsRecyclerView.setLayoutManager(linearLayoutManager);
+                                eventsRecyclerView.setAdapter(eventsAdapter);
+                            }
+                        } catch (Exception exception) {
+                            DynamicToast.makeError(getContext(), "Error API on response").show();
+
                         }
-                    } catch (Exception exception) {
-                        // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.e("TAG", exception.getMessage());
                     }
-                }
 
-                @Override
-                public void onFailure(Call<List<Event>> call, Throwable t) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.d("onFailure:", "Fallo de lectura API filterEventsList");
-                }
-            });
+                    @Override
+                    public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
+                        DynamicToast.makeError(getContext(), "Error API connection").show();
+
+                    }
+                });
     }
-
-
 
 
     /**
@@ -281,13 +276,14 @@ public class EventsFragment extends Fragment {
     private void bestEventsFilter() {
         apiEvents.getEventsBest(Token.getToken(getContext()), new Callback<List<Event>>() {
             @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+            public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
                 eventsAdapter = new EventsAdapter(response.body(), getContext());
                 eventsRecyclerView.setAdapter(eventsAdapter);
             }
 
             @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
+                DynamicToast.makeError(getContext(), "Error API connection").show();
 
             }
         });
@@ -322,64 +318,22 @@ public class EventsFragment extends Fragment {
         apiEvents.getEventsSearch(Token.getToken(getContext()), incomingString, null,
                 null, new Callback<List<Event>>() {
                     @Override
-                    public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                    public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
                         try {
                             if (response.isSuccessful()) {
-                                // TODO: REVISAR SI SE HA DE ELIMINAR
-                                Log.d("RESPONSE BODY: ", call.request().toString());
-
                                 eventsAdapter = new EventsAdapter(response.body(), getContext());
                                 eventsRecyclerView.setAdapter(eventsAdapter);
                             }
                         } catch (Exception exception) {
-                            // TODO: REVISAR SI SE HA DE ELIMINAR
-                            Log.e("TAG", exception.getMessage());
+                            DynamicToast.makeError(getContext(), "Error API on response").show();
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Event>> call, Throwable t) {
-                        // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.d("onFailure:", "Fallo de lectura API filterEventsList");
+                    public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
+                        DynamicToast.makeError(getContext(), "Error API connection").show();
                     }
                 });
-    }
-
-
-    /**
-     * Method used to get a list of all the events created by the user with the session started
-     * from the API.
-     */
-    private void apiMyEventsCall() {
-        apiEvents.getMyEvents(Token.getToken(getContext()), user.getId(), new Callback<List<Event>>() {
-            @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                Intent intent = new Intent(getActivity(), MyEventsActivity.class);
-                try {
-                    if (response.isSuccessful()) {
-                        // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.d("HOLAAA", "AA" + response.body().get(0).getName());
-                        //myEventList.addAll(eventList);
-                        myEventList = response.body();
-                        Bundle args = new Bundle();
-                        args.putSerializable("MyEventList", (Serializable) myEventList);
-                        intent.putExtra("BUNDLE", args);
-                    }
-                } catch (Exception exception) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.e("TAG", exception.getMessage());
-                } finally {
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
-                // TODO: REVISAR SI SE HA DE ELIMINAR
-                Log.e(TAG, "Connection Error on apiMyEventsCall");
-                Log.e(TAG, t.toString());
-            }
-        });
     }
 
 
@@ -390,7 +344,7 @@ public class EventsFragment extends Fragment {
         Context c = getContext();
         apiEvents.getListEvents(Token.getToken(getContext()), new Callback<List<Event>>() {
             @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+            public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
                 try {
                     if (response.isSuccessful()) {
                         eventList = response.body();
@@ -404,14 +358,9 @@ public class EventsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
                 DynamicToast.makeError(c, "Error API connection").show();
             }
         });
-    }
-
-    // TODO: ELIMINAR SI NO SE USA
-    public List<Event> getEventList() {
-        return eventList;
     }
 }

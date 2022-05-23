@@ -3,7 +3,6 @@ package com.androidpprog2.openevents.view.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -50,7 +49,7 @@ public class CreateEditEventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_event);
+        setContentView(R.layout.activity_create_edit_event);
         loadViews();
         Intent intent = getIntent();
         editEvent = (Event) intent.getSerializableExtra("event");
@@ -78,14 +77,11 @@ public class CreateEditEventActivity extends AppCompatActivity {
         description.setText(editEvent.getDescription());
         n_participators.setText(editEvent.getN_participators().toString());
         type.setText(editEvent.getType());
-        Log.d("TEST", "DATE" + editEvent.getEventStart_date());
         String startDate = editEvent.getEventStart_date().split("T")[0];
         String[] ymd = startDate.split("-");
-        Log.d("TEST", "DATE START" + startDate);
         startDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1, Integer.parseInt(ymd[2]));
         String endDate = editEvent.getEventEnd_date().split("T")[0];
         ymd = endDate.split("-");
-        Log.d("TEST", "DATE END" + startDate);
         endDatePicker.updateDate(Integer.parseInt(ymd[0]), Integer.parseInt(ymd[1]) - 1, Integer.parseInt(ymd[2]));
 
 //TODO ACABAR DE PONER LA ENDDATE DEL EVENT Y LAS HORAS Y TODO
@@ -117,9 +113,6 @@ public class CreateEditEventActivity extends AppCompatActivity {
         String startDate = getStringDate(startDatePicker, startTimePicker);
         String endDate = getStringDate(endDatePicker, endTimePicker);
         int num = Integer.parseInt(n_participators.getText().toString());
-        // TODO: ELIMINAR CUANDO FUNCIONE TODO
-        Log.d("IRIS", "date: " + startDate);
-        Log.d("IRIS", "date: " + endDate);
 
         Event e = new Event(name.getText().toString(), image.getText().toString(),
                 location.getText().toString(), description.getText().toString(),
@@ -150,7 +143,6 @@ public class CreateEditEventActivity extends AppCompatActivity {
      * Method called to check the entrances of information and to add the event to the API.
      */
     private void editEventApi() {
-        Log.d("EDIT", "EVENT");
         Context context = this;
         String startDate = getStringDate(startDatePicker, startTimePicker);
         String endDate = getStringDate(endDatePicker, endTimePicker);
@@ -160,12 +152,10 @@ public class CreateEditEventActivity extends AppCompatActivity {
                 location.getText().toString(), description.getText().toString(),
                 startDate, endDate, num, type.getText().toString());
         APIEvents api = APIEvents.getInstance();
-        Log.d("ID", "ID: " + editEvent.getId());
         api.editEvent(Token.getToken(this), editEvent.getId(), e, new Callback<Event>() {
             @Override
             public void onResponse(@NonNull Call<Event> call, @NonNull Response<Event> response) {
                 if (response.body() != null) {
-                    Event eventtt = response.body();
                     DynamicToast.makeSuccess(context, "Event edited successfully!").show();
                     finish();
                 } else {
