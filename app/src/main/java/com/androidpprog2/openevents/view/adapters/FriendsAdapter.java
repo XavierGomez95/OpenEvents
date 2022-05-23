@@ -147,10 +147,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHold
             } else
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-            // TODO: ELIMINAR CUANDO ACABEMOS
-            Log.d("EVENT NAME : ", image);
-            Log.d("URL : ", image);
-
             Picasso.with(context).load(imageURL).into(imageView);
         }
     }

@@ -131,10 +131,6 @@ public class UserDetailActivity extends AppCompatActivity {
         } else
             imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-        // TODO: REVISAR SI SE HA DE ELIMINAR AL FINAL
-        Log.d("EVENT NAME : ", user.getName());
-        Log.d("URL : ", image);
-
         Picasso.with(getApplicationContext()).load(imageURL).into(imageView);
     }
 

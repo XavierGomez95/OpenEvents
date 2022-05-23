@@ -36,19 +36,8 @@ public class SplashActivity extends AppCompatActivity {
                 Intent intent = new Intent(SplashActivity.this, NavigationActivity.class);
                 intent.putExtra("tokenStr", accessToken);
                 startActivity(intent);
-                // TODO: ELIMINAR EL sout
-                System.out.println(getAccessToken());
                 finish();
             }
         }, 2000);
-    }
-
-    private String getAccessToken() {
-        SharedPreferences sharedPreferences = getSharedPreferences
-                ("credenciales", Context.MODE_PRIVATE);
-        accessToken = sharedPreferences.getString("token", "Error, information does not exist.");
-        //accessToken = null; // TEMPORAL PARA QUE SALGA SIEMPRE EL LOGIN
-
-        return accessToken;
     }
 }

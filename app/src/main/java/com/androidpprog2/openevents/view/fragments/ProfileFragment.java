@@ -109,7 +109,6 @@ public class ProfileFragment extends Fragment {
                             editor.putString("email", myUser.getEmail());
 
                             editor.commit();
-                            //TODO SHARED PREFERENCES GUARDAR NUEVO EMAIL!
                         }
                     }
 
@@ -217,10 +216,6 @@ public class ProfileFragment extends Fragment {
         } else
             imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-        // TODO: COMPROBAR SI SE HA DE ELIMINAR ESTE Log.d
-        Log.d("EVENT NAME : ", image);
-        Log.d("URL : ", image);
-
         Picasso.with(getContext()).load(imageURL).into(imageView);
     }
 
@@ -260,7 +255,9 @@ public class ProfileFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<Stats> call, Response<Stats> response) {
-                textViewStats.setText("Comments:" + response.body().getNum_comments() + "\nAveragescore:" + response.body().getAvg_score() + "\nPercentage comments:" + response.body().getPercentage_commenters_below());
+                textViewStats.setText("Comments:" + response.body().getNum_comments() + "\nAveragescore:"
+                        + response.body().getAvg_score() + "\nPercentage comments:"
+                        + response.body().getPercentage_commenters_below());
             }
 
             @Override
@@ -313,8 +310,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                // TODO: COMPROBAR SI SE HA DE ELIMINAR ESTE Log.e
-                Log.d("IRIS", "FAIL");
+                DynamicToast.makeError(getContext(), "Error on response API").show();
             }
         });
     }
@@ -331,9 +327,6 @@ public class ProfileFragment extends Fragment {
         sharedPreferences.edit().remove("email").clear().apply();
         sharedPreferences.edit().putString("token", null).apply();
         sharedPreferences.edit().putString("email", null).apply();
-
-        // TODO: COMPROBAR SI SE HA DE ELIMINAR ESTE Log.e
-        Log.e("LogOut", sharedPreferences.getString("token", "Non existing token"));
 
         // Start LoginActivity and finish this one
         startActivity(new Intent(getContext(), LoginActivity.class));

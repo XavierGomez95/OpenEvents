@@ -18,6 +18,7 @@ import com.androidpprog2.openevents.business.Token;
 import com.androidpprog2.openevents.business.User;
 import com.androidpprog2.openevents.persistance.api.APIUser;
 import com.androidpprog2.openevents.view.adapters.UsersAdapter;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,15 +105,13 @@ public class UsersFragment extends Fragment {
                         usersRecyclerView.setAdapter(usersAdapter);
                     }
                 } catch (Exception exception) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.e(TAG, exception.getMessage());
+                    DynamicToast.makeError(getContext(), exception.getMessage()).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                // TODO: REVISAR SI SE HA DE ELIMINAR
-                Log.d(TAG + "onFailure:", "Fallo de lectura API");
+                DynamicToast.makeError(getContext(), "Error on response API").show();
             }
         });
     }
@@ -149,22 +148,17 @@ public class UsersFragment extends Fragment {
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 try {
                     if (response.isSuccessful()) {
-                        // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.d("RESPONSE BODY: ", response.body().toString());
-
                         usersAdapter = new UsersAdapter(response.body(), getContext());
                         usersRecyclerView.setAdapter(usersAdapter);
                     }
                 } catch (Exception exception) {
-                    // TODO: REVISAR SI SE HA DE ELIMINAR
-                    Log.e(TAG, exception.getMessage());
+                    DynamicToast.makeError(getContext(), exception.getMessage()).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
-                // TODO: REVISAR SI SE HA DE ELIMINAR
-                Log.d(TAG + "onFailure:", "Fallo de lectura API filteredUsersList");
+                DynamicToast.makeError(getContext(), "Error on response API").show();
             }
         });
     }

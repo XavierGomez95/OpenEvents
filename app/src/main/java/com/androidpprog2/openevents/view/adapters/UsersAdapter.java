@@ -165,10 +165,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             } else
                 imageURL = "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg";
 
-            //TODO TEMPORAL
-            Log.d("EVENT NAME : ", userList.get(pos).getName());
-            Log.d("URL : ", image);
-
             Picasso.with(context).load(imageURL).into(imageView);
         }
     }

@@ -46,7 +46,7 @@ import retrofit2.Response;
  */
 public class EventsFragment extends Fragment {
     private APIEvents apiEvents;
-    private List<Event> eventList, myEventList;
+    private List<Event> eventList;
     private RecyclerView eventsRecyclerView;
     private EventsAdapter eventsAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -108,8 +108,6 @@ public class EventsFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 filterType = spinnerListFilters[0];
-                // TODO: ELIMINAR ESTO
-                DynamicToast.makeSuccess(getContext(), filterType).show();
             }
         });
 
@@ -195,14 +193,12 @@ public class EventsFragment extends Fragment {
                             }
                         } catch (Exception exception) {
                             DynamicToast.makeError(getContext(), "Error API on response").show();
-
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<List<Event>> call, Throwable t) {
                         DynamicToast.makeError(getContext(), "Error API connection").show();
-
                     }
                 });
     }
@@ -226,14 +222,12 @@ public class EventsFragment extends Fragment {
                             }
                         } catch (Exception exception) {
                             DynamicToast.makeError(getContext(), "Error API on response").show();
-
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
                         DynamicToast.makeError(getContext(), "Error API connection").show();
-
                     }
                 });
     }
@@ -257,14 +251,12 @@ public class EventsFragment extends Fragment {
                             }
                         } catch (Exception exception) {
                             DynamicToast.makeError(getContext(), "Error API on response").show();
-
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
                         DynamicToast.makeError(getContext(), "Error API connection").show();
-
                     }
                 });
     }
@@ -298,7 +290,6 @@ public class EventsFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
                 DynamicToast.makeError(getContext(), "Error API connection").show();
-
             }
         });
 
@@ -320,36 +311,6 @@ public class EventsFragment extends Fragment {
             eventsAdapter = new EventsAdapter(copyList, getContext());
             eventsRecyclerView.setAdapter(eventsAdapter);
         }
-    }
-
-
-    /**
-     * Method used to filter events by a string entered in a SearchView.
-     */
-    private void getFilteredListBySearch(String incomingString) {
-        // Llamada a la API para filtrar lo del searcher
-
-        apiEvents.getEventsSearch(Token.getToken(getContext()), incomingString, null,
-                null, new Callback<List<Event>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
-                        try {
-                            if (response.isSuccessful()) {
-                                eventsAdapter = new EventsAdapter(response.body(), getContext());
-                                eventsRecyclerView.setAdapter(eventsAdapter);
-                            }
-                        } catch (Exception exception) {
-                            DynamicToast.makeError(getContext(), "Error API connection").show();
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
-                        DynamicToast.makeError(getContext(), "Error API connection").show();
-
-                    }
-                });
     }
 
 
