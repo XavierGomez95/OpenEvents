@@ -50,7 +50,6 @@ public class EventsFragment extends Fragment {
     private RecyclerView eventsRecyclerView;
     private EventsAdapter eventsAdapter;
     private LinearLayoutManager linearLayoutManager;
-    private static final String TAG = "EventFragment";
     private View view;
     private ExtendedFloatingActionButton myEvents_fab;
     private Button bestEvents_btn, allEvents_btn;
@@ -58,8 +57,8 @@ public class EventsFragment extends Fragment {
     private Spinner spinner, searcherSpinner;
     private SearchView searchEventsView;
     private String filterType = "";
-    private final String[] spinnerListCategories = {"category filter", "sports-grup7", "Excursió",
-            "art-grup7", "music-grup7", "nightlife-grup7"};
+    private final String[] spinnerListCategories = {"Type Filter", "sports",
+            "art", "music", "nightlife"};
     private final String[] spinnerListFilters = {"location", "keyword", "date"};
 
 
@@ -189,8 +188,6 @@ public class EventsFragment extends Fragment {
                     public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
                         try {
                             if (response.isSuccessful()) {
-                                // TODO: REVISAR SI SE HA DE ELIMINAR
-                                Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
                                 eventList = response.body();
                                 eventsAdapter = new EventsAdapter(eventList, getContext());
                                 eventsRecyclerView.setLayoutManager(linearLayoutManager);
@@ -222,8 +219,6 @@ public class EventsFragment extends Fragment {
                     public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
                         try {
                             if (response.isSuccessful()) {
-                                // TODO: REVISAR SI SE HA DE ELIMINAR
-                                Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
                                 eventList = response.body();
                                 eventsAdapter = new EventsAdapter(eventList, getContext());
                                 eventsRecyclerView.setLayoutManager(linearLayoutManager);
@@ -255,8 +250,6 @@ public class EventsFragment extends Fragment {
                     public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
                         try {
                             if (response.isSuccessful()) {
-                                // TODO: REVISAR SI SE HA DE ELIMINAR
-                                Log.d("LOCATION RESPONSE BODY: ", call.request().toString());
                                 eventList = response.body();
                                 eventsAdapter = new EventsAdapter(eventList, getContext());
                                 eventsRecyclerView.setLayoutManager(linearLayoutManager);
@@ -275,8 +268,6 @@ public class EventsFragment extends Fragment {
                     }
                 });
     }
-
-
 
 
     /**
@@ -320,11 +311,11 @@ public class EventsFragment extends Fragment {
     public void getFilteredListByCategory() {
         String type = spinner.getSelectedItem().toString();
         List<Event> copyList = new ArrayList<>();
-        if (type.equals("category filter")) {
+        if (type.equals(spinnerListCategories[0])) {
             apiEventsCall();
         } else {
             for (Event event : eventList) {
-                if (event.getType().equals(type)) copyList.add(event);
+                if (event.getType().equals(type + "-grup7")) copyList.add(event);
             }
             eventsAdapter = new EventsAdapter(copyList, getContext());
             eventsRecyclerView.setAdapter(eventsAdapter);
@@ -341,25 +332,22 @@ public class EventsFragment extends Fragment {
         apiEvents.getEventsSearch(Token.getToken(getContext()), incomingString, null,
                 null, new Callback<List<Event>>() {
                     @Override
-                    public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                    public void onResponse(@NonNull Call<List<Event>> call, @NonNull Response<List<Event>> response) {
                         try {
                             if (response.isSuccessful()) {
-                                // TODO: REVISAR SI SE HA DE ELIMINAR
-                                Log.d("RESPONSE BODY: ", call.request().toString());
-
                                 eventsAdapter = new EventsAdapter(response.body(), getContext());
                                 eventsRecyclerView.setAdapter(eventsAdapter);
                             }
                         } catch (Exception exception) {
-                            // TODO: REVISAR SI SE HA DE ELIMINAR
-                            Log.e("TAG", exception.getMessage());
+                            DynamicToast.makeError(getContext(), "Error API connection").show();
+
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Event>> call, Throwable t) {
-                        // TODO: REVISAR SI SE HA DE ELIMINAR
-                        Log.d("onFailure:", "Fallo de lectura API filterEventsList");
+                    public void onFailure(@NonNull Call<List<Event>> call, @NonNull Throwable t) {
+                        DynamicToast.makeError(getContext(), "Error API connection").show();
+
                     }
                 });
     }

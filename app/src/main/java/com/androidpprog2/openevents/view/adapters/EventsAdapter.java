@@ -86,7 +86,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textView;
-        FrameLayout flameLayoutclic1;
+        FrameLayout frameLayout;
 
         /**
          * Initializes checkbox and buttons finding by id
@@ -97,7 +97,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             super(view);
             textView = view.findViewById(R.id.textView);
             imageView = view.findViewById(R.id.icon_image_event_id);
-            flameLayoutclic1 = view.findViewById(R.id.row_fragment);
+            frameLayout = view.findViewById(R.id.row_fragment);
         }
 
         /**
@@ -110,7 +110,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             textView.setText(eventList.get(pos).getName());
             loadImg(pos);
 
-            flameLayoutclic1.setOnClickListener(v -> {
+            frameLayout.setOnClickListener(v -> {
                 Intent intent = new Intent(activity, EventDetailActivity.class);
                 intent.putExtra("position", pos);
                 intent.putExtra("eventlist", (Serializable) eventList);
