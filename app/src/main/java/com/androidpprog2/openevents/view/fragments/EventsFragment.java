@@ -102,7 +102,6 @@ public class EventsFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 filterType = searcherSpinner.getSelectedItem().toString();
-                DynamicToast.makeSuccess(getContext(), filterType).show();
             }
 
             @Override
