@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -71,6 +72,9 @@ public class CreateEditEventActivity extends AppCompatActivity {
      * set text when you want to edit an event
      */
     private void setEditedEventText() {
+        TextView title = findViewById(R.id.tv_logo);
+        title.setText("Edit Event");
+        btn_add_event.setText("EDIT EVENT");
         name.setText(editEvent.getName());
         image.setText(editEvent.getImage());
         location.setText(editEvent.getLocation());
