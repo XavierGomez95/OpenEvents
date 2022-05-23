@@ -59,13 +59,13 @@ public class EventDetailActivity extends AppCompatActivity {
         setTexts(eventList, position);
 
         attendButton.setOnClickListener(view -> {
-            if (attendButton.getText().equals(R.string.Attend)) {
+            if (attendButton.getText().equals("ATTEND")) {
 
                 APIEvents api = APIEvents.getInstance();
                 api.addEventAssistance(Token.getToken(this), event.getId(), new Callback<AssistanceRequest>() {
                     @Override
                     public void onResponse(@NonNull Call<AssistanceRequest> call, @NonNull Response<AssistanceRequest> response) {
-                        attendButton.setText(R.string.unattend);
+                        attendButton.setText("CANCEL ATTENDANCE");
                         DynamicToast.makeSuccess(c, "You will attend to the event!").show();
                     }
 
@@ -80,7 +80,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 api.deleteEventAssistance(Token.getToken(this), event.getId(), new Callback<AssistanceRequest>() {
                     @Override
                     public void onResponse(@NonNull Call<AssistanceRequest> call, @NonNull Response<AssistanceRequest> response) {
-                        attendButton.setText(R.string.Attend);
+                        attendButton.setText("ATTEND");
                         DynamicToast.make(c, "Your attendance have been canceled ").show();
                     }
 
